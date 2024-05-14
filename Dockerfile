@@ -6,7 +6,6 @@ RUN apk add --no-cache build-base openssl
 RUN go mod download
 COPY . .
 RUN apk add --no-cache git && go build -o sui_overflow_hack . && apk del git
-
 FROM alpine
 WORKDIR /app
 RUN apk add --no-cache openssl
