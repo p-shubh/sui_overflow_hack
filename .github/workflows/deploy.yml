@@ -3,16 +3,12 @@ name: "Build and Push to GHCR"
 on:
   push:
     branches: 
-    #   - staging
       - main
-    #   - prod
 
 jobs:
-
   Deploy:
     runs-on: ubuntu-latest
     steps:
-    
     - name: Checkout
       uses: actions/checkout@v3
       
@@ -33,3 +29,19 @@ jobs:
         echo "Pushing Image to GitHub Container Registry"
         docker push $GITHUB_REF_IMAGE
         docker push $GITHUB_BRANCH_IMAGE
+    
+    - name: Deploy on DEV server 
+      if: github.ref == 'refs/heads/main' 
+      uses: appleboy/ssh-action@v0.1.7
+      with:         
+        host: ${{ secrets.DEV_REMOTE_SERVER_ADDRESS }}
+        username: ${{ secrets.DEV_SERVER_USERNAME }}
+        key:  ${{ secrets.DEV_REMOTE_SERVER_KEY }}
+        port: ${{ secrets.DEV_SSH_PORT }} 
+        script: |
+          pwd
+          cd platform
+          sudo podman stop platform && sudo podman rm platform && sudo podman image rm platform
+          echo ${{ secrets.GHCR_TOKEN }} | sudo podman login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
+          sudo podman pull ghcr.io/weareflexable/platform:main
+          sudo podman run --name="platform" --env-file=.env -p 9079:8080 --net=bridge -d ghcr.io/weareflexable/platform:main
