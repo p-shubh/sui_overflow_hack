@@ -44,4 +44,4 @@ jobs:
           # sudo podman stop sui_backend && sudo podman rm sui_backend && sudo podman image rm sui_backend
           echo ${{ secrets.GHCR_TOKEN }} | sudo podman login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
           sudo podman pull ghcr.io/p-shubh/sui_overflow_hack:main
-          sudo podman run --name="sui_backend" --env-file=.env -p 9079:8080 --net=bridge -d ghcr.io/sui_overflow_hack:main
+          sudo podman run --name="sui_backend" --env-file=.env -p 9079:8080 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:main
