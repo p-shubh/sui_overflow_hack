@@ -10,7 +10,5 @@ RUN apk add --no-cache git && go build -o sui_overflow_hack . && apk del git
 FROM alpine
 WORKDIR /app
 RUN apk add --no-cache openssl
-COPY vendor-pkg/auth/apple apple
-RUN mkdir -p apple/cache apple/certs apple/pass.raw
 COPY --from=builder /app/sui_overflow_hack .
 CMD [ "./sui_overflow_hack" ]
