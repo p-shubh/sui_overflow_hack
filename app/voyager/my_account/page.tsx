@@ -1,10 +1,10 @@
 "use client";
 
-import React, {Suspense} from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import HomeNavbar from "@/app/components/HomeNavbar";
 import Footer from "@/app/components/Footer";
+import CategoriesDropdown from "@/app/components/random_chat_components/CategoriesDropdown";
 
 const MyAccount = () => {
   const searchParams = useSearchParams();
@@ -28,16 +28,18 @@ const MyAccount = () => {
             width={200}
             alt="profile-picture"
           />
-          <div className="mt-5">Name</div>
+          <div className="mt-5 font-bold">User Name</div>
         </div>
         <div className="flex mt-10 justify-center">
           <div className="flex flex-col gap-3">
             <div className="font-medium bg-white py-2 px-5 rounded-3xl">
               Address: {address}
             </div>
-            <div className="font-medium bg-white py-2 px-5 rounded-3xl">
+            <div className="font-meLdium bg-white py-2 px-5 rounded-3xl">
               User Id: {id}
             </div>
+            <CategoriesDropdown category="Location" />
+            <CategoriesDropdown category="Interests" />
           </div>
         </div>
       </div>
