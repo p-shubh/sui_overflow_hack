@@ -13,7 +13,7 @@ import Footer from "./components/Footer";
 
 export default function Home() {
   return (
-    <>
+    <main className="w-[95vw] mx-auto p-10">
       <HomeNavbar />
       <div className="bg-[#CDE1F2] p-10">
         <div className="flex lg:flex-row md:flex-col sm:items-center xs:flex-col justify-between row-1">
@@ -90,6 +90,6 @@ export default function Home() {
       </div>
       <hr className="mt-5" />
       <Footer />
-    </>
+    </main>
   );
 }

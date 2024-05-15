@@ -7,7 +7,7 @@ import Footer from "@/app/components/Footer";
 
 const Profile = () => {
   return (
-    <>
+    <main className="w-[95vw] mx-auto p-10">
       <ProfileNavbar />
       <hr className="mt-5" />
       <div className="row-1 flex flex-wrap items-center gap-5 justify-center mt-5">
@@ -85,7 +85,7 @@ const Profile = () => {
       </div>
       <hr className="mt-5" />
       <Footer />
-    </>
+    </main>
   );
 };
 

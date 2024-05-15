@@ -9,7 +9,7 @@ import Footer from "@/app/components/Footer";
 
 const Community = () => {
   return (
-    <>
+    <main className="w-[95vw] mx-auto p-10">
       <CommunitiesNavbar />
       <div>
         <div className="text-lg font-bold mt-10 mb-5">
@@ -85,7 +85,7 @@ const Community = () => {
       </div>
       <hr className="mt-5" />
       <Footer />
-    </>
+    </main>
   );
 };
 

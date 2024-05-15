@@ -12,7 +12,7 @@ const MyAccount = () => {
   const id = searchParams.get("userId");
 
   return (
-    <>
+    <main className="w-[95vw] mx-auto p-10">
       <HomeNavbar />
       <div
         className="p-10 bg-cover bg-center h-screen"
@@ -43,7 +43,7 @@ const MyAccount = () => {
       </div>
       <hr className="mt-5" />
       <Footer />
-    </>
+    </main>
   );
 };
 
