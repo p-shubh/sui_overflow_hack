@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { FaUserFriends } from "react-icons/fa";
+import { FaUserFriends, FaEdit } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("chat");
+  const router = useRouter();
 
   return (
     <div className="fixed h-[100vh] px-3 py-4 bg-[#25262D] top-0 w-[25%]">
@@ -31,6 +33,15 @@ const Sidebar = () => {
           Friends
         </button>
       </div>
+      <button
+        className="fixed flex bottom-0 left-0 w-[25%] mx-auto p-2 rounded bg-black text-gray-50 hover:text-black hover:bg-gray-50"
+        onClick={() => router.push("/voyager/my_account")}
+      >
+        <span className="ml-2">Edit Interest and Location</span>
+        <span className="ml-5 font-medium text-xl">
+          <FaEdit />
+        </span>
+      </button>
     </div>
   );
 };
