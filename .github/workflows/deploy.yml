@@ -42,10 +42,10 @@ jobs:
           echo $TAG
           export GITHUB_REF_IMAGE=ghcr.io/$GITHUB_REPOSITORY:$GITHUB_SHA
           export GITHUB_BRANCH_IMAGE=ghcr.io/$GITHUB_REPOSITORY:$TAG
-          export GITHUB_REF_IMAGE=$(echo $GITHUB_REF_IMAGE | tr '[:upper:]' '[:lower:]')
-          export GITHUB_BRANCH_IMAGE=$(echo $GITHUB_BRANCH_IMAGE | tr '[:upper:]' '[:lower:]')
+          # export GITHUB_REF_IMAGE=$(echo $GITHUB_REF_IMAGE | tr '[:upper:]' '[:lower:]')
+          # export GITHUB_BRANCH_IMAGE=$(echo $GITHUB_BRANCH_IMAGE | tr '[:upper:]' '[:lower:]')
           docker build --build-arg version=$GITHUB_SHA -t $GITHUB_REF_IMAGE -t $GITHUB_BRANCH_IMAGE .
-          echo "Pushing Image to GitHub Container Registry"
+          echo "Pushing Frontend Image to GitHub Container Registry"
           docker push $GITHUB_REF_IMAGE
           docker push $GITHUB_BRANCH_IMAGE
           rm -rf .env
@@ -64,8 +64,7 @@ jobs:
             sudo podman stop sui_backend && sudo podman rm sui_backend && sudo podman image rm ghcr.io/p-shubh/sui_overflow_hack:main
             echo ${{ secrets.GHCR_TOKEN }} | sudo podman login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
             sudo podman pull ghcr.io/p-shubh/sui_overflow_hack:main
-            sudo podman run --name="sui_backend" --env-file=.env -p 9079:8080 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:main
-
+            sudo podman run --name="sui_backend" --env-file=.env -p 8181:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:main
       - name: Deploy on Frontend server 
         if: github.ref == 'refs/heads/frontend' 
         uses: appleboy/ssh-action@v0.1.7
@@ -76,7 +75,7 @@ jobs:
           port: ${{ secrets.DEV_SSH_PORT }}
           script: |
             pwd
-            # docker stop sui_frontend || true && docker image rm ghcr.io/p-shubh/sui_overflow_hack:frontend
-            echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
-            docker pull ghcr.io/p-shubh/sui_overflow_hack:frontend
-            docker run --name="sui-frontend" --rm -p 8181:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:frontend
+            sudo podman stop sui-frontend || true && sudo podman image rm ghcr.io/p-shubh/sui_overflow_hack:frontend
+            echo ${{ secrets.GHCR_TOKEN }} | sudo podman login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+            sudo podman pull ghcr.io/p-shubh/sui_overflow_hack:frontend
+            sudo podman run --name="sui-frontend" --rm -p 4040:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:frontend
