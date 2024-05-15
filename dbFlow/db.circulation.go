@@ -1,6 +1,7 @@
 package dbflow
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 	"os"
@@ -9,7 +10,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func ConnectHackDatabase() *gorm.DB {
+func ConnectHackDatabase() (*gorm.DB, *sql.DB) {
 	// Load environment variables
 	dbHost := os.Getenv("SUPABASE_DB_HOST")
 	dbUsername := os.Getenv("SUPABASE_DB_USERNAME")
@@ -29,8 +30,10 @@ func ConnectHackDatabase() *gorm.DB {
 		log.Printf("failed to connect database: %v", err)
 	}
 
+	lbpq, _ := db.DB()
+
 	// Optionally, you can enable automatic migrations
 	// db.AutoMigrate(&YourModel{})
 
-	return db
+	return db, lbpq
 }
