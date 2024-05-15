@@ -1,12 +1,14 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import HomeNavbar from "@/app/components/HomeNavbar";
 import Footer from "@/app/components/Footer";
-import CategoriesDropdown from "@/app/components/random_chat_components/CategoriesDropdown";
+import CategoriesDropdown from "@/app/components/my_account_components/CategoriesDropdown";
 
 const MyAccount = () => {
+  const [gender, setGender] = useState<string | undefined>();
   const searchParams = useSearchParams();
   const address = searchParams.get("userAddress");
   const id = searchParams.get("userId");
@@ -28,15 +30,45 @@ const MyAccount = () => {
             width={200}
             alt="profile-picture"
           />
-          <div className="mt-5 font-bold">User Name</div>
+          <div className="mt-2 font-bold text-xl flex items-center gap-2">
+            <span>User Name</span>
+            {/* to do => set gender according to choosen input [discuss] */}
+            <span>
+              {gender === "female" ? (
+                <Image
+                  src="/female.png"
+                  height={20}
+                  width={20}
+                  alt="profile-picture"
+                />
+              ) : gender === "male" ? (
+                <Image
+                  src="/male.png"
+                  height={20}
+                  width={20}
+                  alt="profile-picture"
+                />
+              ) : (
+                <Image
+                  src="/unknown_gender.png"
+                  height={20}
+                  width={20}
+                  alt="profile-picture"
+                />
+              )}
+            </span>
+          </div>
         </div>
-        <div className="flex mt-10 justify-center">
+        <div className="flex mt-3 justify-center">
           <div className="flex flex-col gap-3">
             <div className="font-medium bg-white py-2 px-5 rounded-3xl">
               Address: {address}
             </div>
-            <div className="font-meLdium bg-white py-2 px-5 rounded-3xl">
+            <div className="font-medium bg-white py-2 px-5 rounded-3xl">
               User Id: {id}
+            </div>
+            <div className="font-medium bg-white py-2 px-5 rounded-3xl">
+              Gender: {id}
             </div>
             <CategoriesDropdown category="Location" />
             <CategoriesDropdown category="Interests" />
