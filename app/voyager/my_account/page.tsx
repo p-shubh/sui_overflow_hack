@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import HomeNavbar from "@/app/components/HomeNavbar";
 import Footer from "@/app/components/Footer";
 
-const Profile = () => {
+const MyAccount = () => {
   const searchParams = useSearchParams();
   const address = searchParams.get("userAddress");
   const id = searchParams.get("userId");
@@ -47,4 +47,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default MyAccount;

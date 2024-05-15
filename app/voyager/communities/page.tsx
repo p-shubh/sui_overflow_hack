@@ -7,7 +7,7 @@ import Image from "next/image";
 import VivrantCommunitiesCard from "../../components/communities_components/VivrantCommunitiesCard";
 import Footer from "@/app/components/Footer";
 
-const Discover = () => {
+const Community = () => {
   return (
     <>
       <CommunitiesNavbar />
@@ -89,5 +89,5 @@ const Discover = () => {
   );
 };
 
-export default Discover;
-// EAECF0;
+export default Community;
+

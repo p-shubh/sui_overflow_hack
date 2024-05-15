@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { PROFILE_PAGE_IMAGES } from "../../utils/constants";
 import Footer from "@/app/components/Footer";
 
-const page = () => {
+const Profile = () => {
   return (
     <>
       <ProfileNavbar />
@@ -89,4 +89,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Profile;
