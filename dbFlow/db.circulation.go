@@ -21,10 +21,12 @@ func ConnectHackDatabase() *gorm.DB {
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
 		dbHost, dbPort, dbUsername, dbPassword, dbName)
 
+	fmt.Println("dsn : ", dsn)
+
 	// Attempt to connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("failed to connect database: %v", err)
+		log.Printf("failed to connect database: %v", err)
 	}
 
 	// Optionally, you can enable automatic migrations
