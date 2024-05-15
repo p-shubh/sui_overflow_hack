@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {Suspense} from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import HomeNavbar from "@/app/components/HomeNavbar";

@@ -19,14 +19,16 @@ const Navbar = () => {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
   const [profileInfo, setProfileInfo] = useState<AccountData>();
 
-  useEffect(()=>{
-   let value = sessionStorage.getItem('loggedIn');
-   if(value!==null){
-     setIsUserLoggedIn(true);
-   }else{
-    setIsUserLoggedIn(false);
-   }
-  },[])
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let value = localStorage.getItem("loggedIn");
+      if (value !== null) {
+        setIsUserLoggedIn(true);
+      } else {
+        setIsUserLoggedIn(false);
+      }
+    }
+  }, []);
 
   const loginButtonRef = useRef<HTMLButtonElement>();
   const logoutButtonRef = useRef<HTMLButtonElement>();

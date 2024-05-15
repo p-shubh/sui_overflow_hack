@@ -1,3 +1,4 @@
+"use client";
 import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 import {
   SerializedSignature,
@@ -78,10 +79,10 @@ export const Zklogin = ({
   const [modalContent, setModalContent] = useState<string>("");
 
   useEffect(() => {
-    (async function(){
-    await completeZkLogin();
-    setProfileInfo(accounts.current[0]);
-    })()
+    (async function () {
+      await completeZkLogin();
+      setProfileInfo(accounts.current[0]);
+    })();
     fetchBalances(accounts.current);
     const interval = setInterval(() => fetchBalances(accounts.current), 5_000);
     return () => {
@@ -300,7 +301,7 @@ export const Zklogin = ({
       maxEpoch: setupData.maxEpoch,
     });
     setIsUserLoggedIn(true);
-    sessionStorage.setItem('loggedIn', 'true')
+    if (typeof window !== "undefined") localStorage.setItem("loggedIn", "true");
   }
 
   /**
@@ -392,48 +393,60 @@ export const Zklogin = ({
         +suiBalance.totalBalance / 1_000_000_000
       );
     }
-    setBalances((prevBalances) => new Map([...prevBalances, ...newBalances]));
+    // setBalances((prevBalances) => new Map([...prevBalances, ...newBalances]));
   }
 
   /* Session storage */
 
   function saveSetupData(data: SetupData) {
-    sessionStorage.setItem(setupDataKey, JSON.stringify(data));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(setupDataKey, JSON.stringify(data));
+    }
   }
 
   function loadSetupData(): SetupData | null {
-    const dataRaw = sessionStorage.getItem(setupDataKey);
-    if (!dataRaw) {
-      return null;
+    if (typeof window !== "undefined") {
+      const dataRaw = localStorage.getItem(setupDataKey);
+      if (!dataRaw) {
+        return null;
+      }
+      const data: SetupData = JSON.parse(dataRaw);
+      return data;
     }
-    const data: SetupData = JSON.parse(dataRaw);
-    return data;
+    return null;
   }
 
   function clearSetupData(): void {
-    sessionStorage.removeItem(setupDataKey);
+    if (typeof window !== "undefined") localStorage.removeItem(setupDataKey);
   }
 
   function saveAccount(account: AccountData): void {
     const newAccounts = [account, ...accounts.current];
-    sessionStorage.setItem(accountDataKey, JSON.stringify(newAccounts));
+    if (typeof window !== "undefined") {
+      localStorage.setItem(accountDataKey, JSON.stringify(newAccounts));
+    }
     accounts.current = newAccounts;
     fetchBalances([account]);
   }
 
   function loadAccounts(): AccountData[] {
-    const dataRaw = sessionStorage.getItem(accountDataKey);
-    if (!dataRaw) {
-      return [];
+    if (typeof window !== "undefined") {
+      const dataRaw = localStorage.getItem(accountDataKey);
+      if (!dataRaw) {
+        return [];
+      }
+      const data: AccountData[] = JSON.parse(dataRaw);
+      return data;
     }
-    const data: AccountData[] = JSON.parse(dataRaw);
-    return data;
+    return [];
   }
 
   function clearState(): void {
     setIsUserLoggedIn(false);
-    sessionStorage.removeItem("loggedIn");
-    sessionStorage.clear();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("loggedIn");
+      localStorage.clear();
+    }
     accounts.current = [];
     setBalances(new Map());
   }
