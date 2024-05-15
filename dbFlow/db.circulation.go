@@ -2,6 +2,7 @@ package dbflow
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"gorm.io/driver/postgres"
@@ -9,7 +10,7 @@ import (
 )
 
 func ConnectHackDatabase() *gorm.DB {
-	// Connect to the database
+	// Load environment variables
 	dbHost := os.Getenv("SUPABASE_DB_HOST")
 	dbUsername := os.Getenv("SUPABASE_DB_USERNAME")
 	dbPassword := os.Getenv("SUPABASE_DB_PASSWORD")
@@ -17,16 +18,17 @@ func ConnectHackDatabase() *gorm.DB {
 	dbPort := os.Getenv("SUPABASE_DB_PORT")
 
 	// Construct the connection string
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=Asia/Shanghai",
-		dbHost, dbUsername, dbPassword, dbName, dbPort)
+	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		dbHost, dbPort, dbUsername, dbPassword, dbName)
 
+	// Attempt to connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		log.Fatalf("failed to connect database: %v", err)
 	}
 
-	// // Auto migrate the schema
-	// db.AutoMigrate(&SlnSui{})
-	return db
+	// Optionally, you can enable automatic migrations
+	// db.AutoMigrate(&YourModel{})
 
+	return db
 }
