@@ -17,7 +17,7 @@ func ConnectHackDatabase() *gorm.DB {
 	dbPort := os.Getenv("SUPABASE_DB_PORT")
 
 	// Construct the connection string
-	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai",
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=require TimeZone=Asia/Shanghai",
 		dbHost, dbUsername, dbPassword, dbName, dbPort)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
