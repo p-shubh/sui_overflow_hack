@@ -76,7 +76,7 @@ jobs:
           port: ${{ secrets.DEV_SSH_PORT }}
           script: |
             pwd
-            # podman stop sui_frontend || true && podman image rm ghcr.io/p-shubh/sui_overflow_hack:frontend
-            echo ${{ secrets.GHCR_TOKEN }} | podman login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
-            podman pull ghcr.io/p-shubh/sui_overflow_hack:frontend
-            podman run --name="sui-frontend" --rm -p 4040:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:frontend
+            # sudo podman stop sui_frontend || true && sudo podman image rm ghcr.io/p-shubh/sui_overflow_hack:frontend
+            echo ${{ secrets.GHCR_TOKEN }} | sudo podman login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+            sudo podman pull ghcr.io/p-shubh/sui_overflow_hack:frontend
+            sudo podman run --name="sui-frontend" --rm -p 4040:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:frontend
