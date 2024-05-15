@@ -79,4 +79,4 @@ jobs:
             # docker stop sui_frontend || true && docker image rm ghcr.io/p-shubh/sui_overflow_hack:frontend
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
             docker pull ghcr.io/p-shubh/sui_overflow_hack:frontend
-            docker run --name="sui-frontend" --rm -p 4040:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:frontend
+            docker run --name="sui-frontend" --rm -p 6060:4040 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:frontend
