@@ -76,7 +76,7 @@ jobs:
           port: ${{ secrets.DEV_SSH_PORT }}
           script: |
             pwd
-            # docker stop sui_frontend || true && docker image rm ghcr.io/p-shubh/sui_overflow_hack:frontend
-            echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
-            docker pull ghcr.io/p-shubh/sui_overflow_hack:frontend
-            docker run --name="sui-frontend" --rm -p 4040:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:frontend
+            # podman stop sui_frontend || true && podman image rm ghcr.io/p-shubh/sui_overflow_hack:frontend
+            echo ${{ secrets.GHCR_TOKEN }} | podman login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
+            podman pull ghcr.io/p-shubh/sui_overflow_hack:frontend
+            podman run --name="sui-frontend" --rm -p 4040:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:frontend
