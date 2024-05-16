@@ -7,7 +7,7 @@ import (
 )
 
 func VoyagerApplyRoutes(p *gin.RouterGroup) {
-	r := p.Group("voyager")
+	r := p.Group("/voyager")
 	{
 		// GET API for people listing according to interest or location
 

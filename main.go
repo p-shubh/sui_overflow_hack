@@ -2,6 +2,7 @@ package main
 
 import (
 	router "hack/Router"
+	realtimechat "hack/real_time_chat"
 	"log"
 	"os"
 
@@ -16,5 +17,8 @@ func main() {
 			log.Printf("Error in reading the config file : %v\n", err)
 		}
 	}
+
+	realtimechat.RealtimeChatVoigerConnection()
+
 	router.HandleRequest()
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat</title>
+</head>
+<body>
+    <input type="text" id="username" placeholder="Enter your username">
+    <input type="text" id="message" placeholder="Enter your message">
+    <button onclick="sendMessage()">Send</button>
+    <div id="chat"></div>
+
+    <script>
+        const socket = new WebSocket('ws://localhost:6060/v1.0/voyager_web_socket/ws');
+
+        socket.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            const chat = document.getElementById('chat');
+            chat.innerHTML += `<p><strong>${message.username}:</strong> ${message.content}</p>`;
+        };
+
+        function sendMessage() {
+            const username = document.getElementById('username').value;
+            const content = document.getElementById('message').value;
+            const message = { username, content };
+
+            socket.send(JSON.stringify(message));
+        }
+    </script>
+</body>
+</html>

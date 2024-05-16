@@ -2,6 +2,7 @@ package router
 
 import (
 	"fmt"
+	realtimechat "hack/real_time_chat"
 	voyagerrouting "hack/voyagerRouting"
 	"time"
 
@@ -53,6 +54,7 @@ func ApplyRoutes(r *gin.RouterGroup) {
 		fmt.Println("---------------------------------------------------------------------------------------------------------------------------------------")
 
 		voyagerrouting.VoyagerApplyRoutes(v1)
+		realtimechat.RealTimeVoyagerApplyRoutes(v1)
 		// suiRouter.SuiApplyRoutes(v1)
 	}
 }
