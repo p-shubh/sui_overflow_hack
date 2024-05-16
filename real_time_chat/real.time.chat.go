@@ -15,85 +15,6 @@ import (
 	realtimego "github.com/overseedio/realtime-go"
 )
 
-// func handleConnections(c *gin.Context) {
-// 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
-// 	if err != nil {
-// 		log.Println(err)
-// 		return
-// 	}
-// 	defer ws.Close()
-// 	clients[ws] = true
-
-// 	for {
-// 		var msg Message
-// 		err := ws.ReadJSON(&msg)
-// 		if err != nil {
-// 			log.Printf("error: %v", err)
-// 			delete(clients, ws)
-// 			break
-// 		}
-// 		broadcast <- msg
-// 	}
-// }
-
-// func subscribeToRealtime() {
-// 	client := supabase.NewClient(os.Getenv("SUPABASE_PROJECT_URL"), os.Getenv("SUPABASE_ANON_KEY"), nil)
-// 	rtClient, err := realtime.NewClient(client)
-// 	if err != nil {
-// 		log.Fatalf("Error creating Realtime client: %v", err)
-// 	}
-
-// 	rtClient.On("postgres_changes", map[string]string{
-// 		"schema": "public",
-// 		"table":  "messages",
-// 		"event":  "*",
-// 	}, func(payload realtime.Payload) {
-// 		log.Printf("Realtime message: %v", payload)
-
-// 		msg := Message{
-// 			ID:        payload.New["id"].(string),
-// 			Content:   payload.New["content"].(string),
-// 			Username:  payload.New["username"].(string),
-// 			CreatedAt: payload.New["created_at"].(string),
-// 		}
-
-// 		broadcast <- msg
-// 	})
-
-// 	err = rtClient.Start()
-// 	if err != nil {
-// 		log.Fatalf("Error starting Realtime client: %v", err)
-// 	}
-// }
-
-// func handleMessages() {
-// 	db, dbClose := dbflow.ConnectHackDatabase()
-// 	defer dbClose.Close()
-// 	for {
-// 		msg := <-broadcast
-
-// 		for client := range clients {
-// 			err := client.WriteJSON(msg)
-// 			if err != nil {
-// 				log.Printf("error: %v", err)
-// 				client.Close()
-// 				delete(clients, client)
-// 			}
-// 		}
-
-// 		db.Create(&msg)
-// 	}
-// }
-
-// Message represents a chat message
-// type Message struct {
-// 	ID        uint      `json:"id" gorm:"primaryKey"`
-// 	Content   string    `json:"content"`
-// 	Username  string    `json:"username"`
-// 	CreatedAt time.Time `json:"created_at"`
-// }
-
-// var db *gorm.DB
 var clients = make(map[*websocket.Conn]bool)
 var broadcast = make(chan VoyagerRandomeMessages)
 var upgrader = websocket.Upgrader{
@@ -117,6 +38,7 @@ func RealtimeChatVoigerConnection() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer c.Disconnect()
 
 	dbName := os.Getenv("SUPABASE_DB_NAME")
 	schema := os.Getenv("SCHEMA")
