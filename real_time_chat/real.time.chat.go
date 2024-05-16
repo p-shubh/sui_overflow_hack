@@ -38,8 +38,7 @@ func RealtimeChatVoigerConnection() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	// defer c.Disconnect()
-
+	defer c.Disconnect()
 	dbName := os.Getenv("SUPABASE_DB_NAME")
 	schema := os.Getenv("SCHEMA")
 	table := os.Getenv("TABLE")
