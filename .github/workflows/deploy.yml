@@ -20,7 +20,8 @@ jobs:
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build and Push Docker Image
+      - name: Build and Push Backend Docker Image
+        if: github.ref == 'refs/heads/main' 
         run: |
           export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
           export TAG=$([[ $CURRENT_BRANCH == $(basename ${{ github.ref }}) ]] && echo $CURRENT_BRANCH || echo "latest")
