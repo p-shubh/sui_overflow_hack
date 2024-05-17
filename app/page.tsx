@@ -1,6 +1,9 @@
 import Image from "next/image";
 import HomeNavbar from "./components/reusable/HomeNavbar";
-import { LANDING_PAGE_BUTTON } from "./utils/constants";
+import {
+  LANDING_PAGE_BUTTON,
+  LANDING_PAGE_VIBRANT_COMMUNITIES_IMAGES,
+} from "./utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import MembershipPlanCard1 from "./components/membership_plan_cards/MembershipPlanCard1";
 import MembershipPlanCard2 from "./components/membership_plan_cards/MembershipPlanCard2";
@@ -14,7 +17,7 @@ import Footer from "./components/reusable/Footer";
 export default function Home() {
   return (
     <main className="w-[95vw] mx-auto p-10">
-      <HomeNavbar/>
+      <HomeNavbar />
       <div className="bg-[#CDE1F2] p-10">
         <div className="flex lg:flex-row md:flex-col sm:items-center xs:flex-col justify-between row-1">
           <div className="flex flex-col xs:items-center lg:items-start">
@@ -42,23 +45,26 @@ export default function Home() {
           <h4 className="text-lg font-bold mt-10 mb-10">
             Discover Vibrant Communities
           </h4>
-          <div className="flex flex-wrap gap-4 mt-4 images-for-landing-page xs:justify-center md:justify-start">
-            {Array(5)
-              .fill(0)
-              .map((el, id) => (
-                <div key={id} className="flex flex-col mb-8">
-                  <Image
-                    src="https://img.freepik.com/free-photo/businesswoman-working-with-modern-virtual-technologies-hands-touching-screen_1212-720.jpg?t=st=1715435128~exp=1715438728~hmac=ae3b6f2ce406abb053c3451fa5abbbefc7e0806ce62e0563a22a4368f1ddc6f0&w=1480"
-                    height={218}
-                    width={218}
-                    alt="img"
-                  />
-                  <div className="mt-4 font-semibold">Lorem Ipsum</div>
-                  <div className="mt-2 text-sm font-medium">
-                    Lorem Ipsum Dolor Sit
-                  </div>
+          <div className="grid space-around justify-between gap-4 grid-cols-5 mt-4">
+            {/* <div className="flex flex-wrap gap-4 mt-4 xs:justify-center md:justify-start"> */}
+            {LANDING_PAGE_VIBRANT_COMMUNITIES_IMAGES.map((data) => (
+              <div key={uuidv4()} className="flex flex-col mb-8">
+                <Image
+                  src={data.src}
+                  height={218}
+                  width={217}
+                  alt="vivrant-communities"
+                  className="object-fill"
+                />
+                <div className="mt-4 font-semibold">
+                  {data.community_interest}
                 </div>
-              ))}
+                <div className="mt-2 text-sm font-medium">
+                  {data.interest_taglines}
+                </div>
+              </div>
+            ))}
+            {/* </div> */}
           </div>
         </div>
         <hr className="text-white mt-10" />

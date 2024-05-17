@@ -106,6 +106,34 @@ export const LANDING_PAGE_BUTTON = [
   },
 ];
 
+export const LANDING_PAGE_VIBRANT_COMMUNITIES_IMAGES = [
+  {
+    src: "https://img.freepik.com/free-vector/messages-concept-illustration_114360-583.jpg?t=st=1715950641~exp=1715954241~hmac=3c03fee57c247cde4f8f49fb78fd5fc1d918fd35da220aab9d4fcc3641c97fc0&w=740",
+    community_interest: "Meet New",
+    interest_taglines: "Connect with like-minded",
+  },
+  {
+    src: "https://img.freepik.com/free-vector/creative-bulb-ideas-concept-illustration_614304-35.jpg?t=st=1715950715~exp=1715954315~hmac=baaa1a5aa5f0c6046945e796a6df00f9e706c3b5c27b62a17effdf2907c795e6&w=740",
+    community_interest: "Creative Expression",
+    interest_taglines: "Artistic and entertaining",
+  },
+  {
+    src: "https://img.freepik.com/premium-vector/personal-memories-concept_23-2148403720.jpg?w=740",
+    community_interest: "Laugh & Connect",
+    interest_taglines: "Joyful moments with me",
+  },
+  {
+    src: "https://img.freepik.com/free-vector/flat-design-innovation-concept-with-lightbulb_23-2149158516.jpg?t=st=1715950854~exp=1715954454~hmac=42ca531a71366a2f2991fab8044aaee1994987681c294b8f545dcef201f98061&w=740",
+    community_interest: "Unleash Creativity",
+    interest_taglines: "Express yourself freely",
+  },
+  {
+    src: "https://img.freepik.com/premium-vector/success-secret-start-now_71609-551.jpg?w=740",
+    community_interest: "Now is your time!",
+    interest_taglines: "Engage with the community",
+  },
+];
+
 export const HOME_PAGE_NAVBAR_LINKS = [
   {
     label: "Meet new",
