@@ -1,11 +1,16 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import ProfileNavbar from "../../components/profile_components/ProfileNavbar";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import { PROFILE_PAGE_IMAGES } from "../../utils/constants";
 import Footer from "@/app/components/reusable/Footer";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const Profile = () => {
+  const [isProfileLiked, setIsProfileLiked] = useState(false);
+
   return (
     <main className="w-[95vw] mx-auto p-10">
       <ProfileNavbar />
@@ -23,9 +28,14 @@ const Profile = () => {
         <div className="ml-8">
           <div className="flex items-center">
             <h3 className="text-xl font-bold">VoyagerConnect</h3>
-            <button className="bg-[#EAECF0] font-bold py-2 px-8 rounded hover:shadow-md ml-8">
-              Update
-            </button>
+            {isProfileLiked ? (
+              <FaHeart className="ml-8 text-[#EE4E4E] text-xl" />
+            ) : (
+              <FaRegHeart
+                className="ml-8 text-xl"
+                onClick={() => setIsProfileLiked(true)}
+              />
+            )}
           </div>
           <div className="font-medium text-md text-[#5d5d5b]">
             Virtual world explorer
