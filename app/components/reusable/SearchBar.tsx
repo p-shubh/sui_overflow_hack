@@ -1,6 +1,6 @@
 "use client";
 
-const SearchBar = () => {
+const SearchBar = ({placeholder}: {placeholder: string}) => {
   return (
     <form className="min-w-[50%] text-center">
       <label
@@ -31,7 +31,7 @@ const SearchBar = () => {
           type="search"
           id="default-search"
           className="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Find new friends, chat, and discover communities"
+          placeholder={placeholder}
           required
         />
         {/* <button
