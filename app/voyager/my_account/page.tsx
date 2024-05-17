@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import HomeNavbar from "@/app/components/HomeNavbar";
-import Footer from "@/app/components/Footer";
-import CategoriesDropdown from "@/app/components/my_account_components/CategoriesDropdown";
+import HomeNavbar from "@/app/components/reusable/HomeNavbar";
+import Footer from "@/app/components/reusable/Footer";
+import CategoriesDropdown from "@/app/components/reusable/CategoriesDropdown";
 
 const MyAccount = () => {
   const [gender, setGender] = useState<string | undefined>();

@@ -2,12 +2,11 @@
 import { useState, useRef, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { NAVBAR_LINKS } from "../utils/constants";
+import { NAVBAR_LINKS } from "@/app/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
-import { Zklogin } from "../utils/Zklogin";
+import { Zklogin, AccountData } from "@/app/utils/Zklogin";
 import { CgProfile } from "react-icons/cg";
-import { AccountData } from "../utils/Zklogin";
 import { IoIosLogOut } from "react-icons/io";
 
 /**

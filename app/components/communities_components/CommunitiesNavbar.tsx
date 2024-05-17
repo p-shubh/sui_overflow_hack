@@ -2,7 +2,7 @@
 
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
-import SearchBar from "./SearchBar";
+import SearchBar from "../reusable/SearchBar";
 import { DISCOVER_NAVBAR_LINKS } from "@/app/utils/constants";
 
 const Navbar = () => {

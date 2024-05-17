@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import CategoriesDropdown from "@/app/components/my_account_components/CategoriesDropdown";
+import CategoriesDropdown from "@/app/components/reusable/CategoriesDropdown";
 
 const CategoriesAndGenderDetailsPopup = () => {
   return (

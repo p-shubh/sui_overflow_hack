@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { DISCOVER_PAGE_BUTTONS } from "../../utils/constants";
 import Image from "next/image";
 import VivrantCommunitiesCard from "../../components/communities_components/VivrantCommunitiesCard";
-import Footer from "@/app/components/Footer";
+import Footer from "@/app/components/reusable/Footer";
 
 const Community = () => {
   return (

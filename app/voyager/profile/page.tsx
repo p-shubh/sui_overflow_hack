@@ -3,7 +3,7 @@ import ProfileNavbar from "../../components/profile_components/ProfileNavbar";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import { PROFILE_PAGE_IMAGES } from "../../utils/constants";
-import Footer from "@/app/components/Footer";
+import Footer from "@/app/components/reusable/Footer";
 
 const Profile = () => {
   return (

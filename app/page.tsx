@@ -1,10 +1,10 @@
 import Image from "next/image";
+import HomeNavbar from "./components/reusable/HomeNavbar";
 import { LANDING_PAGE_BUTTON } from "./utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import MembershipPlanCard1 from "./components/membership_plan_cards/MembershipPlanCard1";
 import MembershipPlanCard2 from "./components/membership_plan_cards/MembershipPlanCard2";
-import HomeNavbar from "./components/HomeNavbar";
-import Footer from "./components/Footer";
+import Footer from "./components/reusable/Footer";
 
 /*
  *
@@ -14,7 +14,7 @@ import Footer from "./components/Footer";
 export default function Home() {
   return (
     <main className="w-[95vw] mx-auto p-10">
-      <HomeNavbar />
+      <HomeNavbar/>
       <div className="bg-[#CDE1F2] p-10">
         <div className="flex lg:flex-row md:flex-col sm:items-center xs:flex-col justify-between row-1">
           <div className="flex flex-col xs:items-center lg:items-start">
