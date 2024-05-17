@@ -9,9 +9,9 @@ const Navbar = () => {
     <div className="flex justify-between mt-2 mb-8">
       <SearchBar placeholder="Enter interests" />
       <div className="flex gap-10 items-center">
-        <IoMdHome className="text-2xl" />
-        <BiSolidMessageRounded className="text-2xl" />
-        <IoIosNotifications className="text-2xl" />
+        <IoMdHome className="text-2xl text-[#5D5D5B]" />
+        <BiSolidMessageRounded className="text-2xl text-[#5D5D5B]" />
+        <IoIosNotifications className="text-2xl text-[#5D5D5B]" />
         <Image
           src="/profile-image.png"
           height={35}
