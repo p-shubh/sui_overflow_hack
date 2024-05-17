@@ -106,7 +106,7 @@ export const LANDING_PAGE_BUTTON = [
   },
 ];
 
-export const NAVBAR_LINKS = [
+export const HOME_PAGE_NAVBAR_LINKS = [
   {
     label: "Meet new",
     link: "/",

@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { NAVBAR_LINKS } from "@/app/utils/constants";
+import { HOME_PAGE_NAVBAR_LINKS } from "@/app/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import { Zklogin, AccountData } from "@/app/utils/Zklogin";
@@ -48,7 +48,7 @@ const Navbar = () => {
         </Link>
         {/* large screen size nav links and login button */}
         <div className="hidden lg:flex md:gap-10 lg:gap-14">
-          {NAVBAR_LINKS.map(({ label, link }) => (
+          {HOME_PAGE_NAVBAR_LINKS.map(({ label, link }) => (
             <Link
               key={uuidv4()}
               href={link}
