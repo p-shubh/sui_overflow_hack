@@ -2,7 +2,7 @@
 
 import CommunitiesNavbar from "../../components/communities_components/CommunitiesNavbar";
 import { v4 as uuidv4 } from "uuid";
-import { DISCOVER_PAGE_BUTTONS } from "../../utils/constants";
+import { COMMUNITY_PAGE_BUTTONS } from "../../utils/constants";
 import Image from "next/image";
 import VivrantCommunitiesCard from "../../components/communities_components/VivrantCommunitiesCard";
 import Footer from "@/app/components/reusable/Footer";
@@ -16,7 +16,7 @@ const Community = () => {
           Discover New Connections
         </div>
         <div className="flex flex-wrap gap-3">
-          {DISCOVER_PAGE_BUTTONS.map((data) => (
+          {COMMUNITY_PAGE_BUTTONS.map((data) => (
             <button
               key={uuidv4()}
               className="bg-[#EAECF0] font-semibold py-2 px-4 rounded hover:shadow-md"

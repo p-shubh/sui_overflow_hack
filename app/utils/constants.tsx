@@ -149,7 +149,7 @@ export const COMMUNITY_NAVBAR_LINKS = [
   },
 ];
 
-export const DISCOVER_PAGE_BUTTONS = [
+export const COMMUNITY_PAGE_BUTTONS = [
   {
     text: "All",
   },
