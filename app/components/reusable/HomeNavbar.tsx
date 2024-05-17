@@ -101,7 +101,7 @@ const Navbar = () => {
               <IoMdClose />
             </div>
             <div className="mt-8">
-              {NAVBAR_LINKS.map(({ label, link }) => (
+              {HOME_PAGE_NAVBAR_LINKS.map(({ label, link }) => (
                 <Link href={link} key={uuidv4()}>
                   <li className="font-medium mb-3 mt-3 text-slate-800 hover:text-black">
                     {label}
