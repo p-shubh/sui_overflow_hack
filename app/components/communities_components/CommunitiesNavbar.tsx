@@ -3,15 +3,15 @@
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import SearchBar from "../reusable/SearchBar";
-import { DISCOVER_NAVBAR_LINKS } from "@/app/utils/constants";
+import { COMMUNITY_NAVBAR_LINKS } from "@/app/utils/constants";
 
 const Navbar = () => {
   return (
     <div className="flex justify-between mt-2 mb-8">
-      <SearchBar />
+      <SearchBar placeholder="Find new friends, chat and discover communities"/>
       <div className="flex">
         <div className="flex gap-10">
-          {DISCOVER_NAVBAR_LINKS.map(({ label, link }) => (
+          {COMMUNITY_NAVBAR_LINKS.map(({ label, link }) => (
             <Link
               key={uuidv4()}
               href={link}

@@ -127,8 +127,8 @@ export const NAVBAR_LINKS = [
   },
 ];
 
-// discover page related constants
-export const DISCOVER_NAVBAR_LINKS = [
+// community page related constants
+export const COMMUNITY_NAVBAR_LINKS = [
   {
     label: "Random Chats",
     link: "/",
