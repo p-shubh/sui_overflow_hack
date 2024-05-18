@@ -31,7 +31,7 @@ type Chat struct {
 }
 
 func GetPeople(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var people []Person
 	db.Find(&people)
@@ -39,7 +39,7 @@ func GetPeople(c *gin.Context) {
 }
 
 func SendFriendRequest(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var request FriendRequest
 	if err := c.BindJSON(&request); err != nil {
@@ -51,7 +51,7 @@ func SendFriendRequest(c *gin.Context) {
 }
 
 func GetAcceptedFriendRequests(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var requests []FriendRequest
 	db.Where("status = ?", "accepted").Find(&requests)
@@ -59,7 +59,7 @@ func GetAcceptedFriendRequests(c *gin.Context) {
 }
 
 func SendMessage(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var chat Chat
 	if err := c.BindJSON(&chat); err != nil {
@@ -71,7 +71,7 @@ func SendMessage(c *gin.Context) {
 }
 
 func GetInterests(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var interests []string
 	db.Model(&Person{}).Pluck("DISTINCT interest", &interests)
@@ -79,7 +79,7 @@ func GetInterests(c *gin.Context) {
 }
 
 func GetLocations(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var locations []string
 	db.Model(&Person{}).Pluck("DISTINCT location", &locations)
@@ -87,7 +87,7 @@ func GetLocations(c *gin.Context) {
 }
 
 func AddProfileInfo(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var person Person
 	if err := c.BindJSON(&person); err != nil {
@@ -118,7 +118,7 @@ func jkbnds() {
 
 // CRUD operations for categories
 func CreateCategory(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var category Category
 	if err := c.ShouldBindJSON(&category); err != nil {
@@ -130,7 +130,7 @@ func CreateCategory(c *gin.Context) {
 }
 
 func GetCategory(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var categories []Category
 	if err := db.Where("category = ?", c.Param("categorie")).Find(&categories).Error; err != nil {
@@ -141,10 +141,10 @@ func GetCategory(c *gin.Context) {
 }
 
 func UpdateCategory(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var category Category
-	if err := db.First(&category, c.Param("id")).Error; err != nil {
+	if err := db.First(&category, c.Param("sub_id")).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Category not found"})
 		return
 	}
@@ -157,7 +157,7 @@ func UpdateCategory(c *gin.Context) {
 }
 
 func DeleteCategory(c *gin.Context) {
-	var db,close = dbflow.ConnectHackDatabase()
+	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	var category Category
 	if err := db.First(&category, c.Param("id")).Error; err != nil {

@@ -1,6 +1,7 @@
 package dboperation
 
 import (
+	"fmt"
 	dbflow "hack/dbFlow"
 	"net/http"
 
@@ -18,6 +19,7 @@ func VoyagerUserApplyRoutes(p *gin.RouterGroup) {
 		r.POST("/user", CreateUser)
 		r.PUT("/users/:id", UpdateUser)
 		r.DELETE("/users/:id", DeleteUser)
+		r.PATCH("/users", PatchUserBySubId) // Add this line
 	}
 
 }
@@ -84,9 +86,9 @@ func CreateUser(c *gin.Context) {
 func UpdateUser(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
-	id := c.Params.ByName("id")
+	id := c.Params.ByName("sub_id")
 	var user User
-	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
+	if err := db.Where("sub_id = ?", id).First(&user).Error; err != nil {
 		c.AbortWithStatus(404)
 		return
 	}
@@ -103,4 +105,41 @@ func DeleteUser(c *gin.Context) {
 	var user User
 	db.Where("id = ?", id).Delete(&user)
 	c.JSON(200, gin.H{"id #" + id: "deleted"})
+}
+
+func PatchUserBySubId(c *gin.Context) {
+	var db, close = dbflow.ConnectHackDatabase()
+	defer close.Close()
+
+	// subId := c.Params.ByName("sub_id")
+	var user, input User
+
+	// Bind the JSON payload to a map to allow partial updates
+	// var input map[string]interface{}
+	if err := c.BindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// Check if the user exists
+	if err := db.Where("sub_id = ?", input.SubID).First(&user).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	fmt.Printf("%+v\n", user)
+
+	input.UserAddress = user.UserAddress
+
+	// Update the user with the input data
+	if err := db.Model(&user).Updates(input).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, user)
 }
