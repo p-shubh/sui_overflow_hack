@@ -25,14 +25,12 @@ CREATE TABLE locations (
     name VARCHAR(255)
 );
 
-CREATE TABLE profiles (
+CREATE TABLE user (
     id SERIAL PRIMARY KEY,
-    user_id INT,
-    interest_id INT,
-    location_id INT,
-    FOREIGN KEY (user_id) REFERENCES people(id),
-    FOREIGN KEY (interest_id) REFERENCES interests(id),
-    FOREIGN KEY (location_id) REFERENCES locations(id)
+    user_address TEXT,
+    sub_id Text,
+    name Text,
+    provider TEXT
 );
 
 CREATE TABLE categories (

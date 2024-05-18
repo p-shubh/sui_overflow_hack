@@ -36,6 +36,6 @@ func VoyagerApplyRoutes(p *gin.RouterGroup) {
 		r.GET("/categories/:categorie", dboperation.GetCategory)
 		r.PUT("/categories/:id", dboperation.UpdateCategory)
 		r.DELETE("/categories/:id", dboperation.DeleteCategory)
-
 	}
+	dboperation.VoyagerUserApplyRoutes(r)
 }
