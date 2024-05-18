@@ -73,16 +73,66 @@ func RealTimeVoyagerApplyRoutes(p *gin.RouterGroup) {
 	}
 }
 
+// func HandleWebSocket(c *gin.Context) {
+// 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+// 	if err != nil {
+// 		log.Printf("WebSocket upgrade error: %v", err)
+// 		return
+// 	}
+// 	db, dbClose := dbflow.ConnectHackDatabase()
+// 	defer dbClose.Close()
+// 	defer conn.Close()
+
+// 	mutex.Lock()
+// 	clients[conn] = true
+// 	mutex.Unlock()
+
+// 	for {
+// 		var message VoyagerRandomeMessages
+// 		err := conn.ReadJSON(&message)
+// 		if err != nil {
+// 			log.Printf("WebSocket read error: %v", err)
+// 			mutex.Lock()
+// 			delete(clients, conn)
+// 			mutex.Unlock()
+// 			break
+// 		}
+
+// 		// Save the received message to the database
+// 		message.CreatedAt = time.Now()
+// 		message.ID = uuid.New()
+// 		if err := db.Create(&message).Error; err != nil {
+// 			log.Printf("Database insert error: %v", err)
+// 			continue
+// 		}
+
+// 		// Broadcast the message to other clients
+// 		broadcast <- message
+
+// 	}
+// }
+
 func HandleWebSocket(c *gin.Context) {
 	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		log.Printf("WebSocket upgrade error: %v", err)
 		return
 	}
+
+	// Connect to the database
 	db, dbClose := dbflow.ConnectHackDatabase()
 	defer dbClose.Close()
-	defer conn.Close()
 
+	// Close the WebSocket connection when the function exits
+	defer func() {
+		conn.Close()
+		mutex.Lock()
+		delete(clients, conn)
+		mutex.Unlock()
+		log.Println("WebSocket connection closed")
+	}()
+
+	// Add the new client to the clients map
 	mutex.Lock()
 	clients[conn] = true
 	mutex.Unlock()
@@ -91,10 +141,9 @@ func HandleWebSocket(c *gin.Context) {
 		var message VoyagerRandomeMessages
 		err := conn.ReadJSON(&message)
 		if err != nil {
-			log.Printf("WebSocket read error: %v", err)
-			mutex.Lock()
-			delete(clients, conn)
-			mutex.Unlock()
+			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+				log.Printf("WebSocket read error: %v", err)
+			}
 			break
 		}
 
@@ -108,7 +157,6 @@ func HandleWebSocket(c *gin.Context) {
 
 		// Broadcast the message to other clients
 		broadcast <- message
-
 	}
 }
 
