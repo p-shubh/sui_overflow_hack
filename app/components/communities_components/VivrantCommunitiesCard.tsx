@@ -55,25 +55,25 @@ const VivrantCommunitiesCard = ({
         <h5 className="mb-2 text-medium font-bold tracking-tight">
           {sectionHeading}
         </h5>
-        {/* <div className="flex justify-between mt-8"> */}
-        <div className="mt-8">
-          <Image
-            src="/dummy-image.png"
-            height={30}
-            width={30}
-            alt="profile-picture"
-            className="rounded-full mr-2 float-left"
-          />
-          <div className="font-semibold text-sm">{sectionTagline1}</div>
-          <div className="font-semibold text-xs">{sectionTagline2}</div>
+        <div className="flex justify-between flex-wrap mt-8">
+          <div className="">
+            <Image
+              src="/dummy-image.png"
+              height={30}
+              width={30}
+              alt="profile-picture"
+              className="rounded-full mr-2"
+            />
+            <div className="font-semibold text-sm">{sectionTagline1}</div>
+            <div className="font-semibold text-xs">{sectionTagline2}</div>
+          </div>
+          <Link
+            href="/"
+            className="bg-[#0A72C7] hover:bg-[#2a73ae] text-white max-h-[40px] font-bold py-2 px-6 rounded"
+          >
+            Explore
+          </Link>
         </div>
-        <Link
-          href="/"
-          className="bg-[#0A72C7] hover:bg-[#2a73ae] text-white font-bold py-2 px-6 rounded text-right"
-        >
-          Explore
-        </Link>
-        {/* </div> */}
       </div>
     </div>
   );
