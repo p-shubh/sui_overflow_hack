@@ -62,7 +62,7 @@ jobs:
           script: |
             pwd
             cd sui_backend
-            # sudo docker stop sui_backend && sudo docker rm sui_backend && sudo docker image rm ghcr.io/p-shubh/sui_overflow_hack:main
+            sudo docker stop sui_backend && sudo docker rm sui_backend && sudo docker image rm ghcr.io/p-shubh/sui_overflow_hack:main
             echo ${{ secrets.GHCR_TOKEN }} | sudo docker login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
             sudo docker pull ghcr.io/p-shubh/sui_overflow_hack:main
             sudo docker run --name="sui_backend" --env-file=.env -p 8181:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:main
