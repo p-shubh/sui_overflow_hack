@@ -41,12 +41,11 @@ export default function Home() {
         <p className="text-right text-sm font-medium mt-4">
           Dynamic, engaging and fun
         </p>
-        <div className="row-2 flex flex-col xs:items-center lg:items-start">
+        <div className="row-2 flex flex-col text-center items-centert">
           <h4 className="text-lg font-bold mt-10 mb-10">
             Discover Vibrant Communities
           </h4>
-          <div className="grid space-around justify-between gap-4 grid-cols-5 mt-4">
-            {/* <div className="flex flex-wrap gap-4 mt-4 xs:justify-center md:justify-start"> */}
+            <div className="flex flex-wrap mt-4 justify-center gap-10">
             {LANDING_PAGE_VIBRANT_COMMUNITIES_IMAGES.map((data) => (
               <div key={uuidv4()} className="flex flex-col mb-8">
                 <Image
@@ -54,7 +53,7 @@ export default function Home() {
                   height={218}
                   width={217}
                   alt="vivrant-communities"
-                  className="object-fill"
+                  className="object-fill rounded"
                 />
                 <div className="mt-4 font-semibold">
                   {data.community_interest}
@@ -64,7 +63,6 @@ export default function Home() {
                 </div>
               </div>
             ))}
-            {/* </div> */}
           </div>
         </div>
         <hr className="text-white mt-10" />
