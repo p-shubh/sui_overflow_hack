@@ -1,4 +1,3 @@
-"use client";
 import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 import {
   SerializedSignature,
@@ -20,9 +19,10 @@ import {
   requestSuiFromFaucet,
   shortenSuiAddress,
 } from "@polymedia/suits";
-import { Modal, isLocalhost } from "@polymedia/webutils";
+import { Modal } from "@polymedia/webutils";
 import { jwtDecode } from "jwt-decode";
 import { useEffect, useRef, useState, Dispatch, SetStateAction } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 /* Configuration */
 const google = process.env.NEXT_PUBLIC_GOOGLE;
@@ -65,14 +65,14 @@ interface Props {
   loginButtonRef: any;
   logoutButtonRef: any;
   setIsUserLoggedIn: Dispatch<SetStateAction<boolean>>;
-  setProfileInfo: Dispatch<SetStateAction<AccountData | undefined>>;
+  setUserAddress: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const Zklogin = ({
   loginButtonRef,
   logoutButtonRef,
   setIsUserLoggedIn,
-  setProfileInfo,
+  setUserAddress,
 }: Props) => {
   const accounts = useRef<AccountData[]>(loadAccounts()); // useRef() instead of useState() because of setInterval()
   const [balances, setBalances] = useState<Map<string, number>>(new Map()); // Map<Sui address, SUI balance>
@@ -81,7 +81,43 @@ export const Zklogin = ({
   useEffect(() => {
     (async function () {
       await completeZkLogin();
-      setProfileInfo(accounts.current[0]);
+      const userData = accounts.current[0];
+      if (userData) {
+        setUserAddress(userData.userAddr);
+        console.log(userData.sub);
+        const response = await fetch(
+          `http://3.131.171.245:8181/v1.0/voyager/user/sub-id/${userData.sub}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const getUserData = await response.json();
+        console.log(getUserData);
+        if (getUserData.hasOwnProperty("sub_id") === false) {
+          const newUserData = {
+            id: uuidv4(),
+            user_address: userData.userAddr,
+            sub_id: userData.sub,
+            name: "",
+            provider: userData,
+          };
+          console.log("if user data is not found", newUserData);
+          // await fetch(
+          //   "http://3.131.171.245:8181/v1.0/voyager/users",
+          //   {
+          //     method: "POST",
+          //     headers: {
+          //       "Content-Type": "application/json",
+          //     },
+          //     body: JSON.stringify(newUserData),
+          //   }
+          // );
+          console.log();
+        }
+      }
     })();
     fetchBalances(accounts.current);
     const interval = setInterval(() => fetchBalances(accounts.current), 5_000);

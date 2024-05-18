@@ -11,7 +11,6 @@ const MyAccount = () => {
   const [gender, setGender] = useState<string | undefined>();
   const searchParams = useSearchParams();
   const address = searchParams.get("userAddress");
-  const id = searchParams.get("userId");
 
   return (
     <main className="w-[95vw] mx-auto p-10">
@@ -65,10 +64,7 @@ const MyAccount = () => {
               Address: {address}
             </div>
             <div className="font-medium bg-white py-2 px-5 rounded-3xl">
-              User Id: {id}
-            </div>
-            <div className="font-medium bg-white py-2 px-5 rounded-3xl">
-              Gender: {id}
+              Gender: {gender}
             </div>
             <CategoriesDropdown category="Location" />
             <CategoriesDropdown category="Interests" />

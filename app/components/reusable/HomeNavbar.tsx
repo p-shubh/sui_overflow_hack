@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { HOME_PAGE_NAVBAR_LINKS } from "@/app/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
-import { Zklogin, AccountData } from "@/app/utils/Zklogin";
+import { Zklogin } from "@/app/utils/Zklogin";
 import { CgProfile } from "react-icons/cg";
 import { IoIosLogOut } from "react-icons/io";
 
@@ -16,7 +16,7 @@ import { IoIosLogOut } from "react-icons/io";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
-  const [profileInfo, setProfileInfo] = useState<AccountData>();
+  const [userAddress, setUserAddress] = useState<string | undefined>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -32,7 +32,7 @@ const Navbar = () => {
   const loginButtonRef = useRef<HTMLButtonElement>();
   const logoutButtonRef = useRef<HTMLButtonElement>();
 
-  const handleLoginButtonClick = () => {
+  const handleLoginButtonClick = async () => {
     loginButtonRef.current?.click();
   };
 
@@ -66,8 +66,7 @@ const Navbar = () => {
               href={{
                 pathname: "/voyager/my_account",
                 query: {
-                  userAddress: profileInfo?.userAddr,
-                  userId: profileInfo?.sub,
+                  userAddress: userAddress,
                 },
               }}
             >
@@ -115,8 +114,7 @@ const Navbar = () => {
                   href={{
                     pathname: "/voyager/my_account",
                     query: {
-                      userAddress: profileInfo?.userAddr,
-                      userId: profileInfo?.sub,
+                      userAddress: userAddress,
                     },
                   }}
                 >
@@ -142,7 +140,7 @@ const Navbar = () => {
         loginButtonRef={loginButtonRef}
         logoutButtonRef={logoutButtonRef}
         setIsUserLoggedIn={setIsUserLoggedIn}
-        setProfileInfo={setProfileInfo}
+        setUserAddress={setUserAddress}
       />
     </div>
   );
