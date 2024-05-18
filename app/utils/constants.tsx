@@ -198,6 +198,19 @@ export const COMMUNITY_PAGE_BUTTONS = [
   },
 ];
 
+export const VIBRANT_COMMUNITY_CARD_IMAGES = {
+  card1: {
+    src1: "https://img.freepik.com/premium-photo/business-network-connections_175634-38642.jpg?w=740",
+    src2: "https://img.freepik.com/free-photo/3d-geometric-shapes-natural-background_23-2150697438.jpg?t=st=1716016369~exp=1716019969~hmac=1f0198c59fcd7eb9e6c23fe5c4deb7e4c8bfb33239673c339de4580532dae1d7&w=740",
+    src3: "https://img.freepik.com/free-photo/long-shot-adult-nature-with-3d-geometric-shapes_23-2150697330.jpg?t=st=1716016608~exp=1716020208~hmac=6354b83989962d5fc71fba84a140f8f44ca9ecb92ca555686fc76a6d05e0a13d&w=740",
+  },
+  card2: {
+    src1: "https://img.freepik.com/premium-photo/free-photo-world-photography-day_1134551-7610.jpg?w=740",
+    src2: "https://img.freepik.com/free-photo/isometric-view-3d-rendering-city_23-2150901092.jpg?t=st=1716017411~exp=1716021011~hmac=e6058083a22b613b9be91a51a6f5b86f37be56c91f1f0d41b7fd654f65f25d2f&w=360",
+    src3: "https://img.freepik.com/free-photo/futuristic-fantastical-light-lamp-design_23-2151101689.jpg?t=st=1716017615~exp=1716021215~hmac=399ff8c2caf9262828085ae3cad4d5269e80341966afdcbe8b6c160317c5a3ac&w=740",
+  },
+};
+
 // profile page related constants
 export const PROFILE_PAGE_IMAGES = [
   {
