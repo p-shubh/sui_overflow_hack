@@ -65,7 +65,7 @@ jobs:
             sudo podman stop sui_backend && sudo podman rm sui_backend && sudo podman image rm ghcr.io/p-shubh/sui_overflow_hack:main
             echo ${{ secrets.GHCR_TOKEN }} | sudo podman login ghcr.io -u secrets.GHCR_USERNAME --password-stdin
             sudo podman pull ghcr.io/p-shubh/sui_overflow_hack:main
-            sudo podman run --name="sui_backend" --env-file=.env -p 8181:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:main
+            # sudo podman run --name="sui_backend" --env-file=.env -p 8181:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:main
       - name: Deploy on Frontend server 
         if: github.ref == 'refs/heads/frontend' 
         uses: appleboy/ssh-action@v0.1.7
