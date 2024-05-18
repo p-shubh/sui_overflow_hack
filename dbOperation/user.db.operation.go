@@ -19,7 +19,7 @@ func VoyagerUserApplyRoutes(p *gin.RouterGroup) {
 		r.POST("/user", CreateUser)
 		r.PUT("/users/:id", UpdateUser)
 		r.DELETE("/users/:id", DeleteUser)
-		r.PATCH("/users", PatchUserBySubId) // Add this line
+		r.PATCH("/user", PatchUserBySubId)
 	}
 
 }
@@ -111,11 +111,9 @@ func PatchUserBySubId(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 
-	// subId := c.Params.ByName("sub_id")
 	var user, input User
 
 	// Bind the JSON payload to a map to allow partial updates
-	// var input map[string]interface{}
 	if err := c.BindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
