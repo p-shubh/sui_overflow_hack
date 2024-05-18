@@ -84,7 +84,7 @@ export const Zklogin = ({
       const userData = accounts.current[0];
       if (userData) {
         setUserAddress(userData.userAddr);
-        console.log(userData.sub);
+        // console.log(userData.sub);
         const response = await fetch(
           `http://3.131.171.245:8181/v1.0/voyager/user/sub-id/${userData.sub}`,
           {
@@ -95,7 +95,7 @@ export const Zklogin = ({
           }
         );
         const getUserData = await response.json();
-        console.log(getUserData);
+        // console.log(getUserData);
         if (getUserData.hasOwnProperty("sub_id") === false) {
           const newUserData = {
             id: uuidv4(),
@@ -104,18 +104,17 @@ export const Zklogin = ({
             name: "",
             provider: userData,
           };
-          console.log("if user data is not found", newUserData);
-          // await fetch(
-          //   "http://3.131.171.245:8181/v1.0/voyager/users",
-          //   {
-          //     method: "POST",
-          //     headers: {
-          //       "Content-Type": "application/json",
-          //     },
-          //     body: JSON.stringify(newUserData),
-          //   }
-          // );
-          console.log();
+          // console.log("if user data is not found", newUserData);
+          await fetch(
+            "http://3.131.171.245:8181/v1.0/voyager/users",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newUserData),
+            }
+          );
         }
       }
     })();
