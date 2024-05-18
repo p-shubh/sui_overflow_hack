@@ -70,6 +70,10 @@ func CreateUser(c *gin.Context) {
 		return
 	}
 	if err := db.Create(&user).Error; err != nil {
+		if err.Error() == "duplicate key value violates unique constraint \"users_sub_id_key\" (SQLSTATE 23505)" {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error(), "warning": "User already Exists"})
+			return
+		}
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
