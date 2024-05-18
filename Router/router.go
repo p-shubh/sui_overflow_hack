@@ -4,6 +4,7 @@ import (
 	realtimechat "hack/real_time_chat"
 	voyagerrouting "hack/voyagerRouting"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -33,7 +34,12 @@ func HealthCheck(c *gin.Context) {
 	})
 }
 func HandleRequest() {
-	gin.SetMode(gin.DebugMode)
+	if os.Getenv("APP_MODE_DEBUG") == "" {
+		gin.SetMode(gin.ReleaseMode)
+	} else {
+		gin.SetMode(gin.DebugMode)
+	}
+
 	// CreateGinLog()
 	ginApp.Use(CORS)
 	ginApp.Use(cors.New(cors.Config{
