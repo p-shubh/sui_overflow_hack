@@ -5,9 +5,7 @@ import (
 	voyagerrouting "hack/voyagerRouting"
 	"net/http"
 	"os"
-	"time"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -40,17 +38,19 @@ func HandleRequest() {
 		gin.SetMode(gin.DebugMode)
 	}
 
-	// CreateGinLog()
-	ginApp.Use(CORS)
-	ginApp.Use(cors.New(cors.Config{
-		AllowOrigins:  []string{"*"},
-		AllowMethods:  []string{"PUT", "PATCH", "GET", "POST", "DELETE", "OPTIONS"},
-		AllowHeaders:  []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
-		ExposeHeaders: []string{"*"},
+	// // CreateGinLog()
+	// ginApp.Use(CORS)
+	// ginApp.Use(cors.New(cors.Config{
+	// 	AllowOrigins:  []string{"*"},
+	// 	AllowMethods:  []string{"PUT", "PATCH", "GET", "POST", "DELETE", "OPTIONS"},
+	// 	AllowHeaders:  []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
+	// 	ExposeHeaders: []string{"*"},
 
-		AllowCredentials: true,
-		MaxAge:           12 * time.Hour,
-	}))
+	// 	AllowCredentials: true,
+	// 	MaxAge:           12 * time.Hour,
+	// }))
+
+	ginApp.Use(CorsMiddleware())
 
 	ginApp.Use(static.Serve("/", static.LocalFile("./web", false)))
 
@@ -71,5 +71,20 @@ func ApplyRoutes(r *gin.RouterGroup) {
 		voyagerrouting.VoyagerApplyRoutes(v1)
 		realtimechat.RealTimeVoyagerApplyRoutes(v1)
 		// suiRouter.SuiApplyRoutes(v1)
+	}
+}
+
+func CorsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(204)
+			return
+		}
+
+		c.Next()
 	}
 }
