@@ -79,7 +79,7 @@ export const Zklogin = ({
   const [modalContent, setModalContent] = useState<string>("");
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
-
+ 
   useEffect(() => {
     (async function () {
       await completeZkLogin();
@@ -117,7 +117,7 @@ export const Zklogin = ({
             user_address: userData.userAddr,
             sub_id: userData.sub,
             name: "",
-            provider: userData,
+            provider: userData.provider,
           };
           fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
             method: "POST",
