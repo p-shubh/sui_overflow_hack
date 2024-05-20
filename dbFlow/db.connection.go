@@ -12,7 +12,7 @@ func DbTest() {
 		log.Println("[ ERROR ] DbTest :Failed to connect db : ", db.Error.Error())
 	}
 	db.AutoMigrate(
-		// &model.User{},
+		&model.User{},
 		&model.VoyagerRandomeMessages{},
 	)
 }
