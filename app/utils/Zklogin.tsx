@@ -78,25 +78,40 @@ export const Zklogin = ({
   const [balances, setBalances] = useState<Map<string, number>>(new Map()); // Map<Sui address, SUI balance>
   const [modalContent, setModalContent] = useState<string>("");
 
+  const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
+
   useEffect(() => {
     (async function () {
       await completeZkLogin();
       const userData = accounts.current[0];
       if (userData) {
         setUserAddress(userData.userAddr);
-        // console.log(userData.sub);
-        const response = await fetch(
-          `http://3.131.171.245:8181/v1.0/voyager/user/sub-id/${userData.sub}`,
+        let getUserData;
+        getUserData = await fetch(
+          `http://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${userData.sub}`,
           {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
             },
           }
-        );
-        const getUserData = await response.json();
-        // console.log(getUserData);
-        if (getUserData.hasOwnProperty("sub_id") === false) {
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Network response was not ok " + response.statusText
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            return data;
+          })
+          .catch((error) => {
+            return undefined;
+          });
+
+        if (getUserData === undefined) {
           const newUserData = {
             id: uuidv4(),
             user_address: userData.userAddr,
@@ -104,17 +119,16 @@ export const Zklogin = ({
             name: "",
             provider: userData,
           };
-          // console.log("if user data is not found", newUserData);
-          await fetch(
-            "http://3.131.171.245:8181/v1.0/voyager/users",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(newUserData),
-            }
-          );
+          fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newUserData),
+          })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            .catch((error) => console.error("Error:", error));
         }
       }
     })();

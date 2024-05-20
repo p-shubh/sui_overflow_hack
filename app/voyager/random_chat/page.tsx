@@ -9,9 +9,11 @@ const RandomChat = () => {
   const [chatMessages, setChatMessages] = useState<string[]>([]);
   const [socket, setSocket] = useState<WebSocket | null>(null);
 
+  const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
+  // console.log("chat message", chatMessages)
   useEffect(() => {
     const newSocket = new WebSocket(
-      "ws://3.131.171.245:8181/v1.0/voyager_web_socket/ws"
+      `ws://${IP_ADDRESS}/v1.0/voyager_web_socket/ws`
     );
 
     newSocket.onopen = () => {
@@ -20,6 +22,7 @@ const RandomChat = () => {
 
     newSocket.onmessage = (event) => {
       const message = JSON.parse(event.data);
+      // console.log("message", message)
       setChatMessages((prevMessages) => [...prevMessages, message.content]);
     };
 
@@ -36,6 +39,7 @@ const RandomChat = () => {
       socket.readyState === WebSocket.OPEN &&
       inputMessage.length >=1
     ) {
+      // console.log("input message", inputMessage);
       // Send the message
       socket.send(JSON.stringify({ content: inputMessage }));
       setInputMessage(""); // Clear input field after sending message
@@ -52,7 +56,7 @@ const RandomChat = () => {
     <div className="flex w-full h-full">
       <Sidebar />
       <div className="flex flex-col justify-between h-[100vh] w-full ml-[25%] bg-[#393E46]">
-        {chatMessages.length <= 0 && <CategoriesAndGenderDetailsPopup />}
+        {/* {chatMessages.length <= 0 && <CategoriesAndGenderDetailsPopup />} */}
         <div className="bg-blue text-white p-2">
           {chatMessages.map((message, index) => (
             <div

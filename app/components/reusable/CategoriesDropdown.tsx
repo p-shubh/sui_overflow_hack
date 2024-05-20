@@ -21,14 +21,16 @@ const CategoriesDropdown = ({ category }: Props) => {
   const [LocationValue, setLocationValue] = useState<string | null>(null);
   const [interestsValue, setInterestsValue] = useState<string | null>(null);
 
-  const Category = category.toLowerCase();
+  const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
+  const Category = category.toLowerCase();
+  
   const handleOpenMenu = async () => {
     // It will run when isMenuOpen is false which will make 'if' condition !false i.e. true.
     if (!isMenuOpen) {
       try {
         const response = await fetch(
-          `http://3.131.171.245:8181/v1.0/voyager/categories/${Category}`
+          `http://${IP_ADDRESS}/v1.0/voyager/categories/${Category}`
         );
         const list = await response.json();
         if (Category === "interests") {
