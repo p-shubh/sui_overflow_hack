@@ -37,19 +37,6 @@ func HandleRequest() {
 	} else {
 		gin.SetMode(gin.DebugMode)
 	}
-
-	// // CreateGinLog()
-	// ginApp.Use(CORS)
-	// ginApp.Use(cors.New(cors.Config{
-	// 	AllowOrigins:  []string{"*"},
-	// 	AllowMethods:  []string{"PUT", "PATCH", "GET", "POST", "DELETE", "OPTIONS"},
-	// 	AllowHeaders:  []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
-	// 	ExposeHeaders: []string{"*"},
-
-	// 	AllowCredentials: true,
-	// 	MaxAge:           12 * time.Hour,
-	// }))
-
 	ginApp.Use(CORSMiddleware())
 
 	ginApp.Use(static.Serve("/", static.LocalFile("./web", false)))

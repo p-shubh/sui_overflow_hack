@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS Test</title>
+</head>
+<body>
+    <script>
+        fetch('http://3.144.249.199:8181/v1.0/voyager/user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "user_address": "0x91bfeeee250613e1e5452e0dd5cdd3c69779c554af5557bd888fe0d5942fe6e6",
+                "sub_id": "105748264391231543256",
+                "provider": "Google"
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+    </script>
+</body>
+</html>

@@ -18,6 +18,8 @@ func main() {
 		}
 	}
 
+	// dbflow.DbTest()
+
 	realtimechat.RealtimeChatVoigerConnection()
 
 	router.HandleRequest()

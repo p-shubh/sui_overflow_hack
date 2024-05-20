@@ -3,6 +3,7 @@ package dboperation
 import (
 	"fmt"
 	dbflow "hack/dbFlow"
+	"hack/model"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -28,7 +29,7 @@ func VoyagerUserApplyRoutes(p *gin.RouterGroup) {
 func GetUsers(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
-	var users []User
+	var users []model.User
 	db.Find(&users)
 	c.JSON(200, users)
 }
@@ -38,8 +39,8 @@ func GetUser(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	id := c.Params.ByName("id")
-	var user User
-	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
+	var user model.User
+	if err := db.Where("user_id = ?", id).First(&user).Error; err != nil {
 		c.AbortWithStatus(404)
 		return
 	}
@@ -50,7 +51,7 @@ func GetUserBySubId(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	subId := c.Params.ByName("sub_id")
-	var user User
+	var user model.User
 	if err := db.Where("sub_id = ?", subId).First(&user).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
@@ -66,7 +67,7 @@ func GetUserBySubId(c *gin.Context) {
 func CreateUser(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
-	var user User
+	var user model.User
 	if err := c.BindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -87,7 +88,7 @@ func UpdateUser(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	id := c.Params.ByName("sub_id")
-	var user User
+	var user model.User
 	if err := db.Where("sub_id = ?", id).First(&user).Error; err != nil {
 		c.AbortWithStatus(404)
 		return
@@ -102,7 +103,7 @@ func DeleteUser(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	id := c.Params.ByName("id")
-	var user User
+	var user model.User
 	db.Where("id = ?", id).Delete(&user)
 	c.JSON(200, gin.H{"id #" + id: "deleted"})
 }
@@ -111,7 +112,7 @@ func PatchUserBySubId(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 
-	var user, input User
+	var user, input model.User
 
 	// Bind the JSON payload to a map to allow partial updates
 	if err := c.BindJSON(&input); err != nil {

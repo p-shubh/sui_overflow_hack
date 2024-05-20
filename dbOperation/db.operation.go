@@ -98,24 +98,6 @@ func AddProfileInfo(c *gin.Context) {
 	c.JSON(http.StatusCreated, person)
 }
 
-func jkbnds() {
-	var notUsableTopics = []string{"Data Structures and Algorithms",
-		"Database Management Systems (DBMS)",
-		"Computer Networks"}
-	addingValidation := ""
-
-	if len(notUsableTopics) != 0 {
-		addingValidation += `Do not add these under below topics in the response  := 
-		
-		`
-
-		for i, _ := range notUsableTopics {
-			addingValidation += notUsableTopics[i]
-		}
-	}
-
-}
-
 // CRUD operations for categories
 func CreateCategory(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
