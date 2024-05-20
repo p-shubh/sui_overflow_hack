@@ -2,6 +2,7 @@ package main
 
 import (
 	router "hack/Router"
+	dbflow "hack/dbFlow"
 	realtimechat "hack/real_time_chat"
 	"log"
 	"os"
@@ -18,7 +19,7 @@ func main() {
 		}
 	}
 
-	// dbflow.DbTest()
+	dbflow.DbTest()
 
 	realtimechat.RealtimeChatVoigerConnection()
 

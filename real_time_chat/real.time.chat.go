@@ -2,7 +2,10 @@ package realtimechat
 
 import (
 	"fmt"
+
 	dbflow "hack/dbFlow"
+	"hack/model"
+
 	"log"
 	"net/http"
 	"os"
@@ -10,13 +13,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/google/uuid"
 	"github.com/gorilla/websocket"
 	realtimego "github.com/overseedio/realtime-go"
 )
 
 var clients = make(map[*websocket.Conn]bool)
-var broadcast = make(chan VoyagerRandomeMessages)
+var broadcast = make(chan model.VoyagerRandomeMessages)
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
 		return true
@@ -138,7 +140,7 @@ func HandleWebSocket(c *gin.Context) {
 	mutex.Unlock()
 
 	for {
-		var message VoyagerRandomeMessages
+		var message model.VoyagerRandomeMessages
 		err := conn.ReadJSON(&message)
 		if err != nil {
 			if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
@@ -149,7 +151,7 @@ func HandleWebSocket(c *gin.Context) {
 
 		// Save the received message to the database
 		message.CreatedAt = time.Now()
-		message.ID = uuid.New()
+		// message.ID = uuid.New()
 		if err := db.Create(&message).Error; err != nil {
 			log.Printf("Database insert error: %v", err)
 			continue
@@ -179,8 +181,8 @@ func HandleMessages() {
 func CreateMessage(c *gin.Context) {
 	db, dbClose := dbflow.ConnectHackDatabase()
 	defer dbClose.Close()
-	var message VoyagerRandomeMessages
-	message.ID = uuid.New()
+	var message model.VoyagerRandomeMessages
+	// message.ID = uuid.New()
 	fmt.Println("message.ID = ", message.ID)
 	if err := c.ShouldBindJSON(&message); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -197,7 +199,7 @@ func CreateMessage(c *gin.Context) {
 func GetMessages(c *gin.Context) {
 	db, dbClose := dbflow.ConnectHackDatabase()
 	defer dbClose.Close()
-	var messages []VoyagerRandomeMessages
+	var messages []model.VoyagerRandomeMessages
 	if err := db.Find(&messages).Error; err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
