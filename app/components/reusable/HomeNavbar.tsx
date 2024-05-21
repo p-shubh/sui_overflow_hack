@@ -16,7 +16,7 @@ import { IoIosLogOut } from "react-icons/io";
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
-  const [userAddress, setUserAddress] = useState<string | undefined>();
+  const [userSubId, setUserSubId] = useState<string | undefined>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -70,9 +70,9 @@ const Navbar = () => {
           <div className="flex">
             <Link
               href={{
-                pathname: "/voyager/my_account",
+                pathname: "/voyager/profile",
                 query: {
-                  userAddress: userAddress,
+                  userNo: userSubId,
                 },
               }}
             >
@@ -131,9 +131,9 @@ const Navbar = () => {
               <>
                 <Link
                   href={{
-                    pathname: "/voyager/my_account",
+                    pathname: "/voyager/profile",
                     query: {
-                      userAddress: userAddress,
+                      userNo: userSubId,
                     },
                   }}
                 >
@@ -159,7 +159,7 @@ const Navbar = () => {
         loginButtonRef={loginButtonRef}
         logoutButtonRef={logoutButtonRef}
         setIsUserLoggedIn={setIsUserLoggedIn}
-        setUserAddress={setUserAddress}
+        setUserSubId={setUserSubId}
       />
     </div>
   );

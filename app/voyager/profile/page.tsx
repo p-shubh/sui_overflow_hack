@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import ProfileNavbar from "../../components/profile_components/ProfileNavbar";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
@@ -8,12 +9,62 @@ import { PROFILE_PAGE_CULT_CARDS } from "../../utils/constants";
 import Footer from "@/app/components/reusable/Footer";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import CommunityCard from "@/app/components/profile_components/CommunityCard";
-import CategoriesDropdown from "@/app/components/reusable/CategoriesDropdown";
+import Categories from "@/app/components/reusable/Categories";
 import Link from "next/link";
+
+interface UserData {
+  id: string;
+  user_address: string;
+  sub_id: string;
+  name: string;
+  provider: string;
+  gender: string;
+  interest: string;
+  location: string;
+}
 
 const Profile = () => {
   const [isProfileLiked, setIsProfileLiked] = useState(false);
   const [activeTab, setActiveTab] = useState("Cults");
+  const [userData, setUserData] = useState<UserData>();
+
+  const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
+
+  const searchParams = useSearchParams();
+  const subId = searchParams.get("userNo");
+
+  useEffect(() => {
+    let getUserData;
+    (async function () {
+      // send a get request to get data of user saved in db.
+      getUserData = await fetch(
+        `http://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${subId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
+          }
+          return response.json();
+        })
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => {
+          return undefined;
+        });
+      console.log(getUserData);
+      setUserData(getUserData);
+    })();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <main className="w-[95vw] mx-auto p-10">
@@ -30,8 +81,8 @@ const Profile = () => {
           />
         </div>
         <div className="ml-8">
-          <div className="flex items-center">
-            <h3 className="text-xl font-bold">VoyagerConnect</h3>
+          <div className="flex items-center justify-between">
+            <h3 className="text-xl font-bold">{userData !== undefined ? userData?.name : "Username"}</h3>
             {isProfileLiked ? (
               <FaHeart className="ml-8 text-[#EE4E4E] text-xl cursor-pointer" />
             ) : (
@@ -41,15 +92,19 @@ const Profile = () => {
               />
             )}
           </div>
-          <div className="font-medium text-md text-[#5d5d5b]">
+          <div className="font-medium text-[#5d5d5b]">
             Virtual world explorer
           </div>
-          <span>
-            <CategoriesDropdown category="Interests" />
-          </span>
-          <span>Gender:</span>
+          <div className="flex flex-wrap gap-5 mt-3">
+            <span>
+              <Categories category="Interests" value={userData?.interest} />
+            </span>
+            <span>
+              <Categories category="Gender" value={userData?.gender} />
+            </span>
+          </div>
           <div className="flex gap-3 mt-5">
-            <div className="">
+            <div>
               <span className="font-medium text-md mr-2">45</span>
               <span className="font-medium text-md text-[#5d5d5b]">
                 Achievement

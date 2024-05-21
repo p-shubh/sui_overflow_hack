@@ -65,14 +65,14 @@ interface Props {
   loginButtonRef: any;
   logoutButtonRef: any;
   setIsUserLoggedIn: Dispatch<SetStateAction<boolean>>;
-  setUserAddress: Dispatch<SetStateAction<string | undefined>>;
+  setUserSubId: Dispatch<SetStateAction<string | undefined>>;
 }
 
 export const Zklogin = ({
   loginButtonRef,
   logoutButtonRef,
   setIsUserLoggedIn,
-  setUserAddress,
+  setUserSubId,
 }: Props) => {
   const accounts = useRef<AccountData[]>(loadAccounts()); // useRef() instead of useState() because of setInterval()
   const [balances, setBalances] = useState<Map<string, number>>(new Map()); // Map<Sui address, SUI balance>
@@ -85,7 +85,7 @@ export const Zklogin = ({
       await completeZkLogin();
       const userData = accounts.current[0];
       if (userData) {
-        setUserAddress(userData.userAddr);
+        setUserSubId(userData.sub);
         let getUserData;
         // send a get request to get data of user saved in db.
         getUserData = await fetch(
