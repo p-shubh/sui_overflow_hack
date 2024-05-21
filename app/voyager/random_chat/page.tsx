@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import Sidebar from "@/app/components/random_chat_components/Sidebar";
 import CategoriesAndGenderDetailsPopup from "@/app/components/random_chat_components/CategoriesAndGenderDetailsPopup";
+import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 
 interface ChatData {
   id: string;
@@ -19,6 +21,8 @@ const RandomChat = () => {
   const [activeUserId, setActiveUserId] = useState<string | null>(null);
   const [isSocketOpen, setIsSocketOpen] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [like, setLike] = useState<boolean>(false);
+  
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
@@ -45,7 +49,7 @@ const RandomChat = () => {
       newSocket.close();
     };
     // eslint-disable-next-line
-  }, []); // Only runs once when the component mounts
+  }, []);
 
   function sendMessage(event: React.KeyboardEvent<HTMLInputElement>) {
     if (
@@ -87,6 +91,17 @@ const RandomChat = () => {
           ))}
         </div>
         <div className="w-full ">
+          {like ? (
+            <AiFillLike
+              className="text-blue-500 font-medium text-2xl"
+              onClick={() => setLike(false)}
+            />
+          ) : (
+            <AiOutlineLike
+              className="text-white font-medium text-2xl"
+              onClick={() => setLike(true)}
+            />
+          )}
           <div className="w-[95%] mx-auto mb-4">
             <input
               type="text"
