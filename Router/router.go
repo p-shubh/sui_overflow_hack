@@ -59,8 +59,6 @@ func ApplyRoutes(r *gin.RouterGroup) {
 		voyagerrouting.VoyagerApplyRoutes(v1)
 		suiSlnRouter.SuiSlnApplyRoutes(v1)
 		realtimechat.RealTimeVoyagerApplyRoutes(v1)
-
-		// suiRouter.SuiApplyRoutes(v1)
 	}
 }
 
