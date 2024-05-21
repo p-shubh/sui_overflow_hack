@@ -17,6 +17,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState<boolean>(false);
   const [userSubId, setUserSubId] = useState<string | undefined>();
+  const [userAddress, setUserAddress] = useState<string | undefined>();
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -73,6 +74,7 @@ const Navbar = () => {
                 pathname: "/voyager/profile",
                 query: {
                   userNo: userSubId,
+                  userAddress: userAddress,
                 },
               }}
             >
@@ -134,6 +136,7 @@ const Navbar = () => {
                     pathname: "/voyager/profile",
                     query: {
                       userNo: userSubId,
+                      userAddress: userAddress,
                     },
                   }}
                 >
@@ -160,6 +163,7 @@ const Navbar = () => {
         logoutButtonRef={logoutButtonRef}
         setIsUserLoggedIn={setIsUserLoggedIn}
         setUserSubId={setUserSubId}
+        setUserAddress={setUserAddress}
       />
     </div>
   );

@@ -39,6 +39,7 @@ const Profile = () => {
 
   const searchParams = useSearchParams();
   const subId = searchParams.get("userNo");
+ const userAddress =  searchParams.get("userAddress");
 
   useEffect(() => {
     let getUserData;
@@ -144,7 +145,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="mt-3 text-[#474747] text-md font-medium">
-            User Address:{" "}
+            User Address: {userAddress}
           </div>
         </div>
       </div>
