@@ -7,12 +7,13 @@ import (
 )
 
 type User struct {
+	Id          uuid.UUID `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
 	UserAddress string    `json:"user_address"`
 	SubID       string    `gorm:"unique" json:"sub_id"`
 	Name        string    `json:"name"`
 	Provider    string    `json:"provider"`
 	Gender      string    `json:"gender"`
-	Id          uuid.UUID `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	
 }
 type VoyagerRandomeMessages struct {
 	ID         uuid.UUID `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`

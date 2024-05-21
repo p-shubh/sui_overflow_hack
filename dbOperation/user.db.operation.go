@@ -40,7 +40,7 @@ func GetUser(c *gin.Context) {
 	defer close.Close()
 	id := c.Params.ByName("id")
 	var user model.User
-	if err := db.Where("user_id = ?", id).First(&user).Error; err != nil {
+	if err := db.Where("id = ?", id).First(&user).Error; err != nil {
 		c.AbortWithStatus(404)
 		return
 	}
