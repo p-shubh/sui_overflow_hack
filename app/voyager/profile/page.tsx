@@ -4,12 +4,16 @@ import React, { useState } from "react";
 import ProfileNavbar from "../../components/profile_components/ProfileNavbar";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
-import { PROFILE_PAGE_IMAGES } from "../../utils/constants";
+import { PROFILE_PAGE_CULT_CARDS } from "../../utils/constants";
 import Footer from "@/app/components/reusable/Footer";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import CommunityCard from "@/app/components/profile_components/CommunityCard";
+import CategoriesDropdown from "@/app/components/reusable/CategoriesDropdown";
+import Link from "next/link";
 
 const Profile = () => {
   const [isProfileLiked, setIsProfileLiked] = useState(false);
+  const [activeTab, setActiveTab] = useState("Cults");
 
   return (
     <main className="w-[95vw] mx-auto p-10">
@@ -18,7 +22,7 @@ const Profile = () => {
       <div className="row-1 flex flex-wrap items-center gap-5 justify-center mt-5">
         <div className="h-[212px] w-[212px]">
           <Image
-            src="https://img.freepik.com/free-photo/businesswoman-working-with-modern-virtual-technologies-hands-touching-screen_1212-720.jpg?t=st=1715435128~exp=1715438728~hmac=ae3b6f2ce406abb053c3451fa5abbbefc7e0806ce62e0563a22a4368f1ddc6f0&w=212"
+            src="https://img.freepik.com/free-photo/young-woman-with-round-glasses-yellow-sweater_273609-7091.jpg?t=st=1716449282~exp=1716452882~hmac=164428b5943ab7140be5d8cbfa15eaf12b2ff3961b720f9e86d1163628d92e9f&w=826"
             height={212}
             width={212}
             alt="profile-picture"
@@ -29,10 +33,10 @@ const Profile = () => {
           <div className="flex items-center">
             <h3 className="text-xl font-bold">VoyagerConnect</h3>
             {isProfileLiked ? (
-              <FaHeart className="ml-8 text-[#EE4E4E] text-xl" />
+              <FaHeart className="ml-8 text-[#EE4E4E] text-xl cursor-pointer" />
             ) : (
               <FaRegHeart
-                className="ml-8 text-xl"
+                className="ml-8 text-xl cursor-pointer"
                 onClick={() => setIsProfileLiked(true)}
               />
             )}
@@ -40,6 +44,10 @@ const Profile = () => {
           <div className="font-medium text-md text-[#5d5d5b]">
             Virtual world explorer
           </div>
+          <span>
+            <CategoriesDropdown category="Interests" />
+          </span>
+          <span>Gender:</span>
           <div className="flex gap-3 mt-5">
             <div className="">
               <span className="font-medium text-md mr-2">45</span>
@@ -71,20 +79,41 @@ const Profile = () => {
         </div>
       </div>
       <div className="row-2 flex justify-center gap-10 mt-14">
-        <span className="font-bold text-md text-[#5d5d5b]">Artworks</span>
-        <span className="font-bold text-md text-[#5d5d5b]">Live streams</span>
-        <span className="font-bold text-md text-[#5d5d5b]">Inspiration</span>
+        <Link
+          href="#"
+          className={`font-bold text-md text-[#5d5d5b] ${
+            activeTab === "My Journey" && "underline underline-offset-4"
+          }`}
+          onClick={() => setActiveTab("My Journey")}
+        >
+          My Journey
+        </Link>
+        <Link
+          href="#"
+          className={`font-bold text-md text-[#5d5d5b] ${
+            activeTab === "Cults" && "underline underline-offset-4"
+          }`}
+          onClick={() => setActiveTab("Cults")}
+        >
+          Cults
+        </Link>
+        <Link
+          href="#"
+          className={`font-bold text-md text-[#5d5d5b] ${
+            activeTab === "Poaps" && "underline underline-offset-4"
+          }`}
+          onClick={() => setActiveTab("Poaps")}
+        >
+          Poaps
+        </Link>
       </div>
       <hr className="mt-5" />
-      <div className="images-row flex flex-wrap gap-5 justify-around mt-6">
-        {PROFILE_PAGE_IMAGES.map((data) => (
-          <Image
+      <div className="flex flex-wrap gap-x-8 gap-y-8 justify-center mt-10">
+        {PROFILE_PAGE_CULT_CARDS.map((cardData) => (
+          <CommunityCard
             key={uuidv4()}
-            src={data.src}
-            height={272}
-            width={356}
-            alt="posts"
-            className="object-fill"
+            name={cardData.name}
+            imgSrc={cardData.src}
           />
         ))}
       </div>

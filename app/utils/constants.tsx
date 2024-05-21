@@ -212,23 +212,29 @@ export const VIBRANT_COMMUNITY_CARD_IMAGES = {
 };
 
 // profile page related constants
-export const PROFILE_PAGE_IMAGES = [
+export const PROFILE_PAGE_CULT_CARDS = [
   {
-    src: "https://img.freepik.com/free-photo/high-angle-female-meeting-work_23-2148347226.jpg?t=st=1715435787~exp=1715439387~hmac=5bd9bb0c4b3eaf065110dd77e44338e07e9af446ff0911f0330e6ca05936c8d1&w=1480",
+    src: "https://img.freepik.com/free-photo/woman-sitting-happily-with-laptop-table_1150-26786.jpg?t=st=1716446314~exp=1716449914~hmac=4ff2783c5955b2ba7fdf79bc27931396a37076132e868520fcb50b26e7bda790&w=826",
+    name: "StudySphere",
   },
   {
-    src: "https://img.freepik.com/free-photo/smiling-women-taking-selfie-smartphone-near-car-boot-man-leaning-out-from-auto_23-2148039107.jpg?t=st=1715435706~exp=1715439306~hmac=f0ddf27e4fbb15966216bbbd563860d44127f4e7f54354e231d7bfcf754670df&w=1480",
+    src: "https://img.freepik.com/free-photo/guy-shows-document-girl-group-young-freelancers-office-have-conversation-working_146671-13569.jpg?t=st=1716446587~exp=1716450187~hmac=8791bab0a6cd91701120e69032098b4cd84b6be5f12c13b1c0d0dd4afc6f89a3&w=826",
+    name: "BizNetwork",
   },
   {
-    src: "https://img.freepik.com/free-photo/friends-celebrating-2018-with-confetti_23-2147720449.jpg?t=st=1715435624~exp=1715439224~hmac=37372c9b01a120c9a54b9e8ea9c7b6b29489bfc66584012025e190f7d2a95ee1&w=1480",
+    src: "https://img.freepik.com/free-photo/nature-scene-yoga-mediation_23-2151046777.jpg?t=st=1716446632~exp=1716450232~hmac=5ad6ff60bcb6c6cdc3c4f9d55cc157a14687923f528bf2fb25dc156d39ebe30a&w=826",
+    name: "EcoCircle",
   },
   {
-    src: "https://img.freepik.com/free-photo/executive-manager-woman-explaining-management-statistics-working-company-strategy-overtime-office-meeting-room_482257-2393.jpg?t=st=1715435470~exp=1715439070~hmac=4fd3dbc4f6112e39f6e8746eeb5022513cdf0b27e3e84c7399f57ed16716c2b3&w=1800",
+    src: "https://img.freepik.com/free-photo/happy-people-together-looking-camera_23-2148270959.jpg?t=st=1716446440~exp=1716450040~hmac=4ad13814bda201084992b39821a4986a58732b09949f7368f64adfd4ed8800ea&w=826",
+    name: "HobbyHub",
   },
   {
-    src: "https://img.freepik.com/free-photo/empty-start-up-company-office-with-nobody-it-waiting-people-start-working-financial-documents-business-meeting-workplace-with-modern-furniture-management-graphs-computer_482257-30560.jpg?t=st=1715435415~exp=1715439015~hmac=9dc13926baf1559f0c39a9c5515ccb3b28ef58a7fb161dce85f09b295e83f6d0&w=1480",
+    src: "https://img.freepik.com/free-photo/full-shot-family-running-meadow_23-2149049214.jpg?t=st=1716448673~exp=1716452273~hmac=b9a4198945cd59ccefc73d17c0cb4a179bac528d81696cebb702e15f94019703&w=826",
+    name: "FamilyNest",
   },
   {
-    src: "https://img.freepik.com/free-photo/trans-person-working-office-with-colleagues_23-2149286991.jpg?t=st=1715435302~exp=1715438902~hmac=601e4fc2322bd7b7b4fbdb6bf124f492ad0c06678790a494eba76a9660fcbf61&w=1480",
+    src: "https://img.freepik.com/free-photo/spending-hot-day-seashore_1098-15284.jpg?t=st=1716448905~exp=1716452505~hmac=cb2f94bf3d3a479b06396317d1d8eabf123154c76bc8e96c1a89ef4c71f8d8bb&w=826",
+    name: "TravelMates",
   },
 ];
