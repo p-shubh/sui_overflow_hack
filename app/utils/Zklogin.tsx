@@ -79,7 +79,7 @@ export const Zklogin = ({
   const [modalContent, setModalContent] = useState<string>("");
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
- 
+
   useEffect(() => {
     (async function () {
       await completeZkLogin();
@@ -87,6 +87,7 @@ export const Zklogin = ({
       if (userData) {
         setUserAddress(userData.userAddr);
         let getUserData;
+        // send a get request to get data of user saved in db.
         getUserData = await fetch(
           `http://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${userData.sub}`,
           {
@@ -110,7 +111,11 @@ export const Zklogin = ({
           .catch((error) => {
             return undefined;
           });
-
+        // if there is some value in userData then set the userId in local storage
+        if (typeof window !== "undefined" && getUserData !== undefined) {
+          localStorage.setItem("userId", getUserData.id);
+        }
+        // if getUserData is undefined means there is no value then post the data of new user
         if (getUserData === undefined) {
           const newUserData = {
             id: uuidv4(),
@@ -119,6 +124,10 @@ export const Zklogin = ({
             name: "",
             provider: userData.provider,
           };
+          // add the userId to local storage
+          if (typeof window !== "undefined") {
+            localStorage.setItem("userId", newUserData.id);
+          }
           fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
             method: "POST",
             headers: {

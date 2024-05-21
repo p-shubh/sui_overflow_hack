@@ -51,8 +51,14 @@ const Navbar = () => {
           {HOME_PAGE_NAVBAR_LINKS.map(({ label, link }) => (
             <Link
               key={uuidv4()}
-              href={link}
-              className="font-medium self-center"
+              href={
+                isUserLoggedIn === false && label === "Meet new" ? "/" : link
+              }
+              className={`font-medium self-center ${
+                isUserLoggedIn === false &&
+                label === "Meet new" &&
+                "cursor-default"
+              }`}
             >
               {label}
             </Link>
@@ -101,8 +107,21 @@ const Navbar = () => {
             </div>
             <div className="mt-8">
               {HOME_PAGE_NAVBAR_LINKS.map(({ label, link }) => (
-                <Link href={link} key={uuidv4()}>
-                  <li className="font-medium mb-3 mt-3 text-slate-800 hover:text-black">
+                <Link
+                  href={
+                    isUserLoggedIn === false && label === "Meet new"
+                      ? "/"
+                      : link
+                  }
+                  key={uuidv4()}
+                >
+                  <li
+                    className={`font-medium mb-3 mt-3 text-slate-800 hover:text-black ${
+                      isUserLoggedIn === false &&
+                      label === "Meet new" &&
+                      "cursor-default"
+                    }`}
+                  >
                     {label}
                   </li>
                 </Link>

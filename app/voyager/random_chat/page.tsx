@@ -16,12 +16,18 @@ interface ChatData {
 const RandomChat = () => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [chatData, setChatData] = useState<ChatData[]>([]);
+  const [activeUserId, setActiveUserId] = useState<string | null>(null);
   const [isSocketOpen, setIsSocketOpen] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
+
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
- 
+
   useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    setActiveUserId(userId);
+
     // setIsSocketOpen(true); <== to do
+
     const newSocket = new WebSocket(
       `ws://${IP_ADDRESS}/v1.0/voyager_web_socket/ws`
     );
@@ -32,7 +38,7 @@ const RandomChat = () => {
 
     newSocket.onmessage = (event) => {
       const newChatData = JSON.parse(event.data);
-      
+
       setChatData((prevData) => [...prevData, newChatData]);
     };
     return () => {
@@ -50,7 +56,7 @@ const RandomChat = () => {
     ) {
       socket.send(
         JSON.stringify({
-          userId: "550e8400-e29b-41d4-a716-446655440000",
+          userId: activeUserId,
           content: inputMessage,
           commonPass: "secret",
           username: "Mahindra",
