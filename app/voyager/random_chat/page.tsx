@@ -21,8 +21,7 @@ const RandomChat = () => {
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
  
   useEffect(() => {
-    // if(){
-    // setIsSocketOpen(true);
+    // setIsSocketOpen(true); <== to do
     const newSocket = new WebSocket(
       `ws://${IP_ADDRESS}/v1.0/voyager_web_socket/ws`
     );
@@ -39,7 +38,6 @@ const RandomChat = () => {
     return () => {
       newSocket.close();
     };
-    // }
     // eslint-disable-next-line
   }, []); // Only runs once when the component mounts
 

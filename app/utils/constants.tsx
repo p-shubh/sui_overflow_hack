@@ -137,7 +137,7 @@ export const LANDING_PAGE_VIBRANT_COMMUNITIES_IMAGES = [
 export const HOME_PAGE_NAVBAR_LINKS = [
   {
     label: "Meet new",
-    link: "/",
+    link: "/voyager/random_chat",
   },
   {
     label: "Earn rewards",
