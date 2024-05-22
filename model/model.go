@@ -15,10 +15,10 @@ type User struct {
 	Gender      string    `json:"gender"`
 }
 type VoyagerRandomeMessages struct {
-	ID            uuid.UUID `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
-	UserId        uuid.UUID `json:"userId" gorm:"type:uuid"`
-	Content       string    `json:"content"`
-	Username      string    `json:"username"`
+	ID           uuid.UUID `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	SenderUserId uuid.UUID `json:"senderUserId" gorm:"type:uuid"`
+	Content      string    `json:"content"`
+	// Username      string    `json:"username"`
 	ReciverUserId uuid.UUID `json:"reciverUserId" gorm:"type:uuid"`
 	CreatedAt     time.Time `json:"created_at"`
 }

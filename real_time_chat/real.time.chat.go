@@ -165,6 +165,7 @@ func HandleWebSocket(c *gin.Context) {
 func HandleMessages() {
 	for {
 		message := <-broadcast
+		message.ReciverUserId, message.SenderUserId = message.SenderUserId, message.ReciverUserId
 		mutex.Lock()
 		for client := range clients {
 			err := client.WriteJSON(message)
