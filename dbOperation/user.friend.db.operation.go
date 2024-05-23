@@ -121,7 +121,7 @@ func deleteUserFriendsByIDs(c *gin.Context) {
 func getUsersByUserId(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
-	userID := c.Param("userId")
+	userID := c.Param("user_id")
 	var userFriends []model.UserFriendsMap
 	if err := db.Where("user_id = ? OR friends = ?  ", userID, userID).Find(&userFriends).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "No users found for the given user ID"})
