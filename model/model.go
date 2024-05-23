@@ -13,7 +13,7 @@ type User struct {
 	Name        string    `json:"name"`
 	Provider    string    `json:"provider"`
 	Gender      string    `json:"gender"`
-	Category    string    `json:"category"`
+	Interest    string    `json:"interest"`
 	Location    string    `json:"location"`
 }
 type VoyagerRandomeMessages struct {
@@ -23,4 +23,9 @@ type VoyagerRandomeMessages struct {
 	// Username      string    `json:"username"`
 	ReciverUserId uuid.UUID `json:"reciverUserId" gorm:"type:uuid"`
 	CreatedAt     time.Time `json:"created_at"`
+}
+type UserFriendsMap struct {
+	ID      uuid.UUID `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
+	UserId  uuid.UUID `gorm:"not null" json:"userId"`
+	Friends uuid.UUID `gorm:"not null" json:"friends"`
 }

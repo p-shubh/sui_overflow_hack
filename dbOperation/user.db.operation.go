@@ -17,12 +17,12 @@ func VoyagerUserApplyRoutes(p *gin.RouterGroup) {
 		r.GET("/all", GetUsers)
 		r.GET("/:id", GetUser)
 		r.GET("/sub-id/:sub_id", GetUserBySubId)
+		r.GET("/location-interest/:interest/:location", GetUsersByLocationAndCategory)
 		r.POST("", CreateUser)
 		r.PUT("/:id", UpdateUser)
 		r.DELETE("/:id", DeleteUser)
 		r.PATCH("", PatchUserBySubId)
 	}
-
 }
 
 // GetUsers retrieves all users
@@ -130,8 +130,6 @@ func PatchUserBySubId(c *gin.Context) {
 		return
 	}
 
-	fmt.Printf("%+v\n", user)
-
 	input.UserAddress = user.UserAddress
 
 	// Update the user with the input data
@@ -141,4 +139,18 @@ func PatchUserBySubId(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, user)
+}
+func GetUsersByLocationAndCategory(c *gin.Context) {
+	var db, close = dbflow.ConnectHackDatabase()
+	defer close.Close()
+	interest := c.Params.ByName("interest")
+	location := c.Params.ByName("location")
+
+	fmt.Println("GetUsersByLocationAndCategory data : ", interest, location)
+
+	var users []model.User
+	if interest != "" || location != "" {
+		db.Where("interest = ? OR location = ?", interest, location).Find(&users)
+	}
+	c.JSON(http.StatusOK, users)
 }

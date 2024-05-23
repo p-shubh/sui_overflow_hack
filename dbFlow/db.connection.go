@@ -14,5 +14,6 @@ func DbTest() {
 	db.AutoMigrate(
 		&model.User{},
 		&model.VoyagerRandomeMessages{},
+		&model.UserFriendsMap{},
 	)
 }
