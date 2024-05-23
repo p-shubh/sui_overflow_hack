@@ -13,6 +13,8 @@ type User struct {
 	Name        string    `json:"name"`
 	Provider    string    `json:"provider"`
 	Gender      string    `json:"gender"`
+	Category    string    `json:"category"`
+	Location    string    `json:"location"`
 }
 type VoyagerRandomeMessages struct {
 	ID           uuid.UUID `gorm:"type:uuid;primaryKey;default:uuid_generate_v4()" json:"id"`
