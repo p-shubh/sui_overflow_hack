@@ -13,14 +13,14 @@ interface ChatData {
   created_at: string;
 }
 
-const RandomChat = () => {
+const NewChat = ({ params }: { params: string }) => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [chatData, setChatData] = useState<ChatData[]>([]);
   const [activeUserId, setActiveUserId] = useState<string | null>(null);
   const [isSocketOpen, setIsSocketOpen] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [like, setLike] = useState<boolean>(false);
-  
+
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   useEffect(() => {
@@ -79,7 +79,6 @@ const RandomChat = () => {
       <div className="flex flex-col justify-between h-[100vh] w-full ml-[25%] bg-[#35374B]">
         <RandomChatNavbar like={like} setLike={setLike} />
         <div className="p-2 m-5 h-full overflow-auto">
-          {isSocketOpen && <CategoriesAndGenderDetailsPopup />}
           {chatData.map((data, idx) => (
             <div
               key={idx}
@@ -89,7 +88,7 @@ const RandomChat = () => {
             </div>
           ))}
         </div>
-        <div className="w-full ">
+        <div className="w-full">
           <div className="w-[95%] mx-auto mb-4">
             <input
               type="text"
@@ -113,4 +112,4 @@ const RandomChat = () => {
   );
 };
 
-export default RandomChat;
+export default NewChat;

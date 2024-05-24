@@ -1,13 +1,29 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { MdOutlineCancel } from "react-icons/md";
-import CategoriesDropdown from "@/app/components/reusable/CategoriesDropdown";
+
+interface RandomCandidate {
+  id: string;
+  user_address: string;
+  sub_id: string;
+  name: string;
+  provider: string;
+  gender: string;
+  interest: string;
+  location: string;
+}
 
 const CategoriesAndGenderDetailsPopup = () => {
   const [interestInputValue, setInterestInputValue] = useState<
     string | undefined
   >();
   const [interestValue, setInterestValue] = useState<string | undefined>();
+  const [randomCandidateData, setRandomCandidateData] = useState<
+    RandomCandidate | undefined
+  >();
+
+  const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
+  let userId: string | null;
 
   const handleInterestValue = (
     event: React.KeyboardEvent<HTMLInputElement>
@@ -16,6 +32,34 @@ const CategoriesAndGenderDetailsPopup = () => {
       setInterestValue(interestInputValue);
       setInterestInputValue("");
     }
+  };
+
+  const handleStartNewChat = async () => {
+    // find a user for chat
+    if (typeof window !== undefined) {
+      userId = localStorage.getItem("userId");
+    }
+    let list = await fetch(
+      `http://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/game/5bdc7fef-740c-4d85-9a8a-6bfbe53eb16d`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => console.log(error));
+    const randomNumber = Math.floor(Math.random() * list.length) + 1;
+    setRandomCandidateData(list[randomNumber]);
   };
 
   return (
@@ -92,8 +136,12 @@ const CategoriesAndGenderDetailsPopup = () => {
           />
         </div>
       </div>
-      {/* <CategoriesDropdown category="interest" /> */}
-      {/* <CategoriesDropdown category="Location" /> */}
+      <button
+        className="bg-[#4ea5ec] mt-3 hover:bg-[#4890cb] text-white font-bold py-2 px-4 rounded"
+        onClick={handleStartNewChat}
+      >
+        Start new chat
+      </button>
     </div>
   );
 };

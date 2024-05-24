@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 // This Props can be changed according to incoming data from backend
@@ -7,6 +8,8 @@ interface Props {
 }
 
 const SidebarList = ({ name }: Props) => {
+  const router = useRouter();
+
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   function capitaliseFirstLetter(string: string) {
@@ -43,7 +46,7 @@ const SidebarList = ({ name }: Props) => {
 
   return (
     <div className="flex justify-between items-center my-1 px-3 py-2 text-white bg-[#393646] hover:bg-[#4e516d] rounded">
-      <li className="list-none font-medium text-lg">
+      <li className="list-none font-medium text-lg" onClick={()=>router.push("/voyager/random_chat/randomUserId")}>
         {capitaliseFirstLetter(name)}
       </li>
       <IoIosRemoveCircleOutline
