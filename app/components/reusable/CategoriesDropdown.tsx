@@ -85,7 +85,7 @@ const CategoriesDropdown = ({
       {isMenuOpen && (
         <div
           id="dropdown"
-          className="z-10 bg-gray-50 rounded-lg shadow w-44 mt-1"
+          className="z-10 absolute bg-gray-50 rounded-lg shadow w-44 mt-1 overflow-auto max-h-52"
         >
           <ul
             className="py-2 text-sm font-medium"
