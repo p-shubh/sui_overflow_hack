@@ -33,13 +33,12 @@ const Profile = () => {
   const [isEditProfileClicked, setIsEditProfileClicked] = useState(false);
   const [activeTab, setActiveTab] = useState("Cults");
   const [userData, setUserData] = useState<UserData>();
-  const [age, setAge] = useState(0);
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   const searchParams = useSearchParams();
   const subId = searchParams.get("userNo");
- const userAddress =  searchParams.get("userAddress");
+  const userAddress = searchParams.get("userAddress");
 
   useEffect(() => {
     let getUserData;
@@ -71,13 +70,17 @@ const Profile = () => {
       setUserData(getUserData);
     })();
     // eslint-disable-next-line
-  }, []);
+  }, [userData]);
 
   return (
     <main className="w-[95vw] mx-auto p-10">
       <ProfileNavbar />
       {isEditProfileClicked && (
-        <EditProfilePopup setIsEditProfileClicked={setIsEditProfileClicked} />
+        <EditProfilePopup
+          setIsEditProfileClicked={setIsEditProfileClicked}
+          userAddress={userAddress}
+          subId={subId}
+        />
       )}
       <hr className="mt-5" />
       <div className="row-1 flex flex-wrap items-center gap-5 justify-center mt-5">
