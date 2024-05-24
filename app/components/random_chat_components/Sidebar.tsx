@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import { FaUserFriends } from "react-icons/fa";
@@ -34,6 +34,36 @@ const Sidebar = () => {
   const [chatUsersList, setChatUsersList] = useState([...usersListForChatTab]);
   const [friendList, setFriendList] = useState([...usersListForFriendTab]);
   const router = useRouter();
+
+  const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
+
+  useEffect(() => {
+    if (typeof window !== undefined) {
+      const userId = localStorage.getItem("userId");
+      const userFriends = fetch(
+        `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not okay " + response.statusText
+            );
+          }
+          return response.json();
+        })
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => console.log(error));
+      // setFriendList(userFriends);
+    }
+  }, [chatUsersList, friendList]);
 
   return (
     <div className="fixed h-[100vh] px-3 py-4 bg-[#25262D] top-0 w-[25%]">

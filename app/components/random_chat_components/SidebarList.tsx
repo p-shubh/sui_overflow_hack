@@ -1,4 +1,5 @@
 import React from "react";
+import { IoIosRemoveCircleOutline } from "react-icons/io";
 
 // This Props can be changed according to incoming data from backend
 interface Props {
@@ -6,16 +7,50 @@ interface Props {
 }
 
 const SidebarList = ({ name }: Props) => {
+  const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
+
   function capitaliseFirstLetter(string: string) {
     return string.slice(0, 1).toUpperCase() + string.slice(1, string.length);
   }
 
+  const handleRemoveFriend = () => {
+    if (typeof window !== undefined) {
+      const userId = localStorage.getItem("userId");
+      // todo
+      fetch(
+        `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}/:friend_id`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not okay " + response.statusText
+            );
+            return response.json();
+          }
+        })
+        .then((data) => {
+          return data;
+        })
+        .catch((error) => console.log(error));
+    }
+  };
+
   return (
-    <>
-      <li className="text-white bg-[#393646] list-none my-1 px-3 py-1 font-medium text-lg hover:bg-[#4e516d] rounded">
+    <div className="flex justify-between items-center my-1 px-3 py-2 text-white bg-[#393646] hover:bg-[#4e516d] rounded">
+      <li className="list-none font-medium text-lg">
         {capitaliseFirstLetter(name)}
       </li>
-    </>
+      <IoIosRemoveCircleOutline
+        className="font-bold text-xl"
+        onClick={handleRemoveFriend}
+      />
+    </div>
   );
 };
 
