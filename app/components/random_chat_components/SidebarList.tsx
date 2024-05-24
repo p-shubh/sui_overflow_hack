@@ -12,7 +12,7 @@ const SidebarList = ({ name }: Props) => {
 
   return (
     <>
-      <li className="text-white bg-gray-700 list-none my-1 px-3 py-1 font-medium text-lg hover:bg-gray-500 rounded">
+      <li className="text-white bg-[#393646] list-none my-1 px-3 py-1 font-medium text-lg hover:bg-[#4e516d] rounded">
         {capitaliseFirstLetter(name)}
       </li>
     </>
