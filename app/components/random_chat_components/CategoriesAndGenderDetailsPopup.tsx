@@ -15,8 +15,8 @@ const CategoriesAndGenderDetailsPopup = () => {
           alt="profile-picture"
         />
       </div>
-      <CategoriesDropdown category="Interest" />
-      <CategoriesDropdown category="Location" />
+      {/* <CategoriesDropdown category="Interest" /> */}
+      {/* <CategoriesDropdown category="Location" /> */}
     </div>
   );
 };
