@@ -18,7 +18,7 @@ func VoyagerUserApplyRoutes(p *gin.RouterGroup) {
 		r.GET("/:id", GetUser)
 		r.GET("/sub-id/:sub_id", GetUserBySubId)
 		r.GET("/location-interest/:interest/:location", GetUsersByLocationAndCategory)
-		r.GET("/list-interest/:interest/:userId", GetUsersByInterestAndUserId)
+		r.GET("/list-users-interest/:interest/:userId", GetUsersByInterestAndUserId)
 		r.POST("", CreateUser)
 		r.PUT("/:id", UpdateUser)
 		r.DELETE("/:id", DeleteUser)
