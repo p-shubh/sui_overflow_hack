@@ -1,215 +1,43 @@
 // This file includes all the constants or hard coded values
 
 // home page related constants
-export const LANDING_PAGE_BUTTON = [
-  {
-    text: "Music",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Gaming",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Art",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Digital",
-    bg_color: "[#0A72C7]",
-    hover_bg_color: "[#2a73ae]",
-    text_color: "white",
-  },
-  {
-    text: "Connection",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Fun",
-    bg_color: "[#0A72C7]",
-    hover_bg_color: "[#2a73ae]",
-    text_color: "white",
-  },
-  {
-    text: "Creativity",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Exploration",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Diversity",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Joy",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Entertainment",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Social",
-    bg_color: "[#0A72C7]",
-    hover_bg_color: "[#2a73ae]",
-    text_color: "white",
-  },
-  {
-    text: "Community",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Playground",
-    bg_color: "[#0A72C7]",
-    hover_bg_color: "[#2a73ae]",
-    text_color: "white",
-  },
-  {
-    text: "Expression",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Connection",
-    bg_color: "white",
-    hover_bg_color: "white",
-    text_color: "black",
-  },
-  {
-    text: "Convergence",
-    bg_color: "[#0A72C7]",
-    hover_bg_color: "[#2a73ae]",
-    text_color: "white",
-  },
-];
 
 export const LANDING_PAGE_VIBRANT_COMMUNITIES_IMAGES = [
   {
-    src: "https://img.freepik.com/free-vector/messages-concept-illustration_114360-583.jpg?t=st=1715950641~exp=1715954241~hmac=3c03fee57c247cde4f8f49fb78fd5fc1d918fd35da220aab9d4fcc3641c97fc0&w=740",
-    community_interest: "Meet New",
-    interest_taglines: "Connect with like-minded",
+    src: "/people.jpg",
+    community_interest: "Key Features",
+    interest_taglines:
+      "Voyager offers a suite of innovative features that redefine the travel experience",
   },
   {
-    src: "https://img.freepik.com/free-vector/creative-bulb-ideas-concept-illustration_614304-35.jpg?t=st=1715950715~exp=1715954315~hmac=baaa1a5aa5f0c6046945e796a6df00f9e706c3b5c27b62a17effdf2907c795e6&w=740",
-    community_interest: "Creative Expression",
-    interest_taglines: "Artistic and entertaining",
+    src: "/community.jpg",
+    community_interest: "Communities",
+    interest_taglines:
+      "Explore a world of diverse communities, each fostering meaningful connections, shared experiences",
   },
   {
-    src: "https://img.freepik.com/premium-vector/personal-memories-concept_23-2148403720.jpg?w=740",
-    community_interest: "Laugh & Connect",
-    interest_taglines: "Joyful moments with me",
-  },
-  {
-    src: "https://img.freepik.com/free-vector/flat-design-innovation-concept-with-lightbulb_23-2149158516.jpg?t=st=1715950854~exp=1715954454~hmac=42ca531a71366a2f2991fab8044aaee1994987681c294b8f545dcef201f98061&w=740",
-    community_interest: "Unleash Creativity",
-    interest_taglines: "Express yourself freely",
-  },
-  {
-    src: "https://img.freepik.com/premium-vector/success-secret-start-now_71609-551.jpg?w=740",
-    community_interest: "Now is your time!",
-    interest_taglines: "Engage with the community",
-  },
-];
-
-export const HOME_PAGE_NAVBAR_LINKS = [
-  {
-    label: "Meet new",
-    link: "/voyager/random_chat/new",
-  },
-  {
-    label: "Earn rewards",
-    link: "/",
-  },
-
-  {
-    label: "Explore",
-    link: "/",
-  },
-
-  {
-    label: "Join the fun",
-    link: "/",
+    src: "/demo.jpg",
+    community_interest: "Interactive Demo",
+    interest_taglines:
+      "Voyager's immersive demo showcases our cutting-edge features, inviting you to experience the future of social-fi travel firsthand",
   },
 ];
 
 // community page related constants
-export const COMMUNITY_NAVBAR_LINKS = [
+export const CULT_PAGE_COMMUNITIES_IMAGE = [
   {
-    label: "Random Chats",
-    link: "/",
+    src: "/c1.png",
+    community_interest: "Interactive Demo",
   },
   {
-    label: "Earn",
-    link: "/",
+    src: "/c1.png",
+    community_interest: "Interactive Demo",
   },
-
   {
-    label: "Explore",
-    link: "/",
-  },
-
-  {
-    label: "Join",
-    link: "/",
+    src: "/c1.png",
+    community_interest: "Interactive Demo",
   },
 ];
-
-export const COMMUNITY_PAGE_BUTTONS = [
-  {
-    text: "All",
-  },
-  {
-    text: "Owned",
-  },
-  {
-    text: "Created",
-  },
-  {
-    text: "Communities",
-  },
-  {
-    text: "Join",
-  },
-  {
-    text: "Connect",
-  },
-];
-
-export const VIBRANT_COMMUNITY_CARD_IMAGES = {
-  card1: {
-    src1: "https://img.freepik.com/premium-photo/business-network-connections_175634-38642.jpg?w=740",
-    src2: "https://img.freepik.com/free-photo/3d-geometric-shapes-natural-background_23-2150697438.jpg?t=st=1716016369~exp=1716019969~hmac=1f0198c59fcd7eb9e6c23fe5c4deb7e4c8bfb33239673c339de4580532dae1d7&w=740",
-    src3: "https://img.freepik.com/free-photo/long-shot-adult-nature-with-3d-geometric-shapes_23-2150697330.jpg?t=st=1716016608~exp=1716020208~hmac=6354b83989962d5fc71fba84a140f8f44ca9ecb92ca555686fc76a6d05e0a13d&w=740",
-  },
-  card2: {
-    src1: "https://img.freepik.com/premium-photo/free-photo-world-photography-day_1134551-7610.jpg?w=740",
-    src2: "https://img.freepik.com/free-photo/isometric-view-3d-rendering-city_23-2150901092.jpg?t=st=1716017411~exp=1716021011~hmac=e6058083a22b613b9be91a51a6f5b86f37be56c91f1f0d41b7fd654f65f25d2f&w=360",
-    src3: "https://img.freepik.com/free-photo/futuristic-fantastical-light-lamp-design_23-2151101689.jpg?t=st=1716017615~exp=1716021215~hmac=399ff8c2caf9262828085ae3cad4d5269e80341966afdcbe8b6c160317c5a3ac&w=740",
-  },
-};
 
 // profile page related constants
 export const PROFILE_PAGE_MY_JOURNEY_CARDS = [
