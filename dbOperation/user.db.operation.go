@@ -18,6 +18,7 @@ func VoyagerUserApplyRoutes(p *gin.RouterGroup) {
 		r.GET("/:id", GetUser)
 		r.GET("/sub-id/:sub_id", GetUserBySubId)
 		r.GET("/location-interest/:interest/:location", GetUsersByLocationAndCategory)
+		r.GET("/list-interest/:interest/:userId", GetUsersByInterestAndUserId)
 		r.POST("", CreateUser)
 		r.PUT("/:id", UpdateUser)
 		r.DELETE("/:id", DeleteUser)
@@ -152,5 +153,46 @@ func GetUsersByLocationAndCategory(c *gin.Context) {
 	if interest != "" || location != "" {
 		db.Where("interest = ? OR location = ?", interest, location).Find(&users)
 	}
+	c.JSON(http.StatusOK, users)
+}
+
+func GetUsersByInterestAndUserId(c *gin.Context) {
+	db, close := dbflow.ConnectHackDatabase()
+	defer close.Close()
+	interest := c.Param("interest")
+	userId := c.Param("userId")
+	var (
+		users []model.User
+		user  model.User
+		tx    *gorm.DB
+	)
+
+	if len(userId) > 0 {
+		tx = db.Where("id = ?", userId).First(&user)
+		if tx.Error != nil {
+			if tx.Error == gorm.ErrRecordNotFound {
+				c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+				return
+			}
+			c.JSON(http.StatusInternalServerError, gin.H{"error": tx.Error.Error()})
+			return
+		} else {
+			user.Interest = interest
+			if err := db.Save(&user).Error; err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+				return
+			} else {
+				if tx2 := db.Where("interest = ? AND id != ?", user.Interest, user.Id).Find(&users); tx2.Error != nil {
+					if tx.Error == gorm.ErrRecordNotFound {
+						c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+						return
+					}
+					c.JSON(http.StatusInternalServerError, gin.H{"error": tx.Error.Error()})
+					return
+				}
+			}
+		}
+	}
+
 	c.JSON(http.StatusOK, users)
 }
