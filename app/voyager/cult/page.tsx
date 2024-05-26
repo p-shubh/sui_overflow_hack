@@ -70,22 +70,19 @@ export type AccountData = {
   maxEpoch: number;
 };
 
-interface Props {
-  loginButtonRef: any;
-  logoutButtonRef: any;
-  setIsUserLoggedIn: Dispatch<SetStateAction<boolean>>;
-  setUserAddress: Dispatch<SetStateAction<string | undefined>>;
-}
+// interface Props {
+//   loginButtonRef: any;
+//   logoutButtonRef: any;
+//   setIsUserLoggedIn: Dispatch<SetStateAction<boolean>>;
+//   setUserAddress: Dispatch<SetStateAction<string | undefined>>;
+// }
 
-const Cult = ({
-  loginButtonRef,
-  logoutButtonRef,
-  setIsUserLoggedIn,
-  setUserAddress,
-}: Props) => {
+const Cult = () => {
   const accounts = useRef<AccountData[]>(loadAccounts()); // useRef() instead of useState() because of setInterval()
   const [balances, setBalances] = useState<Map<string, number>>(new Map()); // Map<Sui address, SUI balance>
   const [modalContent, setModalContent] = useState<string>("");
+  const [IsUserLoggedIn, setIsUserLoggedIn] = useState(Boolean);
+  const [userAddress, setUserAddress] = useState("");
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
   const router = useRouter();

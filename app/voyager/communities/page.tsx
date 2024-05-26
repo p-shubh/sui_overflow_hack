@@ -1,10 +1,5 @@
 "use client";
 
-import CommunitiesNavbar from "../../components/communities_components/CommunitiesNavbar";
-import { v4 as uuidv4 } from "uuid";
-import Image from "next/image";
-import VivrantCommunitiesCard from "../../components/communities_components/VivrantCommunitiesCard";
-import Footer from "@/app/components/reusable/Footer";
 import HomeNavbar from "@/app/components/reusable/HomeNavbar";
 import { FaDiscord } from "react-icons/fa";
 
