@@ -2,7 +2,6 @@ package router
 
 import (
 	realtimechat "hack/real_time_chat"
-	suiSlnRouter "hack/sui_snl/ApiRouting"
 	voyagerrouting "hack/voyagerRouting"
 	"net/http"
 	"os"
@@ -57,7 +56,7 @@ func ApplyRoutes(r *gin.RouterGroup) {
 	v1 := r.Group("/v1.0")
 	{
 		voyagerrouting.VoyagerApplyRoutes(v1)
-		suiSlnRouter.SuiSlnApplyRoutes(v1)
+		// suiSlnRouter.SuiSlnApplyRoutes(v1)
 		realtimechat.RealTimeVoyagerApplyRoutes(v1)
 	}
 }
