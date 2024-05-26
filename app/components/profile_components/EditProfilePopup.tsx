@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MdOutlineCancel } from "react-icons/md";
-import { RiArrowDropDownLine } from "react-icons/ri";
+// import { RiArrowDropDownLine } from "react-icons/ri";
 import CategoriesDropdown from "../reusable/CategoriesDropdown";
 
 interface CategoryValue {
@@ -14,7 +14,7 @@ interface Props {
   userAddress: string | null;
 }
 
-const EditProfilePopup = ({ setIsEditProfileClicked,userAddress, subId }: Props) => {
+const EditProfilePopup = ({ setIsEditProfileClicked, userAddress, subId }: Props) => {
   const [username, setUsername] = useState<string>("");
   const [age, setAge] = useState<number | string>("");
   const [categoryValue, setCategoryValue] = useState<CategoryValue>({
@@ -34,8 +34,7 @@ const EditProfilePopup = ({ setIsEditProfileClicked,userAddress, subId }: Props)
 
   function UpdateUserData() {
     const updatedUserData = {
-      user_address:
-        "0x91bfeeee250613e1e5452e0dd5cdd3c69779c554af5557bd888fe0d5942fe6e6",
+      user_address: userAddress,
       sub_id: subId,
       name: username,
       provider: "Google",
@@ -57,7 +56,7 @@ const EditProfilePopup = ({ setIsEditProfileClicked,userAddress, subId }: Props)
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        return data;
       })
       .catch((error) => {
         console.error("Error patching data:", error);
@@ -120,7 +119,8 @@ const EditProfilePopup = ({ setIsEditProfileClicked,userAddress, subId }: Props)
               setCategoryValue={setCategoryValue}
             />
           </div>
-          <div>
+          {/* if we have to add interests dropdown */}
+          {/* <div>
             <label
               htmlFor="interests"
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -132,7 +132,7 @@ const EditProfilePopup = ({ setIsEditProfileClicked,userAddress, subId }: Props)
               categoryValue={categoryValue}
               setCategoryValue={setCategoryValue}
             />
-          </div>
+          </div> */}
         </div>
         <button
           type="submit"

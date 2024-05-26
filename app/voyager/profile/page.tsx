@@ -16,7 +16,6 @@ import TabsCards from "@/app/components/profile_components/TabsCards";
 import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
 import EditProfilePopup from "@/app/components/profile_components/EditProfilePopup";
-
 interface UserData {
   id: string;
   user_address: string;
@@ -39,7 +38,7 @@ const Profile = () => {
   const searchParams = useSearchParams();
   const subId = searchParams.get("userNo");
   const userAddress = searchParams.get("userAddress");
-
+  
   useEffect(() => {
     let getUserData;
     (async function () {

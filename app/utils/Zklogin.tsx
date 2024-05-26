@@ -114,8 +114,10 @@ export const Zklogin = ({
           .catch((error) => {
             return undefined;
           });
+
         // if there is some value in userData then set the userId in local storage
         if (typeof window !== "undefined" && getUserData !== undefined) {
+          localStorage.setItem("subId", getUserData.sub_id);
           localStorage.setItem("userId", getUserData.id);
         }
         // if getUserData is undefined means there is no value then post the data of new user
