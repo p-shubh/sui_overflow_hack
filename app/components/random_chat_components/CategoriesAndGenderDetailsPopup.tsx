@@ -20,9 +20,8 @@ const CategoriesAndGenderDetailsPopup = () => {
     string | undefined
   >();
   const [interestValue, setInterestValue] = useState<string | undefined>();
+  // check for gender also (in future)
   const [gender, setGender] = useState<string>("both")
-  const [activeUserId, setActiveUserId] = useState<string | null>()
-  const [activeUserSubId, setActiveUserSubId] = useState<string | null>();
 
   const router = useRouter();
 
@@ -43,14 +42,12 @@ const CategoriesAndGenderDetailsPopup = () => {
     // find a user for chat
     if (typeof window !== undefined) {
       userId = localStorage.getItem("userId");
-      setActiveUserId(userId);
       subId = localStorage.getItem("subId")
-      setActiveUserSubId(subId);
     }
-    UpdateUserData();
-    // hard code for now
+    updateUserData();
+
     let list = await fetch(
-      `http://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/${interestValue}/${activeUserId}`,
+      `http://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/${interestValue}/${userId}`,
       {
         method: "GET",
         headers: {
@@ -67,7 +64,7 @@ const CategoriesAndGenderDetailsPopup = () => {
       .then((data) => {
         return data;
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.log("error getting data", error));
     if (list.length <= 0) {
       alert("No user found");
     } else {
@@ -77,14 +74,12 @@ const CategoriesAndGenderDetailsPopup = () => {
     }
   };
 
-  function UpdateUserData() {
+  async function updateUserData() {
     const updatedUserData = {
-      sub_id: activeUserSubId,
-      provider: "Google",
-      gender: gender,
+      sub_id: subId,
       interest: interestValue,
     };
-    fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
+    await fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -152,7 +147,7 @@ const CategoriesAndGenderDetailsPopup = () => {
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
-                  stroke-width="0"
+                  strokeWidth="0"
                   viewBox="0 0 20 20"
                   aria-hidden="true"
                   height="10"
@@ -160,9 +155,9 @@ const CategoriesAndGenderDetailsPopup = () => {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"
+                    clipRule="evenodd"
                   ></path>
                 </svg>
               </button>

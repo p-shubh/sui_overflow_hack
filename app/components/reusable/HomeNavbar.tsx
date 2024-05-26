@@ -49,17 +49,31 @@ const Navbar = () => {
     >
       <div className="flex gap-2 items-center">
         <div className="text-2xl">
-          <Image src="/logo.png" alt="TokenFest Logo" width={30} height={10} className="w-auto h-auto"/>
+          <Image
+            src="/logo.png"
+            alt="TokenFest Logo"
+            width={30}
+            height={10}
+            className="w-auto h-auto"
+          />
         </div>
         <div className="text-black text-2xl font-semibold hover:text-gray-800 ">
           <Link href="/">Voyager</Link>
         </div>
       </div>
-      <div className="hidden md:flex gap-4 items-center text-gray-500 font-space-grotesk font-semibold hover:text-gray-600">
-        <Link href={isUserLoggedIn ? "/voyager/random_chat/new" : "/"}>
+      <div className="hidden md:flex gap-4 items-center text-gray-500 font-space-grotesk font-semibold">
+        <Link
+          href={isUserLoggedIn ? "/voyager/random_chat/new" : "/"}
+          className="hover:text-gray-600"
+        >
           Meet New
         </Link>
-        <Link href={isUserLoggedIn ? "/voyager/cult" : "/"}>Cults</Link>
+        <Link
+          href={isUserLoggedIn ? "/voyager/cult" : "/"}
+          className="hover:text-gray-600"
+        >
+          Cults
+        </Link>
         <div className="hidden lg:flex justify-center items-center gap-2">
           {isUserLoggedIn ? (
             <div className="flex">
@@ -72,10 +86,10 @@ const Navbar = () => {
                   },
                 }}
               >
-                <CgProfile className="text-4xl cursor-pointer" />
+                <CgProfile className="text-4xl cursor-pointer hover:text-gray-600" />
               </Link>
               <IoIosLogOut
-                className="ml-2 text-3xl cursor-pointer"
+                className="ml-2 text-3xl cursor-pointer hover:text-gray-600"
                 onClick={handleLogoutButtonClick}
               />
             </div>

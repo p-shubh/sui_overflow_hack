@@ -36,6 +36,7 @@ const Profile = () => {
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   const searchParams = useSearchParams();
+  
   const subId = searchParams.get("userNo");
   const userAddress = searchParams.get("userAddress");
   
@@ -96,7 +97,7 @@ const Profile = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <h2 className="text-xl font-bold">
-                {userData !== undefined ? userData?.name : "Username"}
+                {userData !== undefined ? userData?.name : "Random-User"}
               </h2>
               <CiEdit
                 className="text-xl ml-12 cursor-pointer"

@@ -1,5 +1,6 @@
 "use client";
 
+import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Sidebar from "@/app/components/random_chat_components/Sidebar";
 import RandomChatNavbar from "@/app/components/random_chat_components/RandomChatNavbar";
@@ -12,19 +13,21 @@ interface ChatData {
   created_at: string;
 }
 
-const NewChat = ({ params }: { params: string }) => {
+const NewChat = () => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [chatData, setChatData] = useState<ChatData[]>([]);
   const [cachedUserId, setCachedUserId] = useState<string | null>(null);
   const [isSocketOpen, setIsSocketOpen] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [like, setLike] = useState<boolean>(false);
+  const params = useParams();
+  const receiverUserId = params.id;
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
-
+  console.log(chatData);
   useEffect(() => {
     if (typeof window !== undefined) {
-      const userId = localStorage.getItem("userId");
+      let userId = localStorage.getItem("userId");
       setCachedUserId(userId);
     }
 
@@ -40,7 +43,6 @@ const NewChat = ({ params }: { params: string }) => {
 
     newSocket.onmessage = (event) => {
       const newChatData = JSON.parse(event.data);
-
       setChatData((prevData) => [...prevData, newChatData]);
     };
     return () => {
@@ -48,7 +50,7 @@ const NewChat = ({ params }: { params: string }) => {
     };
     // eslint-disable-next-line
   }, []);
-  console.log(chatData);
+
   function sendMessage(event: React.KeyboardEvent<HTMLInputElement>) {
     if (
       event.key === "Enter" &&
@@ -58,10 +60,10 @@ const NewChat = ({ params }: { params: string }) => {
     ) {
       socket.send(
         JSON.stringify({
-          userId: cachedUserId,
+          senderUserId: cachedUserId,
           content: inputMessage,
-          commonPass: "secret",
-          username: "Mahindra",
+          reciverUserId: receiverUserId,
+          created_at: new Date().toISOString(),
         })
       );
       setInputMessage(""); // Clear input field after sending message
