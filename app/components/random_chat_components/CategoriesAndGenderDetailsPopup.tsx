@@ -1,6 +1,8 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import { MdOutlineCancel } from "react-icons/md";
+import { useRouter } from "next/navigation";
 
 interface RandomCandidate {
   id: string;
@@ -18,9 +20,9 @@ const CategoriesAndGenderDetailsPopup = () => {
     string | undefined
   >();
   const [interestValue, setInterestValue] = useState<string | undefined>();
-  const [randomCandidateData, setRandomCandidateData] = useState<
-    RandomCandidate | undefined
-  >();
+  const [activeUserId, setActiveUserId] = useState<string | null>()
+
+  const router = useRouter();
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
   let userId: string | null;
@@ -38,9 +40,11 @@ const CategoriesAndGenderDetailsPopup = () => {
     // find a user for chat
     if (typeof window !== undefined) {
       userId = localStorage.getItem("userId");
+      setActiveUserId(userId);
     }
+    // hard code for now
     let list = await fetch(
-      `http://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/game/5bdc7fef-740c-4d85-9a8a-6bfbe53eb16d`,
+      `http://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/${interestValue}/${activeUserId}`,
       {
         method: "GET",
         headers: {
@@ -58,8 +62,13 @@ const CategoriesAndGenderDetailsPopup = () => {
         return data;
       })
       .catch((error) => console.log(error));
-    const randomNumber = Math.floor(Math.random() * list.length) + 1;
-    setRandomCandidateData(list[randomNumber]);
+    if (list.length <= 0) {
+      alert("No user found");
+    } else {
+      const randomNumber = Math.floor(Math.random() * list.length);
+      const randomCandidateData = list[randomNumber];
+      router.push(`/voyager/random_chat/${randomCandidateData?.id}`);
+    }
   };
 
   return (

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Sidebar from "@/app/components/random_chat_components/Sidebar";
-import CategoriesAndGenderDetailsPopup from "@/app/components/random_chat_components/CategoriesAndGenderDetailsPopup";
 import RandomChatNavbar from "@/app/components/random_chat_components/RandomChatNavbar";
 interface ChatData {
   id: string;
@@ -16,7 +15,7 @@ interface ChatData {
 const NewChat = ({ params }: { params: string }) => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [chatData, setChatData] = useState<ChatData[]>([]);
-  const [activeUserId, setActiveUserId] = useState<string | null>(null);
+  const [cachedUserId, setCachedUserId] = useState<string | null>(null);
   const [isSocketOpen, setIsSocketOpen] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [like, setLike] = useState<boolean>(false);
@@ -24,8 +23,10 @@ const NewChat = ({ params }: { params: string }) => {
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    setActiveUserId(userId);
+    if (typeof window !== undefined) {
+      const userId = localStorage.getItem("userId");
+      setCachedUserId(userId);
+    }
 
     // setIsSocketOpen(true); <== to do
 
@@ -47,7 +48,7 @@ const NewChat = ({ params }: { params: string }) => {
     };
     // eslint-disable-next-line
   }, []);
-
+  console.log(chatData);
   function sendMessage(event: React.KeyboardEvent<HTMLInputElement>) {
     if (
       event.key === "Enter" &&
@@ -57,7 +58,7 @@ const NewChat = ({ params }: { params: string }) => {
     ) {
       socket.send(
         JSON.stringify({
-          userId: activeUserId,
+          userId: cachedUserId,
           content: inputMessage,
           commonPass: "secret",
           username: "Mahindra",
