@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {v4 as uuidv4} from "uuid";
 import Sidebar from "@/app/components/random_chat_components/Sidebar";
 import RandomChatNavbar from "@/app/components/random_chat_components/RandomChatNavbar";
@@ -21,11 +21,14 @@ const NewChat = () => {
   const [isSocketOpen, setIsSocketOpen] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [like, setLike] = useState<boolean>(false);
+
+  const scrollElementRef = useRef<HTMLDivElement>(null);
+
   const params = useParams();
   const receiverUserId = params.id;
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
-  console.log(chatData);
+
   useEffect(() => {
     if (typeof window !== undefined) {
       let userId = localStorage.getItem("userId");
@@ -51,6 +54,13 @@ const NewChat = () => {
     };
     // eslint-disable-next-line
   }, []);
+
+  // to scroll into view the last message
+  const handleScrollIntoView = () => {
+    scrollElementRef.current?.scrollIntoView({ behavior: "smooth" });
+  }
+
+  useEffect(handleScrollIntoView, [chatData.length]);
 
   function sendMessage(event: React.KeyboardEvent<HTMLInputElement>) {
     if (
@@ -87,6 +97,7 @@ const NewChat = () => {
             <>
               {data.reciverUserId === cachedUserId ? (
                 <div
+                  ref={scrollElementRef}
                   key={uuidv4()}
                   className="rounded-l-full rounded-r-full px-3 py-1 text-black max-w-fit mb-3 float-right bg-[#BFACE0]
               clear-both"
@@ -95,6 +106,7 @@ const NewChat = () => {
                 </div>
               ) : (
                 <div
+                  ref={scrollElementRef}
                   key={uuidv4()}
                   className="bg-white rounded-l-full rounded-r-full px-3 py-1 text-black max-w-fit mb-3 float-left clear-both"
                 >
@@ -116,10 +128,6 @@ const NewChat = () => {
               onKeyDown={(event) => {
                 sendMessage(event);
               }}
-              // onKeyDown={(event) => {
-              //   isSocketOpen && sendMessage(event);
-              // }}
-              // disabled={isSocketOpen === false}
             />
           </div>
         </div>
