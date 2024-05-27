@@ -103,8 +103,8 @@ func deleteUserFriends(c *gin.Context) {
 func deleteUserFriendsByIDs(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
-	userID := c.Param("user-id")
-	friendID := c.Param("friend-id")
+	userID := c.Param("user_id")
+	friendID := c.Param("friend_id")
 
 	var userFriends model.UserFriendsMap
 	if err := db.Where("user_id = ? AND friends = ?", userID, friendID).First(&userFriends).Error; err != nil {
