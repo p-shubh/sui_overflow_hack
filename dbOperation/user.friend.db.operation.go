@@ -3,6 +3,7 @@ package dboperation
 import (
 	dbflow "hack/dbFlow"
 	"hack/model"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -122,10 +123,17 @@ func getUsersByUserId(c *gin.Context) {
 	var db, close = dbflow.ConnectHackDatabase()
 	defer close.Close()
 	userID := c.Param("user_id")
-	var userFriends []model.UserFriendsMap
-	if err := db.Where("user_id = ? OR friends = ?  ", userID, userID).Find(&userFriends).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "No users found for the given user ID"})
+	var userFriends []model.UserFriendsMapResponse
+	err := db.Table("user_friends_maps").
+		Select("user_friends_maps.id, user_friends_maps.user_id, User1.name as user_name, user_friends_maps.friends, friends.name as friends_name").
+		Joins("LEFT JOIN users AS User1 ON User1.id = user_friends_maps.user_id").
+		Joins("LEFT JOIN users AS friends ON friends.id = user_friends_maps.friends").
+		Where("user_friends_maps.user_id = ? OR user_friends_maps.friends = ?", userID, userID).
+		Scan(&userFriends).Error
+	if err != nil {
+		log.Println("Failed to execute the query:", err)
 		return
 	}
+
 	c.JSON(http.StatusOK, userFriends)
 }
