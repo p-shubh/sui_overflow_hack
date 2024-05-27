@@ -223,7 +223,7 @@ func PatchUsersByInterestAndUserId(c *gin.Context) {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 				return
 			} else {
-				if tx2 := db.Where("id != ?", user.Id).Find(&users); tx2.Error != nil {
+				if tx2 := db.Where("id = ?", user.Id).Find(&users); tx2.Error != nil {
 					if tx.Error == gorm.ErrRecordNotFound {
 						c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 						return
