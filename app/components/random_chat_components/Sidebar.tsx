@@ -22,48 +22,54 @@ const usersListForChatTab = [
   { name: "Madhav" },
 ]; //This is hardcoded for now
 
-const usersListForFriendTab = [
-  { name: "shashank" },
-  { name: "Prithvi" },
-  { name: "Hema" },
-  { name: "Jaya" },
-]; //This is hardcoded for now
-
+export interface UserFriendInterface {
+  friends: string;
+  friendsName: string;
+  id: string;
+  userId: string;
+  userName: string;
+}
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("chat");
   const [chatUsersList, setChatUsersList] = useState([...usersListForChatTab]);
-  const [friendList, setFriendList] = useState([...usersListForFriendTab]);
+  const [friendList, setFriendList] = useState<UserFriendInterface[]>([]);
   const router = useRouter();
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   useEffect(() => {
-    if (typeof window !== undefined) {
-      const userId = localStorage.getItem("userId");
-      const userFriends = fetch(
-        `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(
-              "Network response was not okay " + response.statusText
-            );
+    (async function () {
+      if (typeof window !== undefined) {
+        const userId = localStorage.getItem("userId");
+        const userFriends: UserFriendInterface[] = await fetch(
+          `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
-          return response.json();
-        })
-        .then((data) => {
-          return data;
-        })
-        .catch((error) => console.log(error));
-      // setFriendList(userFriends);
-    }
-  }, [chatUsersList, friendList]);
+        )
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(
+                "Network response was not okay " + response.statusText
+              );
+            }
+            return response.json();
+          })
+          .then((data) => {
+            if (data === null) {
+              return [];
+            }
+            return data;
+          })
+          .catch((error) => console.log(error));
+        setFriendList(userFriends);
+      }
+    })();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <div className="fixed h-[100vh] px-3 py-4 bg-[#25262D] top-0 w-[25%]">
@@ -98,13 +104,14 @@ const Sidebar = () => {
 
       {/* --------------------------------todo--------------*/}
       <div className="flex flex-col h-[74%] overflow-auto my-2 pr-2">
-        {activeTab === "chat" &&
+        {/* {activeTab === "chat" &&
           chatUsersList.map((userData, idx) => (
             <SidebarList key={idx} name={userData.name} />
-          ))}
+          ))} */}
         {activeTab === "friends" &&
+          friendList !== null &&
           friendList.map((userData, idx) => (
-            <SidebarList key={idx} name={userData.name} />
+            <SidebarList key={idx} userData={userData} />
           ))}
       </div>
       {/* ----------------------------- */}

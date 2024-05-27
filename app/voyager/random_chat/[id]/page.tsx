@@ -2,14 +2,15 @@
 
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import {v4 as uuidv4} from "uuid";
 import Sidebar from "@/app/components/random_chat_components/Sidebar";
 import RandomChatNavbar from "@/app/components/random_chat_components/RandomChatNavbar";
 interface ChatData {
   id: string;
-  userId: string;
+  reciverUserId: string;
+  senderUserId: string;
   content: string;
   username: string;
-  commonPass: string;
   created_at: string;
 }
 
@@ -83,12 +84,24 @@ const NewChat = () => {
         <RandomChatNavbar like={like} setLike={setLike} />
         <div className="p-2 m-5 h-full overflow-auto">
           {chatData.map((data, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-l-full rounded-r-full px-3 py-1 text-black max-w-fit mb-3"
-            >
-              {data.content}
-            </div>
+            <>
+              {data.reciverUserId === cachedUserId ? (
+                <div
+                  key={uuidv4()}
+                  className="rounded-l-full rounded-r-full px-3 py-1 text-black max-w-fit mb-3 float-right bg-[#BFACE0]
+              clear-both"
+                >
+                  {data.content}
+                </div>
+              ) : (
+                <div
+                  key={uuidv4()}
+                  className="bg-white rounded-l-full rounded-r-full px-3 py-1 text-black max-w-fit mb-3 float-left clear-both"
+                >
+                  {data.content}
+                </div>
+              )}
+            </>
           ))}
         </div>
         <div className="w-full">

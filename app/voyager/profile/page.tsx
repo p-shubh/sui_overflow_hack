@@ -117,9 +117,9 @@ const Profile = () => {
             Virtual world explorer
           </div>
           <div className="flex flex-wrap gap-5 mt-3">
-            <span className="text-sm font-semibold text-[#343433]">
+            {/* <span className="text-sm font-semibold text-[#343433]">
               Interest: {userData?.interest}
-            </span>
+            </span> */}
             <span className="text-sm font-semibold text-[#343433]">
               Age: age
             </span>

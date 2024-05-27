@@ -18,9 +18,9 @@ const EditProfilePopup = ({ setIsEditProfileClicked, userAddress, subId }: Props
   const [username, setUsername] = useState<string>("");
   const [age, setAge] = useState<number | string>("");
   const [categoryValue, setCategoryValue] = useState<CategoryValue>({
-    interests: "Technology",
+    interests: "",
     location: "",
-    gender: "Male",
+    gender: "",
   });
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
