@@ -107,7 +107,7 @@ func deleteUserFriendsByIDs(c *gin.Context) {
 	friendID := c.Param("friend-id")
 
 	var userFriends model.UserFriendsMap
-	if err := db.Where("userId = ? AND friends = ?", userID, friendID).First(&userFriends).Error; err != nil {
+	if err := db.Where("user_id = ? AND friends = ?", userID, friendID).First(&userFriends).Error; err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Record not found!"})
 		return
 	}
