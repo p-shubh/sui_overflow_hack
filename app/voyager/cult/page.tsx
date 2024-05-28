@@ -3,11 +3,9 @@
 import HomeNavbar from "@/app/components/reusable/HomeNavbar";
 import React from "react";
 import Image from "next/image";
-import "tailwindcss/tailwind.css";
 import { CULT_PAGE_COMMUNITIES_IMAGE } from "@/app/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import Footer from "@/app/components/reusable/Footer";
-
 import { useRouter } from "next/navigation";
 import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 import {
@@ -24,15 +22,9 @@ import {
   getZkLoginSignature,
   jwtToAddress,
 } from "@mysten/zklogin";
-import {
-  NetworkName,
-  makeExplorerUrl,
-  requestSuiFromFaucet,
-  shortenSuiAddress,
-} from "@polymedia/suits";
-import { Modal } from "@polymedia/webutils";
+import { NetworkName } from "@polymedia/suits";
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useRef, useState, Dispatch, SetStateAction } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const google = process.env.NEXT_PUBLIC_GOOGLE;
 const salt = process.env.NEXT_PUBLIC_URL_SALT_SERVICE;
