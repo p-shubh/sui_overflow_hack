@@ -45,8 +45,8 @@ const CategoriesAndGenderDetailsPopup = () => {
       subId = localStorage.getItem("subId")
     }
     updateUserData();
-
-    let list = await fetch(
+  
+    const list: RandomCandidate[] = await fetch(
       `http://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/${interestValue}/${userId}`,
       {
         method: "GET",
@@ -62,6 +62,7 @@ const CategoriesAndGenderDetailsPopup = () => {
         return response.json();
       })
       .then((data) => {
+        console.log(data)
         return data;
       })
       .catch((error) => console.log("error getting data", error));

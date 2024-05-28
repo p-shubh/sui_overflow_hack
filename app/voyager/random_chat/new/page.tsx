@@ -1,5 +1,6 @@
 import Sidebar from "@/app/components/random_chat_components/Sidebar";
 import CategoriesAndGenderDetailsPopup from "@/app/components/random_chat_components/CategoriesAndGenderDetailsPopup";
+import RandomChatNavbar from "@/app/components/random_chat_components/RandomChatNavbar";
 
 const NewRandomChat = () => {
   return (
