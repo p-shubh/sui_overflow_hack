@@ -6,9 +6,10 @@ import { UserFriendInterface } from "./Sidebar";
 // This Props can be changed according to incoming data from backend
 interface Props {
   userData: UserFriendInterface;
+  updateFriendListAfterRemoving: (friendId: string) => void;
 }
 
-const SidebarList = ({ userData }: Props) => {
+const SidebarList = ({ userData, updateFriendListAfterRemoving }: Props) => {
   const router = useRouter();
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
@@ -16,11 +17,11 @@ const SidebarList = ({ userData }: Props) => {
   function capitaliseFirstLetter(string: string) {
     return string.slice(0, 1).toUpperCase() + string.slice(1, string.length);
   }
-  console.log(userData)
+
   const handleRemoveFriend = () => {
     if (typeof window !== undefined) {
       const userId = localStorage.getItem("userId");
-        console.log(userId, userData.friends);
+      console.log(userId, userData.friends);
       // todo
       fetch(
         `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}/${userData.friends}`,
@@ -37,10 +38,10 @@ const SidebarList = ({ userData }: Props) => {
               "Network response was not okay " + response.statusText
             );
           }
-          return response.json()
+          return response.json();
         })
         .then((data) => {
-          return data;
+          updateFriendListAfterRemoving(userData.friends);
         })
         .catch((error) => console.log(error));
     }

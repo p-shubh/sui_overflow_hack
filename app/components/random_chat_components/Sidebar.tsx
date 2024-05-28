@@ -7,21 +7,6 @@ import { useRouter } from "next/navigation";
 import SidebarList from "./SidebarList";
 import Link from "next/link";
 
-const usersListForChatTab = [
-  { name: "deepak" },
-  { name: "Aman" },
-  { name: "Deepti" },
-  { name: "tanya" },
-  { name: "Suman" },
-  { name: "Madhav" },
-  { name: "deepak" },
-  { name: "Aman" },
-  { name: "Deepti" },
-  { name: "tanya" },
-  { name: "Suman" },
-  { name: "Madhav" },
-]; //This is hardcoded for now
-
 export interface UserFriendInterface {
   friends: string;
   friendsName: string;
@@ -31,7 +16,7 @@ export interface UserFriendInterface {
 }
 const Sidebar = () => {
   const [activeTab, setActiveTab] = useState("chat");
-  const [chatUsersList, setChatUsersList] = useState([...usersListForChatTab]);
+  const [chatUsersList, setChatUsersList] = useState([]);
   const [friendList, setFriendList] = useState<UserFriendInterface[]>([]);
   const router = useRouter();
 
@@ -70,6 +55,14 @@ const Sidebar = () => {
     })();
     // eslint-disable-next-line
   }, []);
+
+  function updateFriendListAfterRemoving(friendId: string) {
+    const currentFriendList = [...friendList];
+    const updatedFriendList = currentFriendList.filter(
+      (data) => data.friends !== friendId
+    );
+    setFriendList(updatedFriendList);
+  }
 
   return (
     <div className="fixed h-[100vh] px-3 py-4 bg-[#25262D] top-0 w-[25%]">
@@ -111,7 +104,11 @@ const Sidebar = () => {
         {activeTab === "friends" &&
           friendList !== null &&
           friendList.map((userData, idx) => (
-            <SidebarList key={idx} userData={userData} />
+            <SidebarList
+              key={idx}
+              userData={userData}
+              updateFriendListAfterRemoving={updateFriendListAfterRemoving}
+            />
           ))}
       </div>
       {/* ----------------------------- */}
