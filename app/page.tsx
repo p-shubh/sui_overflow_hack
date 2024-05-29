@@ -20,7 +20,7 @@ export default function Home() {
       <div className="mx-20">
         <HomeNavbar />
       </div>
-      <div className="bg-[#FFFCF9] ">
+      <div className="bg-white">
         <div className="flex lg:flex-row md:flex-col sm:items-center xs:flex-col justify-between row-1 mx-20">
           <div className="flex flex-col xs:items-center lg:items-start">
             <h1 className=" text-7xl mt-30 md:w-[76.52%] sm:w-[100%] font-englebert">

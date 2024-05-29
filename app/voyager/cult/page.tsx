@@ -3,9 +3,10 @@
 import HomeNavbar from "@/app/components/reusable/HomeNavbar";
 import React from "react";
 import Image from "next/image";
-import { CULT_PAGE_COMMUNITIES_IMAGE } from "@/app/utils/constants";
+import { CULT_PAGE_COMMUNITIES_IMAGE, CULT_PAGE_KEYFEATURES_IMAGE } from "@/app/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import Footer from "@/app/components/reusable/Footer";
+
 import { useRouter } from "next/navigation";
 import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 import {
@@ -22,9 +23,15 @@ import {
   getZkLoginSignature,
   jwtToAddress,
 } from "@mysten/zklogin";
-import { NetworkName } from "@polymedia/suits";
+import {
+  NetworkName,
+  makeExplorerUrl,
+  requestSuiFromFaucet,
+  shortenSuiAddress,
+} from "@polymedia/suits";
+import { Modal } from "@polymedia/webutils";
 import { jwtDecode } from "jwt-decode";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Dispatch, SetStateAction } from "react";
 
 const google = process.env.NEXT_PUBLIC_GOOGLE;
 const salt = process.env.NEXT_PUBLIC_URL_SALT_SERVICE;
@@ -553,8 +560,8 @@ const Cult = () => {
     setBalances(new Map());
   }
   const images = [
-    { src: "/c2.png", alt: "Anime Image 1" },
-    { src: "/c3.png", alt: "Anime Image 2" },
+    { src: "/c5.png", alt: "Anime Image 1" },
+    { src: "/c6.png", alt: "Anime Image 2" },
   ];
   return (
     <main className="w-[full] mx-auto bg-[#FFFCF9] ">
@@ -562,7 +569,7 @@ const Cult = () => {
         <HomeNavbar />
       </div>
       <div className="bg-[#FFFCF9] ">
-        <div className="flex lg:flex-row md:flex-col sm:items-center xs:flex-col justify-between row-1 mx-20">
+        <div className="flex lg:flex-row md:flex-col sm:items-center xs:flex-col justify-between row-1 ml-20">
           <div className="flex flex-col xs:items-center lg:items-start">
             <h1 className=" text-7xl mt-40 md:w-[76.52%] sm:w-[100%] font-englebert">
               Discover the Power of
@@ -577,7 +584,7 @@ const Cult = () => {
             </button>
           </div>
           <Image
-            src="/community1.png"
+            src="/cult.png"
             priority
             width={700}
             height={400}
@@ -597,104 +604,73 @@ const Cult = () => {
               </h1>
             </div>
           </div>
-          <div className="flex flex-wrap justify-center mt-20 mx-20 gap-20">
+          <div className="flex justify-center mt-20 mx-20 gap-8 ">
             {CULT_PAGE_COMMUNITIES_IMAGE.map((data) => (
               <div
                 key={uuidv4()}
-                className="flex justify-center flex-col mb-8 w-1/4"
+                className="flex justify-center flex-col mb-8 "
               >
+
+                <Image
+                  src={data.src}
+                  height={300}
+                  width={350}
+                  alt="vivrant-communities"
+                  className="object-fill rounded"
+                />
                 <div
-                  className="mt-8 text-3xl font-playfair-display"
+                  className="mt-2 text-2xl font-playfair-display "
                   style={{ fontWeight: 600, fontStyle: "italic" }}
                 >
                   {data.community_interest}
                 </div>
-                <Image
-                  src={data.src}
-                  height={400}
-                  width={700}
-                  alt="vivrant-communities"
-                  className="object-fill rounded"
-                />
-                {accounts.current.map((acct) => (
-                  <div
-                    className="mt-2 text-lg font-space-grotesk text-gray-500 mr-12"
-                    key={acct.userAddr}
+                <div
+                  className="mt-2 text-lg font-space-grotesk text-gray-500 "
+                >
+                  <a href="/voyager/communities"><button
+                    className="bg-[#2a73ae] hover:bg-[#101521] text-white font-bold py-2 px-6 rounded-lg"
                   >
-                    <button
-                      className="bg-[#2a73ae] hover:bg-[#101521] text-white font-bold py-2 px-6 rounded-lg"
-                      key={acct.userAddr}
-                      onClick={() => handleJoinClick(acct)}
-                    >
-                      Join Now
-                    </button>
-                    {/* <button onClick={()=> queryevents()}>kdfkt</button> */}
-                  </div>
-                ))}
-                {/* {accounts.current.map((acct) => {
-                                    const balance = balances.get(acct.userAddr);
-                                    const explorerLink = makeExplorerUrl(
-                                        NETWORK,
-                                        "address",
-                                        acct.userAddr
-                                    );
-                                    return (
-                                        <div className="account" key={acct.userAddr}>
-                                            <div>
-                                                <label className={`provider ${acct.provider}`}>
-                                                    {acct.provider}
-                                                </label>
-                                            </div>
-                                            <div>
-                                                Address:{" "}
-                                                <a
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    href={explorerLink}
-                                                >
-                                                    {shortenSuiAddress(acct.userAddr, 6, 6, "0x", "...")}
-                                                </a>
-                                            </div>
-                                            <div>User ID: {acct.sub}</div>
-                                            <div>
-                                                Balance:
-                                                {typeof balance === "undefined"
-                                                    ? "(loading)"
-                                                    : `${balance} SUI`}
-                                            </div>
-                                            <button
-                                                className={`btn-send ${!balance ? "disabled" : ""}`}
-                                                disabled={!balance}
-                                                onClick={() => {
-                                                    sendTransaction(acct);
-                                                }}
-                                            >
-                                                Send transaction
-                                            </button>
-                                            {balance === 0 && (
-                                                <button
-                                                    className="btn-faucet"
-                                                    onClick={() => {
-                                                        requestSuiFromFaucet(NETWORK, acct.userAddr);
-                                                        setModalContent(
-                                                            "💰 Requesting SUI from faucet. This will take a few seconds..."
-                                                        );
-                                                        setTimeout(() => {
-                                                            setModalContent("");
-                                                        }, 3000);
-                                                    }}
-                                                >
-                                                    Use faucet
-                                                </button>
-                                            )}
-                                            <hr />
-                                        </div>
-                                    );
-                                })} */}
+                    Join Now
+                  </button></a>
+                </div>
               </div>
             ))}
           </div>
         </div>
+        <h1
+          className="text-5xl font-playfair-display mt-28 mx-20"
+          style={{ fontWeight: 500, fontStyle: "italic" }}
+        >
+          Key Features
+        </h1>
+        <div className=" row-2 flex flex-col text-center items-centert">
+
+          <div className="flex justify-center mt-10 mx-20 gap-4 ">
+            {CULT_PAGE_KEYFEATURES_IMAGE.map((data) => (
+              <div
+                key={uuidv4()}
+                className="flex justify-center flex-col mb-8 "
+              >
+
+                <Image
+                  src={data.src}
+                  height={400}
+                  width={400}
+                  alt="vivrant-communities"
+                  className="object-fill rounded"
+                />
+                <div
+                  className="mt-2 text-2xl font-playfair-display "
+                  style={{ fontWeight: 600, fontStyle: "italic" }}
+                >
+                  {data.community_interest}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      
 
         <div className="mx-20 p-8 mt-20">
           <div className="">

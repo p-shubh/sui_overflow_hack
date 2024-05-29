@@ -24,18 +24,37 @@ export const LANDING_PAGE_VIBRANT_COMMUNITIES_IMAGES = [
 ];
 
 // community page related constants
+export const CULT_PAGE_KEYFEATURES_IMAGE = [
+  {
+    src: "/c1.png",
+    community_interest: "Fundraising Raids",
+  },
+  {
+    src: "/c2.png",
+    community_interest: "NFT Gated Communities",
+  },
+  {
+    src: "/c3.png",
+    community_interest: "Opinion Polls",
+  },
+  {
+    src: "/c4.png",
+    community_interest: "Decentralized Raffles",
+  },
+];
+
 export const CULT_PAGE_COMMUNITIES_IMAGE = [
   {
-    src: "/c1.png",
-    community_interest: "Interactive Demo",
+    src: "/temple.jpg",
+    community_interest: "Society Spot",
   },
   {
-    src: "/c1.png",
-    community_interest: "Interactive Demo",
+    src: "/temple.jpg",
+    community_interest: "Unity Hub",
   },
   {
-    src: "/c1.png",
-    community_interest: "Interactive Demo",
+    src: "/temple.jpg",
+    community_interest: "Neighbor Connect",
   },
 ];
 

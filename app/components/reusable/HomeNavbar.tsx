@@ -74,6 +74,12 @@ const Navbar = () => {
         >
           Cults
         </Link>
+        <Link
+          href={isUserLoggedIn ? "/voyager/raids" : "/"}
+          className="hover:text-gray-600"
+        >
+          Raids
+        </Link>
         <div className="hidden lg:flex justify-center items-center gap-2">
           {isUserLoggedIn ? (
             <div className="flex">
