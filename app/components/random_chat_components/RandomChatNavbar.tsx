@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useState, Dispatch, SetStateAction } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
 import { useRouter, useParams } from "next/navigation";
 import { UserFriendInterface } from "@/app/voyager/random_chat/[id]/page";
+import { getUserByIdFunction } from "@/app/utils/getUserByIdFunction";
+
 interface Props {
   like: boolean;
   setLike: Dispatch<SetStateAction<boolean>>;
@@ -11,21 +13,33 @@ interface Props {
 }
 
 const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
+  const [cachedUserId, setCachedUserId] = useState<string | null>(null);
+  const [userName, setUserName] = useState("");
   const [profileName, setProfileName] = useState("");
 
   const router = useRouter();
   const params = useParams();
   const friendId = params.id;
 
-  let cachedUserId: string | null;
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
-  async function handleLikeUser() {
+  useEffect(() => {
     if (typeof window !== undefined) {
-      cachedUserId = localStorage.getItem("userId");
+      let userId = localStorage.getItem("userId");
+      setCachedUserId(userId);
+      (async function () {
+        const response = await getUserByIdFunction(userId);
+        setUserName(response.name);
+      })();
     }
+    if (cachedUserId !== null) {
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  async function handleLikeUser() {
     setLike(true);
-    // post user friend
+    // post user's friend
     const body = {
       userId: cachedUserId,
       friends: friendId,
@@ -50,13 +64,10 @@ const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
         setFriendList((prev) => [...prev, data]);
       })
       .catch((error) => console.log(error));
-    await getUpdatedFriends();
-    if (like) {
-      //  give profile access
-    }
+    await getUpdatedFriendList();
   }
 
-  async function getUpdatedFriends() {
+  async function getUpdatedFriendList() {
     const userFriends: UserFriendInterface[] = await fetch(
       `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${cachedUserId}`,
       {
@@ -78,11 +89,9 @@ const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
         if (data === null) {
           return [];
         }
-        console.log(data);
         const dataOfAUser: UserFriendInterface = data.filter(
           (friendData: UserFriendInterface) => friendData.friends === friendId
         )[0];
-        console.log(dataOfAUser);
         setProfileName(dataOfAUser.friendsName);
         return data;
       })
@@ -94,6 +103,7 @@ const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
 
   return (
     <div className="flex bg-[#25262D] p-5 justify-between gap-5">
+      <div className="text-[#7E8EF1] text-xl italic">@{userName}_voyager</div>
       <div className="ml-auto self-center">
         {like ? (
           <AiFillLike className="text-blue-500 font-medium text-3xl cursor-pointer" />

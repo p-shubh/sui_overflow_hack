@@ -28,7 +28,6 @@ const NewChat = () => {
   const [cachedUserId, setCachedUserId] = useState<string | null>(null);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [like, setLike] = useState<boolean>(false);
-  // const [chatUsersList, setChatUsersList] = useState([]);
   const [friendList, setFriendList] = useState<UserFriendInterface[]>([]);
 
   const scrollElementRef = useRef<HTMLDivElement>(null);
