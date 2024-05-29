@@ -1,11 +1,16 @@
+"use client"
+
+import {useState} from "react";
 import Sidebar from "@/app/components/random_chat_components/Sidebar";
 import CategoriesAndGenderDetailsPopup from "@/app/components/random_chat_components/CategoriesAndGenderDetailsPopup";
-import RandomChatNavbar from "@/app/components/random_chat_components/RandomChatNavbar";
+import { UserFriendInterface } from "../[id]/page";
 
 const NewRandomChat = () => {
+  const [friendList, setFriendList] = useState<UserFriendInterface[]>([]);
+
   return (
     <div className="flex w-full h-full">
-      <Sidebar />
+      <Sidebar friendList={friendList} setFriendList={setFriendList} />
       <div className="flex flex-col justify-between h-[100vh] w-full ml-[25%] bg-[#35374B]">
         <div className="p-2 m-5 h-full overflow-auto">
           <CategoriesAndGenderDetailsPopup />

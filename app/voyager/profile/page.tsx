@@ -36,10 +36,10 @@ const Profile = () => {
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   const searchParams = useSearchParams();
-  
+
   const subId = searchParams.get("userNo");
   const userAddress = searchParams.get("userAddress");
-  
+
   useEffect(() => {
     let getUserData;
     (async function () {
@@ -72,6 +72,11 @@ const Profile = () => {
     // eslint-disable-next-line
   }, [userData]);
 
+  function handleHeartClick() {
+    setIsProfileLiked(true);
+    // https://suiscan.xyz/devnet/object/0x962de884e9d74e6501a5dd4ce4c50e66623b1994120f85b4e3397f386951d9e6/txs
+  }
+  
   return (
     <main className="w-[95vw] mx-auto p-10">
       <ProfileNavbar />
@@ -109,7 +114,7 @@ const Profile = () => {
             ) : (
               <FaRegHeart
                 className="ml-8 text-xl cursor-pointer"
-                onClick={() => setIsProfileLiked(true)}
+                onClick={handleHeartClick}
               />
             )}
           </div>

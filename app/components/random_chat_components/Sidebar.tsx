@@ -9,8 +9,8 @@ import Link from "next/link";
 import { UserFriendInterface } from "@/app/voyager/random_chat/[id]/page";
 
 interface Props {
-  friendList?: UserFriendInterface[];
-  setFriendList?: Dispatch<SetStateAction<UserFriendInterface[]>>;
+  friendList: UserFriendInterface[];
+  setFriendList: Dispatch<SetStateAction<UserFriendInterface[]>>;
 }
 
 const Sidebar = ({ friendList, setFriendList }: Props) => {
