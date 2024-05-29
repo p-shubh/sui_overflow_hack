@@ -1,21 +1,21 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import ProfileNavbar from "../../components/profile_components/ProfileNavbar";
+import { useParams } from "next/navigation";
+import ProfileNavbar from "../../../components/profile_components/ProfileNavbar";
 import Image from "next/image";
 import { v4 as uuidv4 } from "uuid";
 import {
   PROFILE_PAGE_MY_JOURNEY_CARDS,
   PROFILE_PAGE_CULT_CARDS,
   PROFILE_PAGE_POAPS_CARDS,
-} from "../../utils/constants";
+} from "../../../utils/constants";
 import Footer from "@/app/components/reusable/Footer";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import TabsCards from "@/app/components/profile_components/TabsCards";
-import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
 import EditProfilePopup from "@/app/components/profile_components/EditProfilePopup";
+
 interface UserData {
   id: string;
   user_address: string;
@@ -27,24 +27,21 @@ interface UserData {
   location: string;
 }
 
-const Profile = () => {
-  const [isEditProfileClicked, setIsEditProfileClicked] = useState(false);
+const FriendProfile = () => {
+  const [isProfileLiked, setIsProfileLiked] = useState(false);
   const [activeTab, setActiveTab] = useState("Cults");
   const [userData, setUserData] = useState<UserData>();
-  
+
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
-  const searchParams = useSearchParams();
-
-  const subId = searchParams.get("userNo");
-  const userAddress = searchParams.get("userAddress");
+  const params = useParams();
 
   useEffect(() => {
     let getUserData;
     (async function () {
       // send a get request to get data of user saved in db.
       getUserData = await fetch(
-        `http://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${subId}`,
+        `http://${IP_ADDRESS}/v1.0/voyager/user/${params.id}`,
         {
           method: "GET",
           headers: {
@@ -70,17 +67,15 @@ const Profile = () => {
     })();
     // eslint-disable-next-line
   }, [userData]);
-  
+
+  function handleHeartClick() {
+    setIsProfileLiked(true);
+    // https://suiscan.xyz/devnet/object/0x962de884e9d74e6501a5dd4ce4c50e66623b1994120f85b4e3397f386951d9e6/txs
+  }
+
   return (
     <main className="w-[95vw] mx-auto p-10">
       <ProfileNavbar />
-      {isEditProfileClicked && (
-        <EditProfilePopup
-          setIsEditProfileClicked={setIsEditProfileClicked}
-          userAddress={userAddress}
-          subId={subId}
-        />
-      )}
       <hr className="mt-5" />
       <div className="row-1 flex flex-wrap items-center gap-5 justify-center mt-5">
         <div className="h-[212px] w-[212px]">
@@ -100,11 +95,15 @@ const Profile = () => {
                   ? userData?.name
                   : "Random-User"}
               </h2>
-              <CiEdit
-                className="text-xl ml-12 cursor-pointer"
-                onClick={() => setIsEditProfileClicked(true)}
-              />
             </div>
+            {isProfileLiked ? (
+              <FaHeart className="ml-8 text-[#EE4E4E] text-xl cursor-pointer" />
+            ) : (
+              <FaRegHeart
+                className="ml-8 text-xl cursor-pointer"
+                onClick={handleHeartClick}
+              />
+            )}
           </div>
           <div className="font-medium text-[#5d5d5b]">
             Virtual world explorer
@@ -126,9 +125,6 @@ const Profile = () => {
                 : "other"}
             </span>
           </div>
-          <span className="flex items-center">
-            0<FaHeart className="ml-2 text-[#EE4E4E] text-lg cursor-pointer" />
-          </span>
           <div className="flex gap-3 mt-5">
             <div>
               <span className="font-medium text-md mr-2">25</span>
@@ -148,10 +144,6 @@ const Profile = () => {
                 Discoveries
               </span>
             </div>
-          </div>
-          <div className="mt-3 text-[#474747] text-md font-medium">
-            <span className="font-semibold text-sm">User Address:</span>&nbsp;
-            <span>{userAddress}</span>
           </div>
         </div>
       </div>
@@ -222,4 +214,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default FriendProfile;

@@ -2,7 +2,7 @@
 
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { UserFriendInterface } from "@/app/voyager/random_chat/[id]/page";
 interface Props {
   like: boolean;
@@ -13,6 +13,7 @@ interface Props {
 const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
   const [profileName, setProfileName] = useState("");
 
+  const router = useRouter();
   const params = useParams();
   const friendId = params.id;
 
@@ -79,8 +80,7 @@ const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
         }
         console.log(data);
         const dataOfAUser: UserFriendInterface = data.filter(
-          (friendData: UserFriendInterface) =>
-            friendData.friends === friendId
+          (friendData: UserFriendInterface) => friendData.friends === friendId
         )[0];
         console.log(dataOfAUser);
         setProfileName(dataOfAUser.friendsName);
@@ -106,8 +106,11 @@ const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
       </div>
       <div>
         {like && (
-          <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-            <span className="font-medium text-gray-600 dark:text-gray-300">
+          <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 cursor-pointer">
+            <span
+              className="font-medium text-gray-600 dark:text-gray-300"
+              onClick={() => router.push(`/voyager/profile/${friendId}`)}
+            >
               {profileName.slice(0, 1).toUpperCase()}
             </span>
           </div>
