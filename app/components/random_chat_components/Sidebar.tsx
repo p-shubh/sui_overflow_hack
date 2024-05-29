@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import SidebarList from "./SidebarList";
 import Link from "next/link";
 import { UserFriendInterface } from "@/app/voyager/random_chat/[id]/page";
+import { v4 as uuidv4 } from "uuid";
 
 interface Props {
   friendList: UserFriendInterface[];
@@ -15,7 +16,13 @@ interface Props {
 }
 
 const Sidebar = ({ friendList, setFriendList, setLike }: Props) => {
-  const [activeTab, setActiveTab] = useState("chat");
+  const [activeTab, setActiveTab] = useState("friends");
+
+  // hardcoded for now
+  const [chatUserList, setChatUserList] = useState<string[]>([
+    "Aditi",
+    "Suranshu",
+  ]);
 
   const router = useRouter();
 
@@ -100,15 +107,21 @@ const Sidebar = ({ friendList, setFriendList, setLike }: Props) => {
 
       {/* --------------------------------todo--------------*/}
       <div className="flex flex-col h-[74%] overflow-auto my-2 pr-2">
-        {/* {activeTab === "chat" &&
-          chatUsersList.map((userData, idx) => (
-            <SidebarList key={idx} name={userData.name} />
-          ))} */}
+        {activeTab === "chat" &&
+          chatUserList.map((name) => (
+            <div
+              className="flex justify-between items-center my-1 px-3 py-2 text-white bg-[#393646] hover:bg-[#4e516d] rounded"
+              key={uuidv4()}
+            >
+              <li className="list-none font-medium text-lg">{name}</li>
+            </div>
+          ))}
+
         {activeTab === "friends" &&
           friendList !== undefined &&
-          friendList.map((userData, idx) => (
+          friendList.map((userData) => (
             <SidebarList
-              key={idx}
+              key={uuidv4()}
               userData={userData}
               updateFriendListAfterRemoving={updateFriendListAfterRemoving}
               setLike={setLike}
