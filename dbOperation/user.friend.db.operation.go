@@ -128,7 +128,7 @@ func getUsersByUserId(c *gin.Context) {
 		Select("user_friends_maps.id, user_friends_maps.user_id, User1.name as user_name, user_friends_maps.friends, friends.name as friends_name").
 		Joins("LEFT JOIN users AS User1 ON User1.id = user_friends_maps.user_id").
 		Joins("LEFT JOIN users AS friends ON friends.id = user_friends_maps.friends").
-		Where("user_friends_maps.user_id = ? OR user_friends_maps.friends = ?", userID, userID).
+		Where("user_friends_maps.user_id = ? ", userID).
 		Scan(&userFriends).Error
 	if err != nil {
 		log.Println("Failed to execute the query:", err)
