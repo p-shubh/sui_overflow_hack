@@ -20,7 +20,7 @@ const EditProfilePopup = ({ setIsEditProfileClicked, userAddress, subId }: Props
   const [categoryValue, setCategoryValue] = useState<CategoryValue>({
     interests: "",
     location: "",
-    gender: "",
+    gender: "other",
   });
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
@@ -85,7 +85,7 @@ const EditProfilePopup = ({ setIsEditProfileClicked, userAddress, subId }: Props
               type="text"
               id="username"
               className="outline-none text-sm rounded-lg block w-full p-2.5 bg-gray-50 border-gray-600 placeholder-gray-400 text-gray-900"
-              placeholder="Samuel"
+              placeholder="username"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
             />

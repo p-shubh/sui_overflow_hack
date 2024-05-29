@@ -32,14 +32,14 @@ const Profile = () => {
   const [isEditProfileClicked, setIsEditProfileClicked] = useState(false);
   const [activeTab, setActiveTab] = useState("Cults");
   const [userData, setUserData] = useState<UserData>();
-
+  
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   const searchParams = useSearchParams();
-  
+
   const subId = searchParams.get("userNo");
   const userAddress = searchParams.get("userAddress");
-  
+
   useEffect(() => {
     let getUserData;
     (async function () {
@@ -72,6 +72,11 @@ const Profile = () => {
     // eslint-disable-next-line
   }, [userData]);
 
+  function handleHeartClick() {
+    setIsProfileLiked(true);
+    // https://suiscan.xyz/devnet/object/0x962de884e9d74e6501a5dd4ce4c50e66623b1994120f85b4e3397f386951d9e6/txs
+  }
+  
   return (
     <main className="w-[95vw] mx-auto p-10">
       <ProfileNavbar />
@@ -97,7 +102,9 @@ const Profile = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <h2 className="text-xl font-bold">
-                {userData !== undefined ? userData?.name : "Random-User"}
+                {userData !== undefined && userData.name !== ""
+                  ? userData?.name
+                  : "Random-User"}
               </h2>
               <CiEdit
                 className="text-xl ml-12 cursor-pointer"
@@ -109,7 +116,7 @@ const Profile = () => {
             ) : (
               <FaRegHeart
                 className="ml-8 text-xl cursor-pointer"
-                onClick={() => setIsProfileLiked(true)}
+                onClick={handleHeartClick}
               />
             )}
           </div>
@@ -120,11 +127,17 @@ const Profile = () => {
             {/* <span className="text-sm font-semibold text-[#343433]">
               Interest: {userData?.interest}
             </span> */}
+            {/* <span className="text-sm font-semibold text-[#343433]">
+              Age:&nbsp;
+              {userData !== undefined && userData.name !== ""
+                ? userData?.age
+                : "00"}
+            </span> */}
             <span className="text-sm font-semibold text-[#343433]">
-              Age: age
-            </span>
-            <span className="text-sm font-semibold text-[#343433]">
-              Gender: {userData?.gender}
+              Gender:&nbsp;
+              {userData !== undefined && userData.name !== ""
+                ? userData?.gender
+                : "other"}
             </span>
           </div>
           <div className="flex gap-3 mt-5">
@@ -148,7 +161,7 @@ const Profile = () => {
             </div>
           </div>
           <div className="mt-3 text-[#474747] text-md font-medium">
-            User Address: {userAddress}
+            <span className="font-semibold text-sm">User Address:</span>&nbsp;<span>{userAddress}</span>
           </div>
         </div>
       </div>

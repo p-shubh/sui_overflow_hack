@@ -1,21 +1,26 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
-import { UserFriendInterface } from "./Sidebar";
+import { UserFriendInterface } from "@/app/voyager/random_chat/[id]/page";
 
 // This Props can be changed according to incoming data from backend
 interface Props {
   userData: UserFriendInterface;
   updateFriendListAfterRemoving: (friendId: string) => void;
+  setLike?: Dispatch<SetStateAction<boolean>>;
 }
 
-const SidebarList = ({ userData, updateFriendListAfterRemoving }: Props) => {
+const SidebarList = ({
+  userData,
+  updateFriendListAfterRemoving,
+  setLike,
+}: Props) => {
   const router = useRouter();
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   function capitaliseFirstLetter(string: string) {
-    return string.slice(0, 1).toUpperCase() + string.slice(1, string.length);
+    return string?.slice(0, 1).toUpperCase() + string?.slice(1, string.length);
   }
 
   const handleRemoveFriend = () => {
@@ -44,6 +49,9 @@ const SidebarList = ({ userData, updateFriendListAfterRemoving }: Props) => {
           updateFriendListAfterRemoving(userData.friends);
         })
         .catch((error) => console.log(error));
+      if (setLike !== undefined) {
+        setLike(false);
+      }
     }
   };
 

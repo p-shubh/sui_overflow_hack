@@ -2,7 +2,7 @@
 
 import { useParams } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import {v4 as uuidv4} from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import Sidebar from "@/app/components/random_chat_components/Sidebar";
 import RandomChatNavbar from "@/app/components/random_chat_components/RandomChatNavbar";
 interface ChatData {
@@ -14,13 +14,22 @@ interface ChatData {
   created_at: string;
 }
 
+export interface UserFriendInterface {
+  friends: string;
+  friendsName: string;
+  id: string;
+  userId: string;
+  userName: string;
+}
+
 const NewChat = () => {
   const [inputMessage, setInputMessage] = useState<string>("");
   const [chatData, setChatData] = useState<ChatData[]>([]);
   const [cachedUserId, setCachedUserId] = useState<string | null>(null);
-  const [isSocketOpen, setIsSocketOpen] = useState<boolean>(false);
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [like, setLike] = useState<boolean>(false);
+  // const [chatUsersList, setChatUsersList] = useState([]);
+  const [friendList, setFriendList] = useState<UserFriendInterface[]>([]);
 
   const scrollElementRef = useRef<HTMLDivElement>(null);
 
@@ -34,8 +43,6 @@ const NewChat = () => {
       let userId = localStorage.getItem("userId");
       setCachedUserId(userId);
     }
-
-    // setIsSocketOpen(true); <== to do
 
     const newSocket = new WebSocket(
       `ws://${IP_ADDRESS}/v1.0/voyager_web_socket/ws`
@@ -58,7 +65,7 @@ const NewChat = () => {
   // to scroll into view the last message
   const handleScrollIntoView = () => {
     scrollElementRef.current?.scrollIntoView({ behavior: "smooth" });
-  }
+  };
 
   useEffect(handleScrollIntoView, [chatData.length]);
 
@@ -89,9 +96,17 @@ const NewChat = () => {
 
   return (
     <div className="flex w-full h-full">
-      <Sidebar />
+      <Sidebar
+        friendList={friendList}
+        setFriendList={setFriendList}
+        setLike={setLike}
+      />
       <div className="flex flex-col justify-between h-[100vh] w-full ml-[25%] bg-[#35374B]">
-        <RandomChatNavbar like={like} setLike={setLike} />
+        <RandomChatNavbar
+          like={like}
+          setLike={setLike}
+          setFriendList={setFriendList}
+        />
         <div className="p-2 m-5 h-full overflow-auto">
           {chatData.map((data, idx) => (
             <>

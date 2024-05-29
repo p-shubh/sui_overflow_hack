@@ -1,23 +1,22 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
 import { FaUserFriends } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import SidebarList from "./SidebarList";
 import Link from "next/link";
+import { UserFriendInterface } from "@/app/voyager/random_chat/[id]/page";
 
-export interface UserFriendInterface {
-  friends: string;
-  friendsName: string;
-  id: string;
-  userId: string;
-  userName: string;
+interface Props {
+  friendList: UserFriendInterface[];
+  setFriendList: Dispatch<SetStateAction<UserFriendInterface[]>>;
+  setLike?: Dispatch<SetStateAction<boolean>>;
 }
-const Sidebar = () => {
+
+const Sidebar = ({ friendList, setFriendList, setLike }: Props) => {
   const [activeTab, setActiveTab] = useState("chat");
-  const [chatUsersList, setChatUsersList] = useState([]);
-  const [friendList, setFriendList] = useState<UserFriendInterface[]>([]);
+
   const router = useRouter();
 
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
@@ -50,18 +49,22 @@ const Sidebar = () => {
             return data;
           })
           .catch((error) => console.log(error));
-        setFriendList(userFriends);
+        if (setFriendList !== undefined) {
+          setFriendList(userFriends);
+        }
       }
     })();
     // eslint-disable-next-line
   }, []);
 
   function updateFriendListAfterRemoving(friendId: string) {
-    const currentFriendList = [...friendList];
-    const updatedFriendList = currentFriendList.filter(
-      (data) => data.friends !== friendId
-    );
-    setFriendList(updatedFriendList);
+    if (friendList !== undefined && setFriendList !== undefined) {
+      const currentFriendList = [...friendList];
+      const updatedFriendList = currentFriendList.filter(
+        (data) => data.friends !== friendId
+      );
+      setFriendList(updatedFriendList);
+    }
   }
 
   return (
@@ -102,12 +105,13 @@ const Sidebar = () => {
             <SidebarList key={idx} name={userData.name} />
           ))} */}
         {activeTab === "friends" &&
-          friendList !== null &&
+          friendList !== undefined &&
           friendList.map((userData, idx) => (
             <SidebarList
               key={idx}
               userData={userData}
               updateFriendListAfterRemoving={updateFriendListAfterRemoving}
+              setLike={setLike}
             />
           ))}
       </div>
