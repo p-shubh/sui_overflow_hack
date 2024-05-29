@@ -11,9 +11,10 @@ import { UserFriendInterface } from "@/app/voyager/random_chat/[id]/page";
 interface Props {
   friendList: UserFriendInterface[];
   setFriendList: Dispatch<SetStateAction<UserFriendInterface[]>>;
+  setLike?: Dispatch<SetStateAction<boolean>>;
 }
 
-const Sidebar = ({ friendList, setFriendList }: Props) => {
+const Sidebar = ({ friendList, setFriendList, setLike }: Props) => {
   const [activeTab, setActiveTab] = useState("chat");
 
   const router = useRouter();
@@ -110,6 +111,7 @@ const Sidebar = ({ friendList, setFriendList }: Props) => {
               key={idx}
               userData={userData}
               updateFriendListAfterRemoving={updateFriendListAfterRemoving}
+              setLike={setLike}
             />
           ))}
       </div>

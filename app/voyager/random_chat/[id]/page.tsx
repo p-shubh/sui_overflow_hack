@@ -96,7 +96,11 @@ const NewChat = () => {
 
   return (
     <div className="flex w-full h-full">
-      <Sidebar friendList={friendList} setFriendList={setFriendList} />
+      <Sidebar
+        friendList={friendList}
+        setFriendList={setFriendList}
+        setLike={setLike}
+      />
       <div className="flex flex-col justify-between h-[100vh] w-full ml-[25%] bg-[#35374B]">
         <RandomChatNavbar
           like={like}
