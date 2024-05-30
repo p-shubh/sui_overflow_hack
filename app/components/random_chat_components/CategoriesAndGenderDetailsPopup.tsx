@@ -109,30 +109,39 @@ const CategoriesAndGenderDetailsPopup = () => {
           Choose gender
         </h6>
         <div className="flex justify-around gap-3">
-          <Image
-            src="/female.png"
-            height={30}
-            width={40}
-            alt="profile-picture"
-            className="hover:border-[#EE99C2] hover:border-2 cursor-pointer"
-            onClick={() => setGender("female")}
-          />
-          <Image
-            src="/male.png"
-            height={30}
-            width={40}
-            alt="profile-picture"
-            className="hover:border-[#5755FE] hover:border-2 cursor-pointer"
-            onClick={() => setGender("male")}
-          />
-          <Image
-            src="/both_gender.png"
-            height={30}
-            width={40}
-            alt="profile-picture"
-            className="hover:border-[#3AA6B9] hover:border-2 cursor-pointer"
-            onClick={() => setGender("both")}
-          />
+          <div className="flex flex-col items-center">
+            <Image
+              src="/female.png"
+              height={30}
+              width={40}
+              alt="profile-picture"
+              className="hover:border-[#EE99C2] hover:border-2 cursor-pointer"
+              onClick={() => setGender("female")}
+            />
+            <h6 className="text-gray-200 text-sm mt-2">female</h6>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/male.png"
+              height={30}
+              width={40}
+              alt="profile-picture"
+              className="hover:border-[#5755FE] hover:border-2 cursor-pointer"
+              onClick={() => setGender("male")}
+            />
+            <h6 className="text-gray-200 text-sm mt-2">male</h6>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/both_gender.png"
+              height={30}
+              width={40}
+              alt="profile-picture"
+              className="hover:border-[#3AA6B9] hover:border-2 cursor-pointer"
+              onClick={() => setGender("both")}
+            />
+            <h6 className="text-gray-200 text-sm mt-2">both</h6>
+          </div>
         </div>
       </div>
       <div className="mt-5">
