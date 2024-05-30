@@ -24,7 +24,7 @@ const CategoriesAndGenderDetailsPopup = () => {
   const [alert, setAlert] = useState<boolean>(false);
 
   // check for gender also (in future)
-  const [gender, setGender] = useState<string>("both");
+  const [gender, setGender] = useState<string>("");
 
   const router = useRouter();
 
@@ -107,10 +107,10 @@ const CategoriesAndGenderDetailsPopup = () => {
   return (
     <>
       {alert && (
-          <Alert
-            message="Oops! We couldn't find a user matching your search"
-            setFunction={setAlert}
-          />
+        <Alert
+          message="Oops! We couldn't find a user matching your search"
+          setFunction={setAlert}
+        />
       )}
       <div className="flex flex-col justify-between bg-[#222831] rounded p-4 w-[30%] h-[auto] m-auto">
         <MdOutlineCancel className="self-end text-2xl font-md text-gray-400 cursor-pointer hover:text-gray-50" />
@@ -125,7 +125,9 @@ const CategoriesAndGenderDetailsPopup = () => {
                 height={30}
                 width={40}
                 alt="profile-picture"
-                className="hover:border-[#EE99C2] hover:border-2 cursor-pointer"
+                className={`hover:border-[#EE99C2] hover:border-2 cursor-pointer ${
+                  gender === "female" && "border-[#EE99C2] border-2"
+                }`}
                 onClick={() => setGender("female")}
               />
               <h6 className="text-gray-200 text-sm mt-2">female</h6>
@@ -136,7 +138,9 @@ const CategoriesAndGenderDetailsPopup = () => {
                 height={30}
                 width={40}
                 alt="profile-picture"
-                className="hover:border-[#5755FE] hover:border-2 cursor-pointer"
+                className={`hover:border-[#5755FE] hover:border-2 cursor-pointer ${
+                  gender === "male" && "border-[#5755FE] border-2"
+                }`}
                 onClick={() => setGender("male")}
               />
               <h6 className="text-gray-200 text-sm mt-2">male</h6>
@@ -147,7 +151,9 @@ const CategoriesAndGenderDetailsPopup = () => {
                 height={30}
                 width={40}
                 alt="profile-picture"
-                className="hover:border-[#3AA6B9] hover:border-2 cursor-pointer"
+                className={`hover:border-[#3AA6B9] hover:border-2 cursor-pointer ${
+                  gender === "both" && "border-[#3AA6B9] border-2"
+                }`}
                 onClick={() => setGender("both")}
               />
               <h6 className="text-gray-200 text-sm mt-2">both</h6>
