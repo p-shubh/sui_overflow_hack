@@ -3,8 +3,8 @@ name: "Build and Push to GHCR"
 on:
   push:
     branches: 
-      - main
-      - frontend
+      - main1
+      - frontend1
 
 jobs:
   Deploy:
@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Build and Push Backend Docker Image
-        if: github.ref == 'refs/heads/main' 
+        if: github.ref == 'refs/heads/main1' 
         run: |
           export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
           export TAG=$([[ $CURRENT_BRANCH == $(basename ${{ github.ref }}) ]] && echo $CURRENT_BRANCH || echo "latest")
@@ -33,7 +33,7 @@ jobs:
           docker push $GITHUB_BRANCH_IMAGE
 
       - name: Build and Push for Frontend server
-        if: github.ref == 'refs/heads/frontend' 
+        if: github.ref == 'refs/heads/frontend1' 
         env:
           PROD_ENV_FILE: ${{ secrets.ENV_FILE }}
         run: |
@@ -52,7 +52,7 @@ jobs:
           rm -rf .env
 
       - name: Deploy on DEV server 
-        if: github.ref == 'refs/heads/main' 
+        if: github.ref == 'refs/heads/main1' 
         uses: appleboy/ssh-action@v0.1.7
         with:         
           host: ${{ secrets.DEV_REMOTE_SERVER_ADDRESS }}
@@ -67,7 +67,7 @@ jobs:
             sudo docker pull ghcr.io/p-shubh/sui_overflow_hack:main
             sudo docker run --name="sui_backend" --env-file=.env -p 8181:6060 --net=bridge -d ghcr.io/p-shubh/sui_overflow_hack:main
       - name: Deploy on Frontend server 
-        if: github.ref == 'refs/heads/frontend' 
+        if: github.ref == 'refs/heads/frontend1' 
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.DEV_REMOTE_SERVER_ADDRESS }}
