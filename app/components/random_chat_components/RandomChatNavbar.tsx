@@ -116,11 +116,11 @@ const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
       </div>
       <div>
         {like && (
-          <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 cursor-pointer">
-            <span
-              className="font-medium text-gray-600 dark:text-gray-300"
-              onClick={() => router.push(`/voyager/profile/${friendId}`)}
-            >
+          <div
+            className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600 cursor-pointer"
+            onClick={() => router.push(`/voyager/profile/${friendId}`)}
+          >
+            <span className="font-medium text-gray-600 dark:text-gray-300">
               {profileName.slice(0, 1).toUpperCase()}
             </span>
           </div>
