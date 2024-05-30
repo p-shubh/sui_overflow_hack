@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { MdOutlineCancel } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import { Alert } from "../reusable/ALert";
 
 interface RandomCandidate {
   id: string;
@@ -20,8 +21,10 @@ const CategoriesAndGenderDetailsPopup = () => {
     string | undefined
   >();
   const [interestValue, setInterestValue] = useState<string | undefined>();
+  const [alert, setAlert] = useState<boolean>(false);
+
   // check for gender also (in future)
-  const [gender, setGender] = useState<string>("both")
+  const [gender, setGender] = useState<string>("both");
 
   const router = useRouter();
 
@@ -42,10 +45,10 @@ const CategoriesAndGenderDetailsPopup = () => {
     // find a user for chat
     if (typeof window !== undefined) {
       userId = localStorage.getItem("userId");
-      subId = localStorage.getItem("subId")
+      subId = localStorage.getItem("subId");
     }
     updateUserData();
-  
+
     const list: RandomCandidate[] = await fetch(
       `http://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/${interestValue}/${userId}`,
       {
@@ -62,12 +65,12 @@ const CategoriesAndGenderDetailsPopup = () => {
         return response.json();
       })
       .then((data) => {
-        console.log(data)
+        console.log(data);
         return data;
       })
       .catch((error) => console.log("error getting data", error));
     if (list.length <= 0) {
-      alert("No user found");
+      setAlert(true);
     } else {
       const randomNumber = Math.floor(Math.random() * list.length);
       const randomCandidateData = list[randomNumber];
@@ -102,99 +105,107 @@ const CategoriesAndGenderDetailsPopup = () => {
   }
 
   return (
-    <div className="flex flex-col justify-between bg-[#222831] rounded p-4 w-[30%] h-[auto] m-auto">
-      <MdOutlineCancel className="self-end text-2xl font-md text-gray-400 cursor-pointer hover:text-gray-50" />
-      <div>
-        <h6 className="font-md text-sm mb-4 text-[#7AA2E3] text-center">
-          Choose gender
-        </h6>
-        <div className="flex justify-around gap-3">
-          <div className="flex flex-col items-center">
-            <Image
-              src="/female.png"
-              height={30}
-              width={40}
-              alt="profile-picture"
-              className="hover:border-[#EE99C2] hover:border-2 cursor-pointer"
-              onClick={() => setGender("female")}
-            />
-            <h6 className="text-gray-200 text-sm mt-2">female</h6>
-          </div>
-          <div className="flex flex-col items-center">
-            <Image
-              src="/male.png"
-              height={30}
-              width={40}
-              alt="profile-picture"
-              className="hover:border-[#5755FE] hover:border-2 cursor-pointer"
-              onClick={() => setGender("male")}
-            />
-            <h6 className="text-gray-200 text-sm mt-2">male</h6>
-          </div>
-          <div className="flex flex-col items-center">
-            <Image
-              src="/both_gender.png"
-              height={30}
-              width={40}
-              alt="profile-picture"
-              className="hover:border-[#3AA6B9] hover:border-2 cursor-pointer"
-              onClick={() => setGender("both")}
-            />
-            <h6 className="text-gray-200 text-sm mt-2">both</h6>
-          </div>
-        </div>
-      </div>
-      <div className="mt-5">
-        <h6 className="font-md text-sm mb-3 text-[#7AA2E3] text-center">
-          Match with interests
-        </h6>
-        <div className="flex flex-wrap gap-2 bg-muted rounded-md p-2 py-4 bg-[#31363F] overflow-x-auto">
-          {interestValue !== undefined && (
-            <div className="inline-flex items-center justify-center px-2.5 py-1 text-sm font-medium rounded-full bg-gray-300">
-              {interestValue}
-              <button className="flex-shrink-0 ml-1.5 h-3.5 w-3.5 rounded-full inline-flex items-center justify-center text-card bg-card-foreground hover:bg-card-foreground/80 focus:bg-card-foreground-hover">
-                <span className="sr-only">Remove</span>
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  strokeWidth="0"
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                  height="10"
-                  width="10"
-                  xmlns="http://www.w3.org/2000/svg"
-                  onClick={() => setInterestValue(undefined)}
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          )}
-
-          <input
-            type="text"
-            className="w-32 select-auto sm:text-sm text-sm rounded-md bg-popover dark:bg-placeholder p-1 focus-visible:outline-none inline-flex bg-gray-200"
-            maxLength={32}
-            placeholder="Add an interest..."
-            onChange={(event) => {
-              setInterestInputValue(event.target.value);
-            }}
-            onKeyDown={handleInterestValue}
-            value={interestInputValue}
+    <>
+      {alert && (
+          <Alert
+            message="Oops! We couldn't find a user matching your search"
+            setFunction={setAlert}
           />
+      )}
+      <div className="flex flex-col justify-between bg-[#222831] rounded p-4 w-[30%] h-[auto] m-auto">
+        <MdOutlineCancel className="self-end text-2xl font-md text-gray-400 cursor-pointer hover:text-gray-50" />
+        <div>
+          <h6 className="font-md text-sm mb-4 text-[#7AA2E3] text-center">
+            Choose gender
+          </h6>
+          <div className="flex justify-around gap-3">
+            <div className="flex flex-col items-center">
+              <Image
+                src="/female.png"
+                height={30}
+                width={40}
+                alt="profile-picture"
+                className="hover:border-[#EE99C2] hover:border-2 cursor-pointer"
+                onClick={() => setGender("female")}
+              />
+              <h6 className="text-gray-200 text-sm mt-2">female</h6>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/male.png"
+                height={30}
+                width={40}
+                alt="profile-picture"
+                className="hover:border-[#5755FE] hover:border-2 cursor-pointer"
+                onClick={() => setGender("male")}
+              />
+              <h6 className="text-gray-200 text-sm mt-2">male</h6>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/both_gender.png"
+                height={30}
+                width={40}
+                alt="profile-picture"
+                className="hover:border-[#3AA6B9] hover:border-2 cursor-pointer"
+                onClick={() => setGender("both")}
+              />
+              <h6 className="text-gray-200 text-sm mt-2">both</h6>
+            </div>
+          </div>
         </div>
+        <div className="mt-5">
+          <h6 className="font-md text-sm mb-3 text-[#7AA2E3] text-center">
+            Match with interests
+          </h6>
+          <div className="flex flex-wrap gap-2 bg-muted rounded-md p-2 py-4 bg-[#31363F] overflow-x-auto">
+            {interestValue !== undefined && (
+              <div className="inline-flex items-center justify-center px-2.5 py-1 text-sm font-medium rounded-full bg-gray-300">
+                {interestValue}
+                <button className="flex-shrink-0 ml-1.5 h-3.5 w-3.5 rounded-full inline-flex items-center justify-center text-card bg-card-foreground hover:bg-card-foreground/80 focus:bg-card-foreground-hover">
+                  <span className="sr-only">Remove</span>
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 20 20"
+                    aria-hidden="true"
+                    height="10"
+                    width="10"
+                    xmlns="http://www.w3.org/2000/svg"
+                    onClick={() => setInterestValue(undefined)}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                      clipRule="evenodd"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            )}
+
+            <input
+              type="text"
+              className="w-32 select-auto sm:text-sm text-sm rounded-md bg-popover dark:bg-placeholder p-1 focus-visible:outline-none inline-flex bg-gray-200"
+              maxLength={32}
+              placeholder="Add an interest..."
+              onChange={(event) => {
+                setInterestInputValue(event.target.value);
+              }}
+              onKeyDown={handleInterestValue}
+              value={interestInputValue}
+            />
+          </div>
+        </div>
+        <button
+          className="bg-[#4ea5ec] mt-3 hover:bg-[#4890cb] text-white font-bold py-2 px-4 rounded"
+          onClick={handleStartNewChat}
+        >
+          Start new chat
+        </button>
       </div>
-      <button
-        className="bg-[#4ea5ec] mt-3 hover:bg-[#4890cb] text-white font-bold py-2 px-4 rounded"
-        onClick={handleStartNewChat}
-      >
-        Start new chat
-      </button>
-    </div>
+    </>
   );
 };
 

@@ -100,7 +100,7 @@ const NewChat = () => {
         setFriendList={setFriendList}
         setLike={setLike}
       />
-      <div className="flex flex-col justify-between h-[100vh] w-full ml-[25%] bg-[#35374B]">
+      <div className="flex flex-col justify-between h-[100vh] w-[75%] ml-[25%] bg-[#35374B]">
         <RandomChatNavbar
           like={like}
           setLike={setLike}

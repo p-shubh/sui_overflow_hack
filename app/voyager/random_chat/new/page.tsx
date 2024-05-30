@@ -11,7 +11,7 @@ const NewRandomChat = () => {
   return (
     <div className="flex w-full h-full">
       <Sidebar friendList={friendList} setFriendList={setFriendList} />
-      <div className="flex flex-col justify-between h-[100vh] w-full ml-[25%] bg-[#35374B]">
+      <div className="flex flex-col justify-between h-[100vh] w-[75%] ml-[25%] bg-[#35374B]">
         <div className="p-2 m-5 h-full overflow-auto">
           <CategoriesAndGenderDetailsPopup />
         </div>
