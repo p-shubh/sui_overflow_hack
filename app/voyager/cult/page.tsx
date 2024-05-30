@@ -3,7 +3,10 @@
 import HomeNavbar from "@/app/components/reusable/HomeNavbar";
 import React from "react";
 import Image from "next/image";
-import { CULT_PAGE_COMMUNITIES_IMAGE, CULT_PAGE_KEYFEATURES_IMAGE } from "@/app/utils/constants";
+import {
+  CULT_PAGE_COMMUNITIES_IMAGE,
+  CULT_PAGE_KEYFEATURES_IMAGE,
+} from "@/app/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import Footer from "@/app/components/reusable/Footer";
 
@@ -343,12 +346,12 @@ const Cult = () => {
    * Assemble a zkLogin signature and submit a transaction
    * https://docs.sui.io/concepts/cryptography/zklogin#assemble-the-zklogin-signature-and-submit-the-transaction
    */
-  const handleJoinClick = async (account: AccountData) => {
-    await sendTransaction(account, () => {
-      router.push("/voyager/communities"); // Navigate to the success page
-    });
-  };
-  async function sendTransaction(account: AccountData, callback: () => void) {
+  // const handleJoinClick = async (account: AccountData) => {
+  //   // await sendTransaction(account, () => {
+  //   //   router.push("/voyager/communities"); // Navigate to the success page
+  //   // });
+  // };
+  async function sendTransaction(account: AccountData) {
     setModalContent("🚀 Sending transaction...");
     console.log("[sendTransaction] Starting transaction");
 
@@ -419,9 +422,9 @@ const Cult = () => {
           result
         );
         fetchBalances([account]);
-        if (callback) {
-          callback(); // Navigate to the success page
-        }
+        // if (callback) {
+        //   callback(); // Navigate to the success page
+        // }
       })
       .catch((error: unknown) => {
         console.warn(
@@ -592,6 +595,68 @@ const Cult = () => {
             className="mt-10"
           />
         </div>
+        {/* to get gas fee --------------- */}
+        {/* {accounts.current.map((acct) => {
+          const balance = balances.get(acct.userAddr);
+          const explorerLink = makeExplorerUrl(
+            NETWORK,
+            "address",
+            acct.userAddr
+          );
+          return (
+            <div className="account" key={acct.userAddr}>
+              <div>
+                <label className={`provider ${acct.provider}`}>
+                  {acct.provider}
+                </label>
+              </div>
+              <div>
+                Address:{" "}
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={explorerLink}
+                >
+                  {shortenSuiAddress(acct.userAddr, 6, 6, "0x", "...")}
+                </a>
+              </div>
+              <div>User ID: {acct.sub}</div>
+              <div>
+                Balance:
+                {typeof balance === "undefined"
+                  ? "(loading)"
+                  : `${balance} SUI`}
+              </div>
+              <button
+                className={`btn-send ${!balance ? "disabled" : ""}`}
+                disabled={!balance}
+                onClick={() => {
+                  sendTransaction(acct);
+                }}
+              >
+                Send transaction
+              </button>
+              {balance === undefined && (
+                <button
+                  className="btn-faucet"
+                  onClick={() => {
+                    requestSuiFromFaucet(NETWORK, acct.userAddr);
+                    setModalContent(
+                      "💰 Requesting SUI from faucet. This will take a few seconds..."
+                    );
+                    setTimeout(() => {
+                      setModalContent("");
+                    }, 3000);
+                  }}
+                >
+                  Use faucet
+                </button>
+              )}
+              <hr />
+            </div>
+          );
+        })} */}
+        {/* ------------------------- */}
 
         <div className="mt-24 row-2 flex flex-col text-center items-centert">
           <div className="flex flex-col items-center text-center">
@@ -610,7 +675,6 @@ const Cult = () => {
                 key={uuidv4()}
                 className="flex justify-center flex-col mb-8 "
               >
-
                 <Image
                   src={data.src}
                   height={300}
@@ -624,14 +688,12 @@ const Cult = () => {
                 >
                   {data.community_interest}
                 </div>
-                <div
-                  className="mt-2 text-lg font-space-grotesk text-gray-500 "
-                >
-                  <a href="/voyager/communities"><button
-                    className="bg-[#2a73ae] hover:bg-[#101521] text-white font-bold py-2 px-6 rounded-lg"
-                  >
-                    Join Now
-                  </button></a>
+                <div className="mt-2 text-lg font-space-grotesk text-gray-500 ">
+                  <a href="/voyager/communities">
+                    <button className="bg-[#2a73ae] hover:bg-[#101521] text-white font-bold py-2 px-6 rounded-lg">
+                      Join Now
+                    </button>
+                  </a>
                 </div>
               </div>
             ))}
@@ -644,14 +706,12 @@ const Cult = () => {
           Key Features
         </h1>
         <div className=" row-2 flex flex-col text-center items-centert">
-
           <div className="flex justify-center mt-10 mx-20 gap-4 ">
             {CULT_PAGE_KEYFEATURES_IMAGE.map((data) => (
               <div
                 key={uuidv4()}
                 className="flex justify-center flex-col mb-8 "
               >
-
                 <Image
                   src={data.src}
                   height={400}
@@ -669,8 +729,6 @@ const Cult = () => {
             ))}
           </div>
         </div>
-
-      
 
         <div className="mx-20 p-8 mt-20">
           <div className="">
