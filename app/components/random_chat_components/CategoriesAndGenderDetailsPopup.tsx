@@ -163,6 +163,7 @@ const CategoriesAndGenderDetailsPopup = () => {
                   height="10"
                   width="10"
                   xmlns="http://www.w3.org/2000/svg"
+                  onClick={() => setInterestValue(undefined)}
                 >
                   <path
                     fillRule="evenodd"
