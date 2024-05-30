@@ -23,11 +23,12 @@ const SidebarList = ({
     return string?.slice(0, 1).toUpperCase() + string?.slice(1, string.length);
   }
 
-  const handleRemoveFriend = () => {
+  const handleRemoveFriend = (
+    event: React.MouseEvent<SVGElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
     if (typeof window !== undefined) {
       const userId = localStorage.getItem("userId");
-      console.log(userId, userData.friends);
-      // todo
       fetch(
         `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}/${userData.friends}`,
         {
@@ -58,8 +59,8 @@ const SidebarList = ({
   return (
     <div className="flex justify-between items-center my-1 px-3 py-2 text-white bg-[#393646] hover:bg-[#4e516d] rounded">
       <li
-        className="list-none font-medium text-lg"
-        onClick={() => router.push("/voyager/random_chat/randomUserId")}
+        className="list-none font-medium text-lg w-full"
+        onClick={() => router.push(`/voyager/random_chat/${userData.friends}`)}
       >
         {capitaliseFirstLetter(userData.friendsName)}
       </li>
