@@ -1,13 +1,13 @@
 "use client";
 import React, { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { IoChatbubbleEllipsesOutline } from "react-icons/io5";
-import { CiEdit } from "react-icons/ci";
 import { FaUserFriends } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import SidebarList from "./SidebarList";
 import Link from "next/link";
 import { UserFriendInterface } from "@/app/voyager/random_chat/[id]/page";
 import { v4 as uuidv4 } from "uuid";
+import { RiChatNewLine } from "react-icons/ri";
 
 interface Props {
   friendList: UserFriendInterface[];
@@ -131,12 +131,12 @@ const Sidebar = ({ friendList, setFriendList, setLike }: Props) => {
       {/* ----------------------------- */}
       {/* to change routing */}
       <button
-        className="fixed flex items-center bottom-0 left-0 w-[25%] mx-auto p-2 rounded font-md text-lg bg-black text-gray-50 hover:bg-[#201828] px-3"
-        onClick={() => router.push("/voyager/profile")}
+        className="fixed flex items-center justify-center bottom-0 left-0 w-[25%] mx-auto p-2 rounded font-md text-lg bg-black text-gray-50 hover:bg-[#201828] px-3"
+        onClick={() => router.push("/voyager/random_chat/new")}
       >
-        <span className="ml-2">Edit your profile now</span>
+        <span className="ml-2">Start new chat</span>
         <span className="ml-5 font-semibold text-2xl">
-          <CiEdit />
+          <RiChatNewLine />
         </span>
       </button>
     </div>

@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { MdOutlineCancel } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { Alert } from "../reusable/ALert";
 
@@ -113,7 +112,6 @@ const CategoriesAndGenderDetailsPopup = () => {
         />
       )}
       <div className="flex flex-col justify-between bg-[#222831] rounded p-4 w-[30%] h-[auto] m-auto">
-        <MdOutlineCancel className="self-end text-2xl font-md text-gray-400 cursor-pointer hover:text-gray-50" />
         <div>
           <h6 className="font-md text-sm mb-4 text-[#7AA2E3] text-center">
             Choose gender
@@ -190,7 +188,6 @@ const CategoriesAndGenderDetailsPopup = () => {
                 </button>
               </div>
             )}
-
             <input
               type="text"
               className="w-32 select-auto sm:text-sm text-sm rounded-md bg-popover dark:bg-placeholder p-1 focus-visible:outline-none inline-flex bg-gray-200"
