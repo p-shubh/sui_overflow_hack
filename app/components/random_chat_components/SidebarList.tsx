@@ -30,7 +30,7 @@ const SidebarList = ({
     if (typeof window !== undefined) {
       const userId = localStorage.getItem("userId");
       fetch(
-        `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}/${userData.friends}`,
+        `https://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}/${userData.friends}`,
         {
           method: "DELETE",
           headers: {

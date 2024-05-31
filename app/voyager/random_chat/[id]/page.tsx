@@ -35,7 +35,7 @@ const NewChat = () => {
   const params = useParams();
   const receiverUserId = params.id;
 
-  const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
+  const IP_ADDRESS = process.env.NEXT_PUBLIC_WEB_SOCKET_SERVER_IP_ADDRESS;
 
   useEffect(() => {
     if (typeof window !== undefined) {

@@ -96,7 +96,7 @@ const Cult = () => {
         setUserAddress(userData.userAddr);
         let getUserData;
         getUserData = await fetch(
-          `http://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${userData.sub}`,
+          `https://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${userData.sub}`,
           {
             method: "GET",
             headers: {
@@ -127,7 +127,7 @@ const Cult = () => {
             name: "",
             provider: userData,
           };
-          fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
+          fetch(`https://${IP_ADDRESS}/v1.0/voyager/user`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

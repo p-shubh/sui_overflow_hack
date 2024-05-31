@@ -42,7 +42,7 @@ const EditProfilePopup = ({ setIsEditProfileClicked, userAddress, subId }: Props
       interest: categoryValue.interests,
       location: "",
     };
-    fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
+    fetch(`https://${IP_ADDRESS}/v1.0/voyager/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

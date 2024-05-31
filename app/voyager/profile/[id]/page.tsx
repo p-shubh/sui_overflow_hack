@@ -92,7 +92,7 @@ const FriendProfile = () => {
     (async function () {
       // send a get request to get data of user saved in db.
       getUserData = await fetch(
-        `http://${IP_ADDRESS}/v1.0/voyager/user/${params.id}`,
+        `https://${IP_ADDRESS}/v1.0/voyager/user/${params.id}`,
         {
           method: "GET",
           headers: {

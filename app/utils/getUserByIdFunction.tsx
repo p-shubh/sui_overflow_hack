@@ -3,7 +3,7 @@ const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 export async function getUserByIdFunction(userId: string | null) {
   // send a get request to get data of user saved in db.
   const response = await fetch(
-    `http://${IP_ADDRESS}/v1.0/voyager/user/${userId}`,
+    `https://${IP_ADDRESS}/v1.0/voyager/user/${userId}`,
     {
       method: "GET",
       headers: {

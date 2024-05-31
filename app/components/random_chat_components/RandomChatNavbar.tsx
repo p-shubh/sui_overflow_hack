@@ -45,7 +45,7 @@ const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
       friends: friendId,
     };
 
-    await fetch(`http://${IP_ADDRESS}/v1.0/voyager/user_friends`, {
+    await fetch(`https://${IP_ADDRESS}/v1.0/voyager/user_friends`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const RandomChatNavbar = ({ like, setLike, setFriendList }: Props) => {
 
   async function getUpdatedFriendList() {
     const userFriends: UserFriendInterface[] = await fetch(
-      `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${cachedUserId}`,
+      `https://${IP_ADDRESS}/v1.0/voyager/user_friends/${cachedUserId}`,
       {
         method: "GET",
         headers: {

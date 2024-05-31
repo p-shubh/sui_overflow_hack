@@ -44,7 +44,7 @@ const Profile = () => {
     (async function () {
       // send a get request to get data of user saved in db.
       getUserData = await fetch(
-        `http://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${subId}`,
+        `https://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${subId}`,
         {
           method: "GET",
           headers: {

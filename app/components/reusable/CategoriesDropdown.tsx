@@ -36,7 +36,7 @@ const CategoriesDropdown = ({
     if (!isMenuOpen) {
       try {
         const response = await fetch(
-          `http://${IP_ADDRESS}/v1.0/voyager/categories/${category}`
+          `https://${IP_ADDRESS}/v1.0/voyager/categories/${category}`
         );
         const list = await response.json();
         if (category === "interests") {

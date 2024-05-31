@@ -33,7 +33,7 @@ const Sidebar = ({ friendList, setFriendList, setLike }: Props) => {
       if (typeof window !== undefined) {
         const userId = localStorage.getItem("userId");
         const userFriends: UserFriendInterface[] = await fetch(
-          `http://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}`,
+          `https://${IP_ADDRESS}/v1.0/voyager/user_friends/${userId}`,
           {
             method: "GET",
             headers: {

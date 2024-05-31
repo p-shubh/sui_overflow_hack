@@ -95,7 +95,7 @@ export const Zklogin = ({
         let getUserData;
         // send a get request to get data of user saved in db.
         getUserData = await fetch(
-          `http://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${userData.sub}`,
+          `https://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${userData.sub}`,
           {
             method: "GET",
             headers: {
@@ -135,7 +135,7 @@ export const Zklogin = ({
           if (typeof window !== "undefined") {
             localStorage.setItem("userId", newUserData.id);
           }
-          fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
+          fetch(`https://${IP_ADDRESS}/v1.0/voyager/user`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
