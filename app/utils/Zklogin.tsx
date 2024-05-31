@@ -86,6 +86,9 @@ export const Zklogin = ({
     (async function () {
       await completeZkLogin();
       const userData = accounts.current[0];
+      if (typeof window !== undefined && userData !== undefined) {
+        localStorage.setItem("subId", userData.sub);
+      }
       if (userData) {
         setUserSubId(userData.sub);
         setUserAddress(userData.userAddr);
