@@ -43,9 +43,9 @@ const Raids = () => {
                         <h1 className="text-5xl mt-60 text-gray-800">
                             Embark on Unforgettable Adventures
                         </h1>
-                        <button className="mt-5 px-5 py-3 text-white bg-[#101521] hover:bg-[#2a73ae] rounded-lg shadow-md">
+                        <a href="/voyager/soloraids"><button className="mt-5 px-5 py-3 text-white bg-[#101521] hover:bg-[#2a73ae] rounded-lg shadow-md">
                             Start your adventure
-                        </button>
+                        </button></a>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@ const Raids = () => {
                 <div className="bg-[#D7E58D] min-h-screen p-10 mt-20">
                     <div className="grid grid-cols-1 md:grid-cols-2">
                         <div className="flex flex-col items-center p-5">
-                            <a href="/voyager/soloraids"><button className="text-3xl font-bold mb-2">Solo raids<span className="text-3xl">↗</span></button></a>
+                            <button className="text-3xl font-bold mb-2">Solo raids<span className="text-3xl">↗</span></button>
                             <img src="/solo.png" className="w-96 h-96 object-cover rounded-3xl mb-4 mt-4" />
                         </div>
                         <div className="flex flex-col items-center p-5">

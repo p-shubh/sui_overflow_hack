@@ -285,12 +285,12 @@ const FriendProfile = () => {
     // Sign the transaction bytes with the ephemeral private key
     const txb = new TransactionBlock();
     const packageObjectId =
-      "0x060e7b1582b32e66db840e3c0ddd54c85adea2caaa43de1e294b2634b23be223";
+      "0x4837d0a64ebd11f83ce43748d98e6f7b9bb3a50998ae05a8da9541406b343802";
     txb.moveCall({
       target: `${packageObjectId}::voyagerprofile::update_hearts`,
       arguments: [
         txb.pure(
-          "0xad12a06a5a3a96dd3868debfc29a284710f160b4e2c17cd4871825e177015475"
+          "0xebfad0fc2267231aae45766f960f0c899d1a87ee5ae31495a9270200766f3e0a"
         ),
         txb.pure(heartCount + 1),
       ],
