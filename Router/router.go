@@ -49,10 +49,10 @@ func HandleRequest() {
 	})
 	ApplyRoutes(&ginApp.RouterGroup)
 
-	certificate := `certificate.crt`
-	privateKey := `private.key`
+	// certificate := `certificate.crt`
+	// privateKey := `private.key`
 
-	ginApp.RunTLS(":6060", certificate, privateKey)
+	ginApp.Run(":6060")
 }
 
 func ApplyRoutes(r *gin.RouterGroup) {
