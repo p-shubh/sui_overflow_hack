@@ -80,6 +80,12 @@ const Navbar = () => {
         >
           Raids
         </Link>
+        <Link
+          href={isUserLoggedIn ? "/swapusdc" : "/"}
+          className="hover:text-gray-600"
+        >
+          Swap USDC
+        </Link>
         <div className="hidden lg:flex justify-center items-center gap-2">
           {isUserLoggedIn ? (
             <div className="flex">
@@ -132,29 +138,30 @@ const Navbar = () => {
       {menuOpen && (
         <div className="md:hidden absolute top-16 right-0 bg-white w-full shadow-lg py-4">
           <Link
-            href="/"
-            className="block px-4 py-2 text-black font-semibold hover:text-gray-700"
-          >
-            Home
-          </Link>
-          <Link
-            href="/"
-            className="block px-4 py-2 text-black font-semibold hover:text-gray-700"
-          >
-            About
-          </Link>
-          <Link
-            href="/"
-            className="block px-4 py-2 text-black font-semibold hover:text-gray-700"
-          >
-            Features
-          </Link>
-          <Link
-            href="/"
-            className="block px-4 py-2 text-black font-semibold hover:text-gray-700"
-          >
-            Testimonials
-          </Link>
+          href={isUserLoggedIn ? "/voyager/random_chat/new" : "/"}
+          className="block px-4 py-2 text-black font-semibold hover:text-gray-700"
+        >
+          Meet New
+        </Link>
+        <Link
+          href={isUserLoggedIn ? "/voyager/cult" : "/"}
+          className="block px-4 py-2 text-black font-semibold hover:text-gray-700"
+
+        >
+          Cults
+        </Link>
+        <Link
+          href={isUserLoggedIn ? "/voyager/raids" : "/"}
+          className="block px-4 py-2 text-black font-semibold hover:text-gray-700"
+        >
+          Raids
+        </Link>
+        <Link
+          href={isUserLoggedIn ? "/swapusdc" : "/"}
+          className="block px-4 py-2 text-black font-semibold hover:text-gray-700"
+        >
+          Swap USDC
+        </Link>
           {isUserLoggedIn ? (
             <div className="flex">
               <Link

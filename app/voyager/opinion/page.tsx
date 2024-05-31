@@ -17,8 +17,8 @@ const Opinion = () => {
                         className="p-2 rounded-full border border-gray-300 w-1/2"
                     />
                     <div>
-                        <button className="bg-white rounded-full mr-2 font-bold"><CommunityDropdown /></button>
-                        <button className="bg-white p-2 px-8 font-bold rounded-full">+ Create</button>
+                        {/* <button className="bg-white rounded-full mr-2 font-bold"><CommunityDropdown /></button> */}
+                        <a href="/voyager/createOpinion"><button className="bg-white p-2 px-8 font-bold rounded-full">+ Create</button></a>
                     </div>
                 </div>
 
@@ -33,7 +33,18 @@ const Opinion = () => {
                             <button>↓</button>
                             <button className="ml-4">10</button>
                         </div>
-                        <button className="bg-white p-2 px-8 rounded-full">Society Spot</button>
+                        <button className="bg-white p-2 px-8 rounded-full">Soumalya</button>
+                    </div>
+                </div>
+                <div className="bg-[#EDF5C1] p-8 pr-20 mb-4 rounded-lg mx-32 mt-10">
+                    <h2 className="text-2xl font-bold mb-2">5 SUI</h2>
+                    <div className="flex justify-between items-center">
+                        <div className="flex items-center">
+                            <button className="mr-2">↑ 5</button>
+                            <button>↓</button>
+                            <button className="ml-4">10</button>
+                        </div>
+                        <button className="bg-white p-2 px-8 rounded-full">Shilpa</button>
                     </div>
                 </div>
                 <div className="bg-[#EDF5C1] p-8 pr-20 mb-4 rounded-lg mx-32 mt-10">
@@ -47,7 +58,7 @@ const Opinion = () => {
                             <button>↓</button>
                             <button className="ml-4">10</button>
                         </div>
-                        <button className="bg-white p-2 px-8 rounded-full">Unity Hub</button>
+                        <button className="bg-white p-2 px-8 rounded-full">Shubham</button>
                     </div>
                 </div>
 

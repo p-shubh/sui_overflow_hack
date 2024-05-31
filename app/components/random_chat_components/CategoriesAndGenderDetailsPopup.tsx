@@ -47,7 +47,7 @@ const CategoriesAndGenderDetailsPopup = () => {
       subId = localStorage.getItem("subId");
     }
     updateUserData();
-
+    console.log("interestValue", interestValue);
     const list: RandomCandidate[] = await fetch(
       `https://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/${interestValue}/${userId}`,
       {
@@ -176,7 +176,7 @@ const CategoriesAndGenderDetailsPopup = () => {
                     aria-hidden="true"
                     height="10"
                     width="10"
-                    xmlns="https://www.w3.org/2000/svg"
+                    xmlns="http://www.w3.org/2000/svg"
                     onClick={() => setInterestValue(undefined)}
                   >
                     <path

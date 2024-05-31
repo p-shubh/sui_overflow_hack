@@ -356,6 +356,7 @@ export const Zklogin = ({
    */
   async function sendTransaction(account: AccountData) {
     // Sign the transaction bytes with the ephemeral private key
+    console.log("aaaaaaa")
     let userId;
     if(typeof window !== undefined){
       userId = localStorage.getItem("userId");

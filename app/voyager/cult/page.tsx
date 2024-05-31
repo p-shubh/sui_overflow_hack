@@ -3,14 +3,12 @@
 import HomeNavbar from "@/app/components/reusable/HomeNavbar";
 import React from "react";
 import Image from "next/image";
-import {
-  CULT_PAGE_COMMUNITIES_IMAGE,
-  CULT_PAGE_KEYFEATURES_IMAGE,
-} from "@/app/utils/constants";
+import { CULT_PAGE_COMMUNITIES_IMAGE, CULT_PAGE_KEYFEATURES_IMAGE } from "@/app/utils/constants";
 import { v4 as uuidv4 } from "uuid";
 import Footer from "@/app/components/reusable/Footer";
 
 import { useRouter } from "next/navigation";
+
 import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
 import {
   SerializedSignature,
@@ -72,12 +70,6 @@ export type AccountData = {
   maxEpoch: number;
 };
 
-// interface Props {
-//   loginButtonRef: any;
-//   logoutButtonRef: any;
-//   setIsUserLoggedIn: Dispatch<SetStateAction<boolean>>;
-//   setUserAddress: Dispatch<SetStateAction<string | undefined>>;
-// }
 
 const Cult = () => {
   const accounts = useRef<AccountData[]>(loadAccounts()); // useRef() instead of useState() because of setInterval()
@@ -96,7 +88,7 @@ const Cult = () => {
         setUserAddress(userData.userAddr);
         let getUserData;
         getUserData = await fetch(
-          `https://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${userData.sub}`,
+          `http://${IP_ADDRESS}/v1.0/voyager/user/sub-id/${userData.sub}`,
           {
             method: "GET",
             headers: {
@@ -127,7 +119,7 @@ const Cult = () => {
             name: "",
             provider: userData,
           };
-          fetch(`https://${IP_ADDRESS}/v1.0/voyager/user`, {
+          fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -346,12 +338,12 @@ const Cult = () => {
    * Assemble a zkLogin signature and submit a transaction
    * https://docs.sui.io/concepts/cryptography/zklogin#assemble-the-zklogin-signature-and-submit-the-transaction
    */
-  // const handleJoinClick = async (account: AccountData) => {
-  //   // await sendTransaction(account, () => {
-  //   //   router.push("/voyager/communities"); // Navigate to the success page
-  //   // });
-  // };
-  async function sendTransaction(account: AccountData) {
+  const handleJoinClick = async (account: AccountData) => {
+    await sendTransaction(account, () => {
+      router.push("/voyager/communities"); // Navigate to the success page
+    });
+  };
+  async function sendTransaction(account: AccountData, callback: () => void) {
     setModalContent("🚀 Sending transaction...");
     console.log("[sendTransaction] Starting transaction");
 
@@ -422,9 +414,9 @@ const Cult = () => {
           result
         );
         fetchBalances([account]);
-        // if (callback) {
-        //   callback(); // Navigate to the success page
-        // }
+        if (callback) {
+          callback(); // Navigate to the success page
+        }
       })
       .catch((error: unknown) => {
         console.warn(
@@ -562,10 +554,7 @@ const Cult = () => {
     accounts.current = [];
     setBalances(new Map());
   }
-  const images = [
-    { src: "/c5.png", alt: "Anime Image 1" },
-    { src: "/c6.png", alt: "Anime Image 2" },
-  ];
+
   return (
     <main className="w-[full] mx-auto bg-[#FFFCF9] ">
       <div className="mx-20">
@@ -575,10 +564,10 @@ const Cult = () => {
         <div className="flex lg:flex-row md:flex-col sm:items-center xs:flex-col justify-between row-1 ml-20">
           <div className="flex flex-col xs:items-center lg:items-start">
             <h1 className=" text-7xl mt-40 md:w-[76.52%] sm:w-[100%] font-englebert">
-              Discover the Power of
+              Discover the Power of Cults
             </h1>
             <div className="mt-6 text-2xl md:w-[76.52%] sm:w-[100%] font-space-grotesk text-gray-500">
-              Unlock the Anime-Inspired Community Experience: Explore our
+              Unlock the Community Experience: Explore our
               vibrant network, connect with like-minded individuals, and embark
               on a journey of shared passions and lively interactions
             </div>
@@ -595,7 +584,6 @@ const Cult = () => {
             className="mt-10"
           />
         </div>
-        {/* to get gas fee --------------- */}
         {/* {accounts.current.map((acct) => {
           const balance = balances.get(acct.userAddr);
           const explorerLink = makeExplorerUrl(
@@ -656,8 +644,6 @@ const Cult = () => {
             </div>
           );
         })} */}
-        {/* ------------------------- */}
-
         <div className="mt-24 row-2 flex flex-col text-center items-centert">
           <div className="flex flex-col items-center text-center">
             <div>
@@ -665,7 +651,7 @@ const Cult = () => {
                 className="text-5xl font-playfair-display"
                 style={{ fontWeight: 500, fontStyle: "italic" }}
               >
-                Discover the Communities of Anime-Inspired Voyager
+                Discover the Communities of Voyager
               </h1>
             </div>
           </div>
@@ -675,6 +661,7 @@ const Cult = () => {
                 key={uuidv4()}
                 className="flex justify-center flex-col mb-8 "
               >
+
                 <Image
                   src={data.src}
                   height={300}
@@ -688,12 +675,14 @@ const Cult = () => {
                 >
                   {data.community_interest}
                 </div>
-                <div className="mt-2 text-lg font-space-grotesk text-gray-500 ">
-                  <a href="/voyager/communities">
-                    <button className="bg-[#2a73ae] hover:bg-[#101521] text-white font-bold py-2 px-6 rounded-lg">
-                      Join Now
-                    </button>
-                  </a>
+                <div
+                  className="mt-2 text-lg font-space-grotesk text-gray-500 "
+                >
+                  <a href="/voyager/communities"><button
+                    className="bg-[#2a73ae] hover:bg-[#101521] text-white font-bold py-2 px-6 rounded-lg"
+                  >
+                    Join Now
+                  </button></a>
                 </div>
               </div>
             ))}
@@ -706,12 +695,14 @@ const Cult = () => {
           Key Features
         </h1>
         <div className=" row-2 flex flex-col text-center items-centert">
+
           <div className="flex justify-center mt-10 mx-20 gap-4 ">
             {CULT_PAGE_KEYFEATURES_IMAGE.map((data) => (
               <div
                 key={uuidv4()}
                 className="flex justify-center flex-col mb-8 "
               >
+
                 <Image
                   src={data.src}
                   height={400}
@@ -730,49 +721,11 @@ const Cult = () => {
           </div>
         </div>
 
-        <div className="mx-20 p-8 mt-20">
-          <div className="">
-            <h1
-              className="text-6xl mb-4 font-playfair-display"
-              style={{ fontWeight: 500, fontStyle: "italic" }}
-            >
-              Embrace the Anime-Inspired Community
-            </h1>
-          </div>
-          <div className="flex flex-col gap-4 mb-8 mt-20 h-96 ">
-            {images.map((image, index) => (
-              <div key={index} className="w-96 sm:w-1/2 p-2">
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  width={384}
-                  height={192}
-                  className="w-96 h-48 rounded-lg shadow-md"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-col sm:flex-row justify-between items-center mt-16">
-            <div className="sm:mb-0">
-              <button className="bg-white text-black border border-gray-300 py-4 pr-44 pl-12 rounded-lg shadow-md">
-                Unlock Exclusive Benefits
-              </button>
-              <p className="text-gray-500 mt-2">Explore Community Features</p>
-            </div>
-          </div>
-          <div className="w-2/3 h-80 text-center sm:text-left ml-96 ">
-            <h2 className="text-6xl mb-2 ml-32 font-englebert">
-              Community Highlights
-            </h2>
-            <p className="text-gray-600 text-2xl mt-16 ml-32">
-              Experience the Vibrant Anime-Inspired Community: Discover
-              exclusive content, engage in captivating discussions, and immerse
-              yourself in a world of shared interests and boundless creativity.
-            </p>
-          </div>
-        </div>
-      </div>
+      </div >
+      <div className="mt-20">
       <Footer />
+
+      </div>
     </main>
   );
 };
